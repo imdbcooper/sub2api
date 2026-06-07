@@ -896,6 +896,9 @@ export default {
     unknown: 'Неизвестно',
     in: 'Вход',
     out: 'Выход',
+    cacheHit: 'Попадание в кэш',
+    cacheCreate: 'Создание кэша',
+    cacheHitRate: 'Доля попаданий в кэш',
     inputTokenPrice: 'Цена входа',
     outputTokenPrice: 'Цена выхода',
     perMillionTokens: '/ 1 млн токенов',
@@ -906,6 +909,9 @@ export default {
     imageBillingSize: 'Размер для биллинга',
     imageInputSize: 'Размер входа',
     imageOutputSize: 'Размер выхода',
+    imageOutputTokens: 'Токены вывода изображения',
+    imageOutputTokenPrice: 'Цена токенов вывода изображения',
+    imageOutputCost: 'Стоимость вывода изображения',
     imageSizeSource: 'Источник размера',
     imageSizeBreakdown: 'Разбивка размера',
     imageSizeSourceOutput: 'Выход апстрима',
@@ -933,7 +939,26 @@ export default {
     exportExcelSuccess: 'Данные расхода экспортированы в Excel',
     exportExcelFailed: 'Не удалось экспортировать данные расхода',
     imageUnit: ' изображений',
-    userAgent: 'User-Agent'
+    userAgent: 'User-Agent',
+    tabs: { usage: 'Расход', errors: 'Ошибочные запросы' },
+    errors: {
+      time: 'Время', model: 'Модель', endpoint: 'Endpoint', status: 'Статус',
+      category: 'Категория', platform: 'Платформа', message: 'Сообщение ошибки',
+      keyName: 'Имя ключа', keyDeleted: 'Удалён', allKeys: 'Все ключи',
+      modelPlaceholder: 'Поиск модели', allCategories: 'Все категории',
+      empty: 'Ошибочных запросов нет', failedToLoad: 'Не удалось загрузить ошибочные запросы',
+      categories: {
+        auth: 'Ошибка авторизации', rate_limit: 'Rate limit', quota: 'Баланс/подписка',
+        invalid_request: 'Некорректный запрос', service_unavailable: 'Сервис недоступен',
+        upstream: 'Ошибка upstream', internal: 'Ошибка платформы', other: 'Другое',
+      },
+      detail: {
+        title: 'Детали ошибочного запроса',
+        responseBody: 'Тело ответа',
+        upstreamStatus: 'Статус upstream',
+        loadFailed: 'Не удалось загрузить детали, попробуйте ещё раз',
+      },
+    }
   },
 
   // Shared keys for channel monitor (admin + user views)
@@ -2599,6 +2624,29 @@ export default {
       modelFilterIncludeSummary: 'Применяется к моделям: {count}',
       modelFilterExcludeSummary: 'Исключает моделей: {count}',
       emptyLogs: 'Записей проверки нет',
+      preBlockSyncStatus: 'Статус синхронной предблокировки',
+      preBlockSyncHint: 'Live-счётчики синхронного пути модерации без асинхронных задач записи.',
+      preBlockActive: 'Синхронная обработка',
+      preBlockActiveHint: 'Сейчас проверяется',
+      preBlockChecked: 'Проверено',
+      preBlockCheckedHint: 'Попало в путь предблокировки',
+      preBlockAllowed: 'Разрешено',
+      preBlockAllowedHint: 'Блокировка не сработала',
+      preBlockBlocked: 'Заблокировано',
+      preBlockBlockedHint: 'Отклонено после срабатывания',
+      preBlockErrors: 'Ошибки аудита',
+      preBlockErrorsHint: 'Сбой или нет пригодного ключа',
+      preBlockAvgLatency: 'Средняя задержка',
+      preBlockAvgLatencyHint: 'Средняя для синхронного пути',
+      preBlockAPIKeyLoad: 'Нагрузка ключей аудита',
+      preBlockAPIKeyLoadHint: 'Синхронные pre-block проверки напрямую обходят пригодные ключи аудита по кругу.',
+      preBlockAPIKeyLoadSummary: 'Sync активно {active} / пригодных ключей {available}, всего {total}, worker: {workerActive} / {workerTotal}',
+      preBlockAPIKeyTotals: 'Всего {total}, успешно {success}, ошибок {errors}',
+      preBlockAPIKeyLoadEmpty: 'Данных о нагрузке ключей аудита пока нет',
+      preBlockKeyActiveShort: 'Активно',
+      preBlockKeyTotalShort: 'Всего',
+      preBlockKeyAvgShort: 'Сред.',
+      preBlockKeyLastShort: 'Последний',
       workerStatus: 'Runtime worker-ов',
       workerStatusHint: 'Статус очереди и пула worker-ов для асинхронных задач наблюдения.',
       workerPool: 'Пул worker-ов',
@@ -3331,6 +3379,17 @@ export default {
         responsesModeAuto: 'Auto',
         responsesModeForceResponses: 'Force Responses',
         responsesModeForceChatCompletions: 'Force Chat Completions',
+        responsesModeTextDisabledHint:
+          'Неприменимо, когда endpoint Responses / Chat Completions не включён.',
+        endpointCapabilities: 'Возможности endpoint-ов',
+        endpointCapabilitiesDesc:
+          'Используется маршрутизацией аккаунтов. Текстовый endpoint следует настройке поддержки Responses API выше и отображается как Responses, Chat Completions или auto-режим; Embeddings отдельно управляет /v1/embeddings.',
+        capabilityResponses: 'Responses',
+        capabilityTextAuto: 'Responses / Chat Completions (Auto)',
+        capabilityResponsesAuto: 'Responses (auto probe)',
+        capabilityChatCompletions: 'Chat Completions',
+        capabilityChatCompletionsAuto: 'Chat Completions (auto probe)',
+        capabilityEmbeddings: 'Embeddings',
         responsesStatusAutoSupported: 'Auto probe: Responses',
         responsesStatusAutoUnsupported: 'Auto probe: Chat Completions',
         responsesStatusAutoUnknown: 'Auto probe: unknown',
@@ -3339,6 +3398,9 @@ export default {
         codexCLIOnly: 'Только официальные клиенты Codex',
         codexCLIOnlyDesc:
           'Применяется только к OpenAI OAuth. Если включено, разрешены только семейства официальных клиентов Codex; если отключено, шлюз обходит это ограничение и сохраняет прежнее поведение.',
+        codexCLIOnlyAllowClaudeCode: 'Также разрешить Codex-плагин Claude Code',
+        codexCLIOnlyAllowClaudeCodeDesc:
+          'Действует только когда включён переключатель выше. Дополнительно разрешает запросы от Codex-плагина Claude Code (точное совпадение originator=Claude Code), не ослабляя блокировку других неофициальных клиентов.',
         codexImageGenerationBridge: 'Мост генерации изображений Codex',
         codexImageGenerationBridgeDesc:
           'Политика аккаунта имеет приоритет над настройками канала и глобальными настройками. Управляет только тем, получают ли запросы Codex через текстовый endpoint /responses инструмент image_generation; отдельные endpoint-ы генерации изображений не затрагиваются.',
@@ -3439,6 +3501,12 @@ export default {
         'Если включено, warmup-запросы вроде генерации заголовка будут возвращать mock-ответы без расхода upstream-токенов',
       autoPauseOnExpired: 'Автопауза при истечении срока',
       autoPauseOnExpiredDesc: 'Если включено, аккаунт автоматически приостановит маршрутизацию после истечения срока действия',
+      autoPause5hThreshold: 'Порог расхода 5h (%)',
+      autoPause7dThreshold: 'Порог расхода 7d (%)',
+      autoPauseThresholdHint: 'Оставьте пустым или укажите 0, чтобы использовать глобальный порог по умолчанию из настроек Ops; задайте значение, чтобы переопределить глобальный порог. Достижение порога только пропускает аккаунт при маршрутизации и не меняет schedulable.',
+      autoPause5hDisabled: 'Отключить автопаузу 5h',
+      autoPause7dDisabled: 'Отключить автопаузу 7d',
+      autoPauseDisabledHint: 'Если включено, этот аккаунт никогда не ставится на автопаузу, даже если задан глобальный порог по умолчанию.',
       // Quota control (Anthropic OAuth/SetupToken only)
       quotaControl: {
         title: 'Управление квотой',
@@ -4714,6 +4782,8 @@ export default {
         group: 'Группа',
         user: 'Пользователь',
         userId: 'ID пользователя',
+        apiKey: 'API-ключ',
+        keyDeletedBadge: 'Ключ удалён',
         account: 'Аккаунт',
         accountId: 'Account ID',
         status: 'Статус',
@@ -4840,7 +4910,11 @@ export default {
         suggestRequest: 'Ошибка клиентского запроса: попросите клиента исправить параметры запроса',
         suggestAuth: 'Ошибка Auth: проверьте API key/credentials',
         suggestPlatform: 'Ошибка платформы: приоритизируйте расследование и исправление',
-        suggestGeneric: 'Смотрите детали для дополнительного контекста'
+        suggestGeneric: 'Смотрите детали для дополнительного контекста',
+        apiKeyPrefix: 'Префикс ключа',
+        attemptedKeyPrefix: 'Префикс использованного ключа',
+        deletedKeyOwner: 'Владелец удалённого ключа',
+        keyDeletedBadge: 'Ключ удалён'
       },
       requestDetails: {
         title: 'Детали запроса',
@@ -5155,6 +5229,11 @@ export default {
         aggregation: 'Задачи предагрегации',
         enableAggregation: 'Включить предагрегацию',
         aggregationHint: 'Предагрегация повышает производительность запросов для длинных временных окон',
+        openaiQuotaAutoPause: 'Автопауза OpenAI-аккаунта по квоте',
+        openaiQuotaAutoPauseHint: 'Когда OpenAI-аккаунт достигает порога расхода 5h / 7d, scheduler автоматически пропускает его и возобновляет после прокрутки окна. Пороги конкретного аккаунта имеют приоритет над этим глобальным значением по умолчанию.',
+        openaiQuotaAutoPauseDefault5h: 'Порог расхода 5h по умолчанию (%)',
+        openaiQuotaAutoPauseDefault7d: 'Порог расхода 7d по умолчанию (%)',
+        openaiQuotaAutoPauseThresholdHint: 'Значение 0-100; оставьте пустым или 0, чтобы отключить глобальный порог по умолчанию.',
         errorFiltering: 'Фильтрация ошибок',
         ignoreCountTokensErrors: 'Игнорировать ошибки count_tokens',
         ignoreCountTokensErrorsHint: 'Если включено, ошибки запросов count_tokens не будут записываться в лог ошибок.',
@@ -5185,7 +5264,8 @@ export default {
           slaMinPercentRange: 'Минимальный процент SLA должен быть от 0 до 100',
           ttftP99MaxRange: 'Максимум TTFT P99 должен быть числом ≥ 0',
           requestErrorRateMaxRange: 'Максимальная доля ошибок запросов должна быть от 0 до 100',
-          upstreamErrorRateMaxRange: 'Максимальная доля ошибок upstream должна быть от 0 до 100'
+          upstreamErrorRateMaxRange: 'Максимальная доля ошибок upstream должна быть от 0 до 100',
+          openaiQuotaAutoPauseRange: 'Порог автопаузы OpenAI по квоте должен быть от 0 до 100'
         }
       },
       concurrency: {
@@ -5579,6 +5659,9 @@ export default {
         openaiCodexUserAgent: 'OpenAI Codex UA',
         openaiCodexUserAgentPlaceholder: 'codex-tui/0.125.0 (Ubuntu 22.4.0; x86_64) xterm-256color (codex-tui; 0.125.0)',
         openaiCodexUserAgentHint: 'Используется для обхода Cloudflare browser-UA challenges на OpenAI upstream. Применяется только когда клиентский User-Agent определяется как браузер (Mozilla/...). Оставьте пустым, чтобы использовать встроенное значение по умолчанию.',
+        openaiAllowClaudeCodeCodexPlugin: 'Разрешить использование Codex-плагина в Claude Code',
+        openaiAllowClaudeCodeCodexPluginDesc:
+          'Глобальный переключатель; влияет только на OpenAI OAuth-аккаунты с включённым режимом "только официальные клиенты Codex". Если включено, такие аккаунты дополнительно разрешают запросы от Codex-плагина Claude Code (точное совпадение originator=Claude Code) без настройки каждого аккаунта; upstream-запросы остаются в passthrough.',
       },
       webSearchEmulation: {
         title: 'Эмуляция Web Search',
@@ -6275,6 +6358,14 @@ export default {
       openaiExperimentalScheduler: {
         title: 'Экспериментальная политика OpenAI scheduler',
         description: "По умолчанию отключено. Когда включено, меняет только экспериментальную политику выбора аккаунта шлюза для OpenAI traffic; это не означает наличие такой возможности у upstream OpenAI."
+      },
+      usageRecords: {
+        title: 'Записи расхода',
+        description: 'Настройки записей расхода и ошибочных запросов, видимых конечным пользователям.',
+      },
+      user_error_view: {
+        label: 'Разрешить пользователям просматривать свои ошибочные запросы',
+        description: 'Когда включено, пользователи могут видеть на странице расхода сокращённую информацию о своих неуспешных запросах без внутренних/upstream-деталей. Для наличия данных должен быть включён ops-мониторинг.',
       },
       saveSettings: 'Сохранить настройки',
       saving: 'Сохранение...',
