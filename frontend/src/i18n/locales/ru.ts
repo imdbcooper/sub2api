@@ -344,6 +344,34 @@ export default {
     }
   },
 
+  adminCompliance: {
+    title: 'Подтверждение соответствия требованиям развёртывания и эксплуатации',
+    blockingNotice: 'Перед продолжением работы с консолью требуется подтвердить соблюдение требований развёртывания и эксплуатации.',
+    riskNotice: 'Это подтверждение даёт ясное, заметное и воспроизводимое уведомление об обязательствах и операционных рисках для self-hosted инстансов.',
+    version: 'Версия документа',
+    openDocument: 'Открыть документ на GitHub',
+    documentSource: 'Текст соглашения берётся из Markdown-файлов этого репозитория. При изменении содержания соглашения версия документа должна быть повышена; подтверждения старых версий становятся недействительными, и пользователи консоли должны подтвердить документ заново.',
+    inputLabel: 'Введите следующую фразу подтверждения точно',
+    inputPlaceholder: 'Введите фразу подтверждения, чтобы продолжить',
+    inputMismatch: 'Фраза подтверждения не совпадает. Введите отображаемый текст точно.',
+    legalNote: 'Это подтверждение определяет отсутствие аффилированности и границы ответственности между self-hosted инстансами и open-source проектом, правообладателями, участниками и сопровождающими. Сторона, которая развёртывает, эксплуатирует или контролирует соответствующий инстанс, самостоятельно отвечает за применимые к ней обязательства.',
+    logout: 'Выйти',
+    accept: 'Подтвердить и продолжить',
+    accepted: 'Подтверждение соответствия сохранено',
+    acceptFailed: 'Не удалось отправить подтверждение'
+  },
+
+  legal: {
+    loadFailed: 'Не удалось загрузить документ',
+    retryLater: 'Обновите страницу и повторите попытку позже.',
+    notFound: 'Документ не найден',
+    notFoundDescription: 'Этот юридический документ не существует или был удалён администратором.',
+    updatedAt: 'Обновлено: {date}',
+    empty: 'Нет содержимого',
+    loginAgreement: 'Соглашение для входа',
+    adminCompliance: 'Обязательство по соответствию требованиям развёртывания и эксплуатации'
+  },
+
   // Navigation
   nav: {
     dashboard: 'Панель',
@@ -856,6 +884,8 @@ export default {
     accountCost: 'Стоимость',
     userBilled: 'Списано с пользователя',
     accountBilled: 'Списано с аккаунта',
+    resetNow: 'Сейчас',
+    resetPending: 'Ожидает обновления',
     accountMultiplier: 'Тариф аккаунта',
     avgDuration: 'Средняя длительность',
     inSelectedRange: 'за выбранный период',
@@ -1794,6 +1824,16 @@ export default {
       allGroups: 'Все группы',
       searchGroups: 'Поиск групп...',
       fuzzySearch: 'Нечёткий поиск',
+      apiKeyGroupFilter: 'Группа API-ключа',
+      apiKeyGroupExclusive: 'Эксклюзивные группы',
+      apiKeyGroupPublic: 'Публичные группы',
+      apiKeyGroupSubscription: 'Группы подписок',
+      apiKeyGroupDisabled: 'Отключённые группы',
+      authorizedGroupFilter: 'Разрешённая группа',
+      allAuthorizedGroups: 'Все разрешённые группы',
+      searchAuthorizedGroups: 'Поиск разрешённых групп...',
+      allApiKeyGroups: 'Все группы API-ключей',
+      searchApiKeyGroups: 'Поиск групп API-ключей...',
       admin: 'Администратор',
       user: 'Пользователь',
       disabled: 'Отключено',
@@ -3300,6 +3340,11 @@ export default {
       recoverStateHint: 'Используется для восстановления runtime-состояния ошибок, лимитов частоты и временного исключения из маршрутизации.',
       recoverStateSuccess: 'Состояние аккаунта восстановлено',
       recoverStateFailed: 'Не удалось восстановить состояние аккаунта',
+      fallbackActive: 'Резервный маршрут',
+      fallbackActiveTip: 'Исходный proxy {origin} истёк',
+      revertProxy: 'Вернуть proxy',
+      revertProxySuccess: 'Исходный proxy успешно восстановлен',
+      revertProxyFailed: 'Не удалось восстановить proxy',
       resetStatus: 'Сбросить статус',
       statusReset: 'Статус аккаунта сброшен',
       failedToResetStatus: 'Не удалось сбросить статус аккаунта',
@@ -4176,6 +4221,8 @@ export default {
         status: 'Статус',
         accounts: 'Аккаунты',
         latency: 'Задержка',
+        expiry: 'Срок действия',
+        createdAt: 'Создан',
         actions: 'Действия'
       },
       testConnection: 'Проверить подключение',
@@ -4273,7 +4320,21 @@ export default {
       hostRequired: 'Введите адрес хоста',
       portInvalid: 'Порт должен быть в диапазоне 1-65535',
       deleteConfirm:
-        "Удалить '{name}'? У аккаунтов, использующих этот proxy, proxy будет удалён."
+        "Удалить '{name}'? У аккаунтов, использующих этот proxy, proxy будет удалён.",
+      neverExpires: 'Никогда',
+      expired: 'Истёк',
+      overdueDays: 'Просрочен на {days} дн.',
+      expiringInDays: 'Истекает через {days} дн.',
+      remainingDays: 'Осталось {days} дн.',
+      expiresAt: 'Срок действия',
+      nDays: '{days} дн.',
+      expiryDaysPlaceholder: 'Свои дни, пусто = никогда',
+      expiryWarnDays: 'Предупреждение об истечении (дни)',
+      fallbackMode: 'Резерв при сбое',
+      fallbackNone: 'Без резерва',
+      fallbackProxy: 'Резервный proxy',
+      fallbackDirect: 'Прямое подключение',
+      backupProxy: 'Резервный proxy'
     },
 
     // Redeem Codes
@@ -5028,6 +5089,7 @@ export default {
           accountRateLimitedCount: 'Аккаунты с rate limit',
           accountErrorCount: 'Аккаунты с ошибками (без временно исключённых из маршрутизации)',
           accountErrorRatio: 'Доля аккаунтов с ошибками (%)',
+          accountTempUnscheduledCount: 'Временно исключённые из маршрутизации аккаунты',
           overloadAccountCount: 'Перегруженные аккаунты'
         },
         metricDescriptions: {
@@ -5045,6 +5107,7 @@ export default {
           accountRateLimitedCount: 'Количество аккаунтов с rate limit в окне.',
           accountErrorCount: 'Количество аккаунтов с ошибками в окне (без временно исключённых из маршрутизации).',
           accountErrorRatio: 'Доля аккаунтов с ошибками в окне (0-100).',
+          accountTempUnscheduledCount: 'Количество аккаунтов, временно исключённых из маршрутизации прямо сейчас (например, из-за автоматического исключения при сбое proxy или учётных данных).',
           overloadAccountCount: 'Количество перегруженных аккаунтов в окне.'
         },
         hints: {

@@ -96,6 +96,7 @@ import { sanitizeUrl } from '@/utils/url'
 import type { LoginAgreementDocument, PublicSettings } from '@/types'
 import zhAdminCompliance from '../../../../docs/legal/admin-compliance.zh.md?raw'
 import enAdminCompliance from '../../../../docs/legal/admin-compliance.en.md?raw'
+import ruAdminCompliance from '../../../../docs/legal/admin-compliance.ru.md?raw'
 
 type LegalDocumentIcon = 'document' | 'shield' | 'globe' | 'cog'
 
@@ -124,13 +125,23 @@ const updatedAt = computed(() =>
 const documentTypeLabel = computed(() =>
   isAdminComplianceDocument.value ? t('legal.adminCompliance') : t('legal.loginAgreement')
 )
+const adminComplianceContent = computed(() => {
+  const locale = getLocale()
+  if (locale === 'zh') {
+    return zhAdminCompliance
+  }
+  if (locale === 'ru') {
+    return ruAdminCompliance
+  }
+  return enAdminCompliance
+})
 
 const currentDocument = computed<LoginAgreementDocument | null>(() => {
   if (isAdminComplianceDocument.value) {
     return {
       id: 'admin-compliance',
       title: t('adminCompliance.title'),
-      content_md: getLocale() === 'zh' ? zhAdminCompliance : enAdminCompliance
+      content_md: adminComplianceContent.value
     }
   }
   const id = documentId.value

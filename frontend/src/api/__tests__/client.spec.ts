@@ -159,6 +159,7 @@ describe('API Client', () => {
               version: 'v2026.06.10',
               document_path_zh: 'docs/legal/admin-compliance.zh.md',
               document_path_en: 'docs/legal/admin-compliance.en.md',
+              document_path_ru: 'docs/legal/admin-compliance.ru.md',
             },
           },
         },

@@ -62,7 +62,9 @@ func TestAdminComplianceStatusRequiresAckWhenMissing(t *testing.T) {
 	require.True(t, status.Required)
 	require.Equal(t, AdminComplianceVersion, status.Version)
 	require.Equal(t, AdminComplianceAckPhraseZH, status.AckPhraseZH)
+	require.Equal(t, AdminComplianceAckPhraseRU, status.AckPhraseRU)
 	require.Equal(t, AdminComplianceDocumentPathZH, status.DocumentPathZH)
+	require.Equal(t, AdminComplianceDocumentPathRU, status.DocumentPathRU)
 }
 
 func TestAcceptAdminComplianceRejectsWrongPhrase(t *testing.T) {
@@ -98,6 +100,23 @@ func TestAcceptAdminCompliancePersistsCurrentVersion(t *testing.T) {
 	require.NoError(t, json.Unmarshal([]byte(repo.values[adminComplianceAcknowledgementKey(42)]), &stored))
 	require.Equal(t, AdminComplianceVersion, stored.Version)
 	require.Equal(t, AdminComplianceDocumentPathZH, stored.DocumentZH)
+}
+
+func TestAcceptAdminComplianceAcceptsRussianPhrase(t *testing.T) {
+	repo := &adminComplianceRepoStub{}
+	svc := NewSettingService(repo, &config.Config{})
+
+	status, err := svc.AcceptAdminCompliance(context.Background(), AdminComplianceAcceptInput{
+		AdminUserID: 7,
+		Language:    "ru-RU",
+		Phrase:      AdminComplianceAckPhraseRU,
+	})
+	require.NoError(t, err)
+	require.False(t, status.Required)
+
+	var stored AdminComplianceAcknowledgement
+	require.NoError(t, json.Unmarshal([]byte(repo.values[adminComplianceAcknowledgementKey(7)]), &stored))
+	require.Equal(t, AdminComplianceDocumentPathRU, stored.DocumentRU)
 }
 
 func TestAdminComplianceStatusRequiresAckOnOldVersion(t *testing.T) {

@@ -108,6 +108,7 @@ import { useAdminComplianceStore, useAppStore, useAuthStore } from '@/stores'
 import { getLocale } from '@/i18n'
 import zhDocument from '../../../../docs/legal/admin-compliance.zh.md?raw'
 import enDocument from '../../../../docs/legal/admin-compliance.en.md?raw'
+import ruDocument from '../../../../docs/legal/admin-compliance.ru.md?raw'
 
 const { t } = useI18n()
 const complianceStore = useAdminComplianceStore()
@@ -124,10 +125,23 @@ marked.setOptions({
 const visible = computed(() => authStore.isAuthenticated && authStore.isAdmin && complianceStore.shouldShow)
 const expectedPhrase = computed(() => complianceStore.expectedPhrase)
 const canSubmit = computed(() => typedPhrase.value.trim() === expectedPhrase.value)
-const currentDocument = computed(() => getLocale() === 'zh' ? zhDocument : enDocument)
+const currentDocument = computed(() => {
+  const locale = getLocale()
+  if (locale === 'zh') {
+    return zhDocument
+  }
+  if (locale === 'ru') {
+    return ruDocument
+  }
+  return enDocument
+})
 const documentUrl = computed(() => {
-  if (getLocale() === 'zh') {
+  const locale = getLocale()
+  if (locale === 'zh') {
     return complianceStore.status?.document_url_zh || 'https://github.com/Wei-Shaw/sub2api/blob/main/docs/legal/admin-compliance.zh.md'
+  }
+  if (locale === 'ru') {
+    return complianceStore.status?.document_url_ru || 'https://github.com/imdbcooper/sub2api/blob/main/docs/legal/admin-compliance.ru.md'
   }
   return complianceStore.status?.document_url_en || 'https://github.com/Wei-Shaw/sub2api/blob/main/docs/legal/admin-compliance.en.md'
 })
