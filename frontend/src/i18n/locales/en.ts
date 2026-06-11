@@ -4727,6 +4727,7 @@ export default {
       noData: 'No data.',
       loadingText: 'loading',
       ready: 'ready',
+      autoRefreshRemaining: 'Remaining {seconds}s',
       requestsTotal: 'Requests (total)',
       slaScope: 'SLA scope:',
       tokens: 'Tokens',
@@ -5414,6 +5415,60 @@ export default {
         auto: 'Auto',
         raw: 'Raw',
         preagg: 'Preagg'
+      },
+      systemLogs: {
+        title: 'System Logs',
+        description: 'Sorted by newest first by default. Supports filtering, search, and cleanup by conditions.',
+        cleanupCurrentFilter: 'Clean current filter',
+        refreshHealth: 'Refresh health metrics',
+        cleanupConfirm: 'Clean system logs matching the current filters? This action cannot be undone.',
+        cleanupSuccess: 'Cleanup complete. Deleted {count} logs.',
+        empty: 'No system logs',
+        health: {
+          queue: 'Queue {depth}/{capacity}',
+          written: 'Written {count}',
+          dropped: 'Dropped {count}',
+          failed: 'Failed {count}'
+        },
+        runtime: {
+          title: 'Runtime log config (applies immediately)',
+          level: 'Level',
+          stacktraceLevel: 'Stacktrace threshold',
+          samplingInitial: 'Sampling initial',
+          samplingThereafter: 'Sampling thereafter',
+          retentionDays: 'Retention days',
+          caller: 'caller',
+          sampling: 'sampling',
+          save: 'Save and apply',
+          saveSuccess: 'Runtime log config applied',
+          saveFailed: 'Failed to save log config',
+          reset: 'Rollback defaults',
+          resetConfirm: 'Rollback to startup config (env/yaml) and apply immediately?',
+          resetSuccess: 'Rolled back to startup log config',
+          resetFailed: 'Failed to rollback log config',
+          lastWriteError: 'Last write error: {error}'
+        },
+        filters: {
+          timeRange: 'Time range',
+          startTime: 'Start time (optional)',
+          endTime: 'End time (optional)',
+          level: 'Level',
+          component: 'Component',
+          componentPlaceholder: 'e.g. http.access',
+          platform: 'Platform',
+          model: 'Model',
+          keyword: 'Keyword',
+          keywordPlaceholder: 'message/request_id'
+        },
+        table: {
+          time: 'Time',
+          level: 'Level',
+          detail: 'Log details'
+        },
+        errors: {
+          loadFailed: 'Failed to load system logs',
+          cleanupFailed: 'Failed to clean system logs'
+        }
       },
       accountAvailability: {
         available: 'Available',
@@ -6775,11 +6830,15 @@ export default {
   // Custom Page (iframe embed)
   customPage: {
     title: 'Custom Page',
+    tocTitle: 'Contents',
     openInNewTab: 'Open in new tab',
     notFoundTitle: 'Page not found',
     notFoundDesc: 'This custom page does not exist or has been removed.',
     notConfiguredTitle: 'Page URL not configured',
     notConfiguredDesc: 'The URL for this custom page has not been properly configured.',
+    pageNotFoundInline: 'Page not found',
+    loadFailedInline: 'Failed to load page',
+    copySuccess: 'Copied ✓',
   },
 
   // Announcements Page

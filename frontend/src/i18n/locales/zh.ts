@@ -4881,6 +4881,7 @@ export default {
       noData: '暂无数据',
       loadingText: '加载中...',
       ready: '就绪',
+      autoRefreshRemaining: '剩余 {seconds}s',
       requestsTotal: '请求（总计）',
       slaScope: 'SLA 范围：',
       tokens: 'Token数',
@@ -5574,6 +5575,60 @@ export default {
         auto: 'Auto（自动）',
         raw: 'Raw（不聚合）',
         preagg: 'Preagg（聚合）'
+      },
+      systemLogs: {
+        title: '系统日志',
+        description: '默认按最新时间倒序，支持筛选搜索与按条件清理。',
+        cleanupCurrentFilter: '按当前筛选清理',
+        refreshHealth: '刷新健康指标',
+        cleanupConfirm: '确认按当前筛选条件清理系统日志？该操作不可撤销。',
+        cleanupSuccess: '清理完成，删除 {count} 条日志',
+        empty: '暂无系统日志',
+        health: {
+          queue: '队列 {depth}/{capacity}',
+          written: '写入 {count}',
+          dropped: '丢弃 {count}',
+          failed: '失败 {count}'
+        },
+        runtime: {
+          title: '运行时日志配置（实时生效）',
+          level: '级别',
+          stacktraceLevel: '堆栈阈值',
+          samplingInitial: '采样初始',
+          samplingThereafter: '采样后续',
+          retentionDays: '保留天数',
+          caller: 'caller',
+          sampling: 'sampling',
+          save: '保存并生效',
+          saveSuccess: '日志运行时配置已生效',
+          saveFailed: '保存日志配置失败',
+          reset: '回滚默认值',
+          resetConfirm: '确认回滚为启动配置（env/yaml）并立即生效？',
+          resetSuccess: '已回滚到启动日志配置',
+          resetFailed: '回滚日志配置失败',
+          lastWriteError: '最近写入错误：{error}'
+        },
+        filters: {
+          timeRange: '时间范围',
+          startTime: '开始时间（可选）',
+          endTime: '结束时间（可选）',
+          level: '级别',
+          component: '组件',
+          componentPlaceholder: '如 http.access',
+          platform: '平台',
+          model: '模型',
+          keyword: '关键词',
+          keywordPlaceholder: '消息/request_id'
+        },
+        table: {
+          time: '时间',
+          level: '级别',
+          detail: '日志详细信息'
+        },
+        errors: {
+          loadFailed: '系统日志加载失败',
+          cleanupFailed: '清理系统日志失败'
+        }
       },
       accountAvailability: {
         available: '可用',
@@ -6929,11 +6984,15 @@ export default {
   // Custom Page (iframe embed)
   customPage: {
     title: '自定义页面',
+    tocTitle: '目录',
     openInNewTab: '新窗口打开',
     notFoundTitle: '页面不存在',
     notFoundDesc: '该自定义页面不存在或已被删除。',
     notConfiguredTitle: '页面链接未配置',
     notConfiguredDesc: '该自定义页面的 URL 未正确配置。',
+    pageNotFoundInline: '页面未找到',
+    loadFailedInline: '加载页面失败',
+    copySuccess: '已复制 ✓',
   },
 
   // Announcements Page

@@ -4727,6 +4727,7 @@ export default {
       noData: 'Нет данных.',
       loadingText: 'загрузка',
       ready: 'готово',
+      autoRefreshRemaining: 'Осталось {seconds}с',
       requestsTotal: 'Запросы (всего)',
       slaScope: 'Область SLA:',
       tokens: 'Токены',
@@ -5414,6 +5415,60 @@ export default {
         auto: 'Auto',
         raw: 'Raw',
         preagg: 'Preagg'
+      },
+      systemLogs: {
+        title: 'Системные логи',
+        description: 'По умолчанию сортируются от новых к старым. Поддерживаются фильтры, поиск и очистка по условиям.',
+        cleanupCurrentFilter: 'Очистить текущий фильтр',
+        refreshHealth: 'Обновить метрики здоровья',
+        cleanupConfirm: 'Очистить системные логи по текущим фильтрам? Действие нельзя отменить.',
+        cleanupSuccess: 'Очистка завершена. Удалено логов: {count}.',
+        empty: 'Системных логов нет',
+        health: {
+          queue: 'Очередь {depth}/{capacity}',
+          written: 'Записано {count}',
+          dropped: 'Отброшено {count}',
+          failed: 'Ошибок {count}'
+        },
+        runtime: {
+          title: 'Runtime-конфигурация логов (применяется сразу)',
+          level: 'Уровень',
+          stacktraceLevel: 'Порог stacktrace',
+          samplingInitial: 'Начальная выборка',
+          samplingThereafter: 'Дальнейшая выборка',
+          retentionDays: 'Дней хранения',
+          caller: 'caller',
+          sampling: 'sampling',
+          save: 'Сохранить и применить',
+          saveSuccess: 'Runtime-конфигурация логов применена',
+          saveFailed: 'Не удалось сохранить конфигурацию логов',
+          reset: 'Откатить defaults',
+          resetConfirm: 'Откатить к стартовой конфигурации (env/yaml) и применить сразу?',
+          resetSuccess: 'Откат к стартовой конфигурации логов выполнен',
+          resetFailed: 'Не удалось откатить конфигурацию логов',
+          lastWriteError: 'Последняя ошибка записи: {error}'
+        },
+        filters: {
+          timeRange: 'Диапазон времени',
+          startTime: 'Начало (опционально)',
+          endTime: 'Конец (опционально)',
+          level: 'Уровень',
+          component: 'Компонент',
+          componentPlaceholder: 'например http.access',
+          platform: 'Платформа',
+          model: 'Модель',
+          keyword: 'Ключевое слово',
+          keywordPlaceholder: 'message/request_id'
+        },
+        table: {
+          time: 'Время',
+          level: 'Уровень',
+          detail: 'Детали лога'
+        },
+        errors: {
+          loadFailed: 'Не удалось загрузить системные логи',
+          cleanupFailed: 'Не удалось очистить системные логи'
+        }
       },
       accountAvailability: {
         available: 'Доступно',
@@ -6775,11 +6830,15 @@ export default {
   // Custom Page (iframe embed)
   customPage: {
     title: 'Пользовательская страница',
+    tocTitle: 'Содержание',
     openInNewTab: 'Открыть в новой вкладке',
     notFoundTitle: 'Страница не найдена',
     notFoundDesc: 'Эта пользовательская страница не существует или была удалена.',
     notConfiguredTitle: 'URL страницы не настроен',
     notConfiguredDesc: 'URL этой пользовательской страницы настроен некорректно.',
+    pageNotFoundInline: 'Страница не найдена',
+    loadFailedInline: 'Не удалось загрузить страницу',
+    copySuccess: 'Скопировано ✓',
   },
 
   // Announcements Page
