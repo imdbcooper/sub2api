@@ -7244,27 +7244,18 @@ const authSourceDefaultsMeta = computed(() => [
   },
   {
     source: "github" as AuthSourceType,
-    title: "GitHub",
-    description: localText(
-      "通过 GitHub 已验证邮箱首次注册或首次绑定时应用。",
-      "Applied on first signup or first bind through a verified GitHub email.",
-    ),
+    title: t("admin.settings.authSourceDefaults.sources.github.title"),
+    description: t("admin.settings.authSourceDefaults.sources.github.description"),
   },
   {
     source: "google" as AuthSourceType,
-    title: "Google",
-    description: localText(
-      "通过 Google 已验证邮箱首次注册或首次绑定时应用。",
-      "Applied on first signup or first bind through a verified Google email.",
-    ),
+    title: t("admin.settings.authSourceDefaults.sources.google.title"),
+    description: t("admin.settings.authSourceDefaults.sources.google.description"),
   },
   {
     source: "dingtalk" as AuthSourceType,
-    title: "钉钉",
-    description: localText(
-      "通过钉钉首次注册或首次绑定时应用。",
-      "Applied on first signup or first bind through DingTalk.",
-    ),
+    title: t("admin.settings.authSourceDefaults.sources.dingtalk.title"),
+    description: t("admin.settings.authSourceDefaults.sources.dingtalk.description"),
   },
 ]);
 

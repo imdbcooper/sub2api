@@ -6466,6 +6466,18 @@ export default {
           wechat: {
             title: 'Регистрация через WeChat',
             description: 'Выдачи квот по умолчанию для регистраций через WeChat.'
+          },
+          github: {
+            title: 'Регистрация через GitHub',
+            description: 'Применяется при первой регистрации или первой привязке через подтверждённый email GitHub.'
+          },
+          google: {
+            title: 'Регистрация через Google',
+            description: 'Применяется при первой регистрации или первой привязке через подтверждённый email Google.'
+          },
+          dingtalk: {
+            title: 'Регистрация через DingTalk',
+            description: 'Применяется при первой регистрации или первой привязке через DingTalk.'
           }
         },
         grantOnFirstBindLabel: 'Выдать при первой привязке',

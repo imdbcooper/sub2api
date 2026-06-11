@@ -6466,6 +6466,18 @@ export default {
           wechat: {
             title: 'WeChat signup',
             description: 'Default quota grants for WeChat signups.'
+          },
+          github: {
+            title: 'GitHub signup',
+            description: 'Applied on first signup or first bind through a verified GitHub email.'
+          },
+          google: {
+            title: 'Google signup',
+            description: 'Applied on first signup or first bind through a verified Google email.'
+          },
+          dingtalk: {
+            title: 'DingTalk signup',
+            description: 'Applied on first signup or first bind through DingTalk.'
           }
         },
         grantOnFirstBindLabel: 'Grant on first bind',

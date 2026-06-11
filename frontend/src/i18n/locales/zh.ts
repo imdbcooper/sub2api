@@ -6621,6 +6621,18 @@ export default {
           wechat: {
             title: '微信登录',
             description: '适用于微信第三方注册的新用户默认配额。'
+          },
+          github: {
+            title: 'GitHub 登录',
+            description: '通过 GitHub 已验证邮箱首次注册或首次绑定时应用。'
+          },
+          google: {
+            title: 'Google 登录',
+            description: '通过 Google 已验证邮箱首次注册或首次绑定时应用。'
+          },
+          dingtalk: {
+            title: '钉钉登录',
+            description: '通过钉钉首次注册或首次绑定时应用。'
           }
         },
         grantOnFirstBindLabel: '首次绑定时授权',
