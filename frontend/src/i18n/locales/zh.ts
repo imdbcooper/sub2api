@@ -5775,6 +5775,22 @@ export default {
         quickSetCopy: '使用当前站点生成并复制',
         redirectUrlSetAndCopied: '已使用当前站点生成回调地址并复制到剪贴板'
       },
+      emailOAuth: {
+        title: '邮箱快捷登录',
+        description: '开启 GitHub 或 Google 邮箱授权登录后，系统会读取已验证邮箱，存在则直接登录，不存在则自动注册。',
+        githubDescription: 'GitHub OAuth App 需要 read:user user:email 权限，回调地址填写下方后端地址。',
+        githubSetupGuidePrefix: '开通引导：GitHub Settings -> Developer settings -> ',
+        githubSetupGuideSuffix: ' -> New OAuth App；Homepage URL 填站点域名，Authorization callback URL 填下面的后端回调地址。',
+        googleDescription: 'Google OAuth 客户端需要 openid email profile 范围，并在凭据里登记后端回调地址。',
+        googleSetupGuide: '开通引导：Google Cloud Console -> APIs & Services -> OAuth consent screen 完成同意屏幕；Credentials -> Create Credentials -> OAuth client ID，类型选择 Web application，并把下面地址加入 Authorized redirect URIs。',
+        clientId: 'Client ID',
+        clientSecret: 'Client Secret',
+        secretConfiguredPlaceholder: '密钥已配置，留空以保留当前值。',
+        backendCallbackUrl: '后端回调地址',
+        frontendCallbackUrl: '前端回跳地址',
+        generateAndCopy: '生成并复制',
+        callbackUrlCopied: '回调地址已写入并复制。'
+      },
       dingtalk: {
         title: '钉钉登录',
         description: '配置钉钉 OAuth，用于 Sub2API 用户登录',

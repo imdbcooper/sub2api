@@ -5616,6 +5616,22 @@ export default {
         quickSetCopy: 'Generate & Copy (current site)',
         redirectUrlSetAndCopied: 'Redirect URL generated and copied to clipboard'
       },
+      emailOAuth: {
+        title: 'Email OAuth Sign-in',
+        description: 'After GitHub or Google email OAuth is enabled, the system reads a verified email, signs in matching users, and auto-registers missing users.',
+        githubDescription: 'GitHub OAuth App needs read:user user:email scopes. Use the backend callback URL below.',
+        githubSetupGuidePrefix: 'Setup guide: GitHub Settings -> Developer settings -> ',
+        githubSetupGuideSuffix: ' -> New OAuth App. Use your site origin as Homepage URL and the backend callback URL below as Authorization callback URL.',
+        googleDescription: 'Google OAuth client needs openid email profile scopes and the backend callback URL registered in credentials.',
+        googleSetupGuide: 'Setup guide: Google Cloud Console -> APIs & Services -> OAuth consent screen, then Credentials -> Create Credentials -> OAuth client ID, choose Web application, and add the URL below to Authorized redirect URIs.',
+        clientId: 'Client ID',
+        clientSecret: 'Client Secret',
+        secretConfiguredPlaceholder: 'Secret configured. Leave empty to keep the current value.',
+        backendCallbackUrl: 'Backend Callback URL',
+        frontendCallbackUrl: 'Frontend Callback URL',
+        generateAndCopy: 'Generate and copy',
+        callbackUrlCopied: 'Callback URL set and copied.'
+      },
       dingtalk: {
         title: 'DingTalk Login',
         description: 'Configure DingTalk OAuth for Sub2API end-user login',

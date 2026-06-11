@@ -1793,15 +1793,10 @@
               class="border-b border-gray-100 px-6 py-4 dark:border-dark-700"
             >
               <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-                {{ localText("邮箱快捷登录", "Email OAuth Sign-in") }}
+                {{ t("admin.settings.emailOAuth.title") }}
               </h2>
               <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                {{
-                  localText(
-                    "开启 GitHub 或 Google 邮箱授权登录后，系统会读取已验证邮箱，存在则直接登录，不存在则自动注册。",
-                    "After GitHub or Google email OAuth is enabled, the system reads a verified email, signs in matching users, and auto-registers missing users.",
-                  )
-                }}
+                {{ t("admin.settings.emailOAuth.description") }}
               </p>
             </div>
             <div class="space-y-6 p-6">
@@ -1813,12 +1808,7 @@
                         GitHub
                       </h3>
                       <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                        {{
-                          localText(
-                            "GitHub OAuth App 需要 read:user user:email 权限，回调地址填写下方后端地址。",
-                            "GitHub OAuth App needs read:user user:email scopes. Use the backend callback URL below.",
-                          )
-                        }}
+                        {{ t("admin.settings.emailOAuth.githubDescription") }}
                       </p>
                     </div>
                     <Toggle v-model="form.github_oauth_enabled" />
@@ -1826,33 +1816,22 @@
 
                   <div v-if="form.github_oauth_enabled" class="mt-4 space-y-4">
                     <div class="rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600 dark:bg-dark-800 dark:text-gray-300">
-                      <template v-if="isZhLocale">
-                        开通引导：GitHub Settings → Developer settings →
-                        <a
-                          data-testid="github-oauth-apps-guide-link"
-                          href="https://github.com/settings/developers"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="font-medium text-primary-600 hover:underline dark:text-primary-400"
-                        >OAuth Apps</a>
-                        → New OAuth App；Homepage URL 填站点域名，Authorization callback URL 填下面的后端回调地址。
-                      </template>
-                      <template v-else>
-                        Setup guide: GitHub Settings → Developer settings →
-                        <a
-                          data-testid="github-oauth-apps-guide-link"
-                          href="https://github.com/settings/developers"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="font-medium text-primary-600 hover:underline dark:text-primary-400"
-                        >OAuth Apps</a>
-                        → New OAuth App. Use your site origin as Homepage URL and the backend callback URL below as Authorization callback URL.
-                      </template>
+                      {{ t("admin.settings.emailOAuth.githubSetupGuidePrefix") }}
+                      <a
+                        data-testid="github-oauth-apps-guide-link"
+                        href="https://github.com/settings/developers"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-medium text-primary-600 hover:underline dark:text-primary-400"
+                      >OAuth Apps</a>
+                      {{ t("admin.settings.emailOAuth.githubSetupGuideSuffix") }}
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                       <div>
-                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Client ID</label>
+                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.emailOAuth.clientId") }}
+                        </label>
                         <input
                           v-model="form.github_oauth_client_id"
                           type="text"
@@ -1861,14 +1840,16 @@
                         />
                       </div>
                       <div>
-                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Client Secret</label>
+                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.emailOAuth.clientSecret") }}
+                        </label>
                         <input
                           v-model="form.github_oauth_client_secret"
                           type="password"
                           class="input font-mono text-sm"
                           :placeholder="
                             form.github_oauth_client_secret_configured
-                              ? localText('密钥已配置，留空以保留当前值。', 'Secret configured. Leave empty to keep the current value.')
+                              ? t('admin.settings.emailOAuth.secretConfiguredPlaceholder')
                               : 'GitHub OAuth Client Secret'
                           "
                         />
@@ -1877,7 +1858,7 @@
 
                     <div>
                       <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {{ localText("后端回调地址", "Backend Callback URL") }}
+                        {{ t("admin.settings.emailOAuth.backendCallbackUrl") }}
                       </label>
                       <input
                         v-model="form.github_oauth_redirect_url"
@@ -1891,7 +1872,7 @@
                           class="btn btn-secondary btn-sm w-fit"
                           @click="setAndCopyEmailOAuthRedirectUrl('github')"
                         >
-                          {{ localText("生成并复制", "Generate and copy") }}
+                          {{ t("admin.settings.emailOAuth.generateAndCopy") }}
                         </button>
                         <code
                           v-if="githubOAuthRedirectUrlSuggestion"
@@ -1904,7 +1885,7 @@
 
                     <div>
                       <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {{ localText("前端回跳地址", "Frontend Callback URL") }}
+                        {{ t("admin.settings.emailOAuth.frontendCallbackUrl") }}
                       </label>
                       <input
                         v-model="form.github_oauth_frontend_redirect_url"
@@ -1923,12 +1904,7 @@
                         Google
                       </h3>
                       <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                        {{
-                          localText(
-                            "Google OAuth 客户端需要 openid email profile 范围，并在凭据里登记后端回调地址。",
-                            "Google OAuth client needs openid email profile scopes and the backend callback URL registered in credentials.",
-                          )
-                        }}
+                        {{ t("admin.settings.emailOAuth.googleDescription") }}
                       </p>
                     </div>
                     <Toggle v-model="form.google_oauth_enabled" />
@@ -1936,17 +1912,14 @@
 
                   <div v-if="form.google_oauth_enabled" class="mt-4 space-y-4">
                     <div class="rounded-lg bg-gray-50 px-3 py-2 text-xs text-gray-600 dark:bg-dark-800 dark:text-gray-300">
-                      {{
-                        localText(
-                          "开通引导：Google Cloud Console → APIs & Services → OAuth consent screen 完成同意屏幕；Credentials → Create Credentials → OAuth client ID，类型选择 Web application，并把下面地址加入 Authorized redirect URIs。",
-                          "Setup guide: Google Cloud Console → APIs & Services → OAuth consent screen, then Credentials → Create Credentials → OAuth client ID, choose Web application, and add the URL below to Authorized redirect URIs.",
-                        )
-                      }}
+                      {{ t("admin.settings.emailOAuth.googleSetupGuide") }}
                     </div>
 
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                       <div>
-                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Client ID</label>
+                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.emailOAuth.clientId") }}
+                        </label>
                         <input
                           v-model="form.google_oauth_client_id"
                           type="text"
@@ -1955,14 +1928,16 @@
                         />
                       </div>
                       <div>
-                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">Client Secret</label>
+                        <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                          {{ t("admin.settings.emailOAuth.clientSecret") }}
+                        </label>
                         <input
                           v-model="form.google_oauth_client_secret"
                           type="password"
                           class="input font-mono text-sm"
                           :placeholder="
                             form.google_oauth_client_secret_configured
-                              ? localText('密钥已配置，留空以保留当前值。', 'Secret configured. Leave empty to keep the current value.')
+                              ? t('admin.settings.emailOAuth.secretConfiguredPlaceholder')
                               : 'Google OAuth Client Secret'
                           "
                         />
@@ -1971,7 +1946,7 @@
 
                     <div>
                       <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {{ localText("后端回调地址", "Backend Callback URL") }}
+                        {{ t("admin.settings.emailOAuth.backendCallbackUrl") }}
                       </label>
                       <input
                         v-model="form.google_oauth_redirect_url"
@@ -1985,7 +1960,7 @@
                           class="btn btn-secondary btn-sm w-fit"
                           @click="setAndCopyEmailOAuthRedirectUrl('google')"
                         >
-                          {{ localText("生成并复制", "Generate and copy") }}
+                          {{ t("admin.settings.emailOAuth.generateAndCopy") }}
                         </button>
                         <code
                           v-if="googleOAuthRedirectUrlSuggestion"
@@ -1998,7 +1973,7 @@
 
                     <div>
                       <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {{ localText("前端回跳地址", "Frontend Callback URL") }}
+                        {{ t("admin.settings.emailOAuth.frontendCallbackUrl") }}
                       </label>
                       <input
                         v-model="form.google_oauth_frontend_redirect_url"
@@ -7596,7 +7571,7 @@ async function setAndCopyEmailOAuthRedirectUrl(provider: EmailOAuthProvider) {
   }
   await copyToClipboard(
     url,
-    localText("回调地址已写入并复制。", "Callback URL set and copied."),
+    t("admin.settings.emailOAuth.callbackUrlCopied"),
   );
 }
 

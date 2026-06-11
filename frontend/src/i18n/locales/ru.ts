@@ -5616,6 +5616,22 @@ export default {
         quickSetCopy: 'Сгенерировать и скопировать (текущий сайт)',
         redirectUrlSetAndCopied: 'Redirect URL сгенерирован и скопирован в буфер обмена'
       },
+      emailOAuth: {
+        title: 'Вход через email OAuth',
+        description: 'После включения GitHub или Google email OAuth система считывает подтверждённый email, входит в существующий аккаунт или автоматически регистрирует новый.',
+        githubDescription: 'GitHub OAuth App требует scopes read:user и user:email. Укажите backend callback URL ниже.',
+        githubSetupGuidePrefix: 'Инструкция: GitHub Settings -> Developer settings -> ',
+        githubSetupGuideSuffix: ' -> New OAuth App. В Homepage URL укажите origin сайта, а в Authorization callback URL - backend callback URL ниже.',
+        googleDescription: 'Google OAuth client требует scopes openid, email и profile, а backend callback URL должен быть зарегистрирован в credentials.',
+        googleSetupGuide: 'Инструкция: Google Cloud Console -> APIs & Services -> OAuth consent screen, затем Credentials -> Create Credentials -> OAuth client ID, выберите Web application и добавьте URL ниже в Authorized redirect URIs.',
+        clientId: 'Client ID',
+        clientSecret: 'Client Secret',
+        secretConfiguredPlaceholder: 'Secret настроен. Оставьте пустым, чтобы сохранить текущее значение.',
+        backendCallbackUrl: 'Backend Callback URL',
+        frontendCallbackUrl: 'Frontend Callback URL',
+        generateAndCopy: 'Сгенерировать и скопировать',
+        callbackUrlCopied: 'Callback URL записан и скопирован.'
+      },
       dingtalk: {
         title: 'Вход через DingTalk',
         description: 'Настройте DingTalk OAuth для входа конечных пользователей Sub2API',
