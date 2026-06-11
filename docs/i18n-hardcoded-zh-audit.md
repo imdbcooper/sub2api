@@ -22,6 +22,7 @@ The i18n extraction was completed in reviewable batches:
 | `a47b36fe` | Groups and account creation UI copy |
 | `d0cfb47d` | Ops system logs and custom page copy |
 | `98dca1a6` | Admin helper/runtime copy, validation helpers, email template metadata, legal defaults |
+| `b83da7b5` | Review fixes for missing keys and translated model preset labels |
 
 ## Resolved Areas
 
@@ -71,7 +72,7 @@ Final targeted checks run during extraction:
 | Command | Result |
 | --- | --- |
 | `npm run typecheck` | Passed |
-| `npm run test:run -- src/components/admin/channel/__tests__/types.spec.ts src/api/__tests__/settings.paymentVisibleMethods.spec.ts src/views/admin/__tests__/SettingsView.spec.ts` | Passed, 28 tests |
+| `npm run test:run -- src/components/account/__tests__/BulkEditAccountModal.spec.ts src/components/admin/channel/__tests__/types.spec.ts src/api/__tests__/settings.paymentVisibleMethods.spec.ts src/views/admin/__tests__/SettingsView.spec.ts` | Passed, 41 tests |
 | `git diff --check` | Passed |
 
 Read-only final audit result: no likely user-visible hardcoded Chinese remained outside excluded locale/test paths.
