@@ -91,14 +91,14 @@ export type WeChatConnectMode = "open" | "mp" | "mobile";
 
 export interface PaymentVisibleMethodSourceOption {
   value: PaymentVisibleMethodSource;
-  labelZh: string;
-  labelEn: string;
+  labelKey: string;
+  fallbackLabel: string;
 }
 
 export interface WeChatConnectModeOption {
   value: WeChatConnectMode;
-  labelZh: string;
-  labelEn: string;
+  labelKey: string;
+  fallbackLabel: string;
 }
 
 const AUTH_SOURCE_TYPES: AuthSourceType[] = [
@@ -117,29 +117,29 @@ const PAYMENT_VISIBLE_METHOD_SOURCE_OPTIONS: Record<
   PaymentVisibleMethodSourceOption[]
 > = {
   alipay: [
-    { value: "", labelZh: "未配置", labelEn: "Not configured" },
+    { value: "", labelKey: "admin.settings.paymentVisibleMethods.sources.notConfigured", fallbackLabel: "Not configured" },
     {
       value: "official_alipay",
-      labelZh: "支付宝官方",
-      labelEn: "Official Alipay",
+      labelKey: "admin.settings.paymentVisibleMethods.sources.officialAlipay",
+      fallbackLabel: "Official Alipay",
     },
     {
       value: "easypay_alipay",
-      labelZh: "易支付支付宝",
-      labelEn: "EasyPay Alipay",
+      labelKey: "admin.settings.paymentVisibleMethods.sources.easyPayAlipay",
+      fallbackLabel: "EasyPay Alipay",
     },
   ],
   wxpay: [
-    { value: "", labelZh: "未配置", labelEn: "Not configured" },
+    { value: "", labelKey: "admin.settings.paymentVisibleMethods.sources.notConfigured", fallbackLabel: "Not configured" },
     {
       value: "official_wxpay",
-      labelZh: "微信官方",
-      labelEn: "Official WeChat Pay",
+      labelKey: "admin.settings.paymentVisibleMethods.sources.officialWechatPay",
+      fallbackLabel: "Official WeChat Pay",
     },
     {
       value: "easypay_wxpay",
-      labelZh: "易支付微信",
-      labelEn: "EasyPay WeChat Pay",
+      labelKey: "admin.settings.paymentVisibleMethods.sources.easyPayWechatPay",
+      fallbackLabel: "EasyPay WeChat Pay",
     },
   ],
 };
@@ -166,16 +166,16 @@ const PAYMENT_VISIBLE_METHOD_SOURCE_ALIASES: Record<
   },
 };
 const WECHAT_CONNECT_MODE_OPTIONS: WeChatConnectModeOption[] = [
-  { value: "open", labelZh: "PC 应用", labelEn: "PC App" },
+  { value: "open", labelKey: "admin.settings.wechatConnect.openAppTitle", fallbackLabel: "PC App" },
   {
     value: "mp",
-    labelZh: "公众号",
-    labelEn: "Official Account",
+    labelKey: "admin.settings.wechatConnect.mpAppTitle",
+    fallbackLabel: "Official Account",
   },
   {
     value: "mobile",
-    labelZh: "移动应用",
-    labelEn: "Mobile App",
+    labelKey: "admin.settings.wechatConnect.mobileAppTitle",
+    fallbackLabel: "Mobile App",
   },
 ];
 const WECHAT_CONNECT_MODE_ALIASES: Record<string, WeChatConnectMode> = {

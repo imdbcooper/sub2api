@@ -1,5 +1,10 @@
 import type { BillingMode, PricingInterval } from '@/api/admin/channels'
 
+type ChannelValidationTranslator = (
+  key: string,
+  params?: Record<string, string | number>,
+) => string
+
 export interface IntervalFormEntry {
   min_tokens: number
   max_tokens: number | null
@@ -125,6 +130,7 @@ export function findModelConflict(models: string[]): [string, string] | null {
 export function validateIntervals(
   intervals: IntervalFormEntry[],
   mode: BillingMode = 'token',
+  t?: ChannelValidationTranslator,
 ): string | null {
   if (!intervals || intervals.length === 0) return null
 
@@ -132,58 +138,116 @@ export function validateIntervals(
   const sorted = [...intervals].sort((a, b) => a.min_tokens - b.min_tokens)
 
   for (let i = 0; i < sorted.length; i++) {
-    const err = validateSingleInterval(sorted[i], i)
+    const err = validateSingleInterval(sorted[i], i, t)
     if (err) return err
   }
 
   // per_request / image 模式按 tier_label 匹配，不做 token 区间重叠校验
   if (mode !== 'token') return null
-  return checkIntervalOverlap(sorted)
+  return checkIntervalOverlap(sorted, t)
 }
 
-function validateSingleInterval(iv: IntervalFormEntry, idx: number): string | null {
+function validationMessage(
+  t: ChannelValidationTranslator | undefined,
+  key: string,
+  params: Record<string, string | number>,
+  fallback: string,
+): string {
+  return t ? t(`admin.channels.form.validation.${key}`, params) : fallback
+}
+
+function validateSingleInterval(
+  iv: IntervalFormEntry,
+  idx: number,
+  t?: ChannelValidationTranslator,
+): string | null {
+  const index = idx + 1
   if (iv.min_tokens < 0) {
-    return `区间 #${idx + 1}: 最小 token 数 (${iv.min_tokens}) 不能为负数`
+    return validationMessage(
+      t,
+      'minTokensNegative',
+      { index, value: iv.min_tokens },
+      `Interval #${index}: minimum token count (${iv.min_tokens}) cannot be negative`,
+    )
   }
   if (iv.max_tokens != null) {
     if (iv.max_tokens <= 0) {
-      return `区间 #${idx + 1}: 最大 token 数 (${iv.max_tokens}) 必须大于 0`
+      return validationMessage(
+        t,
+        'maxTokensPositive',
+        { index, value: iv.max_tokens },
+        `Interval #${index}: maximum token count (${iv.max_tokens}) must be greater than 0`,
+      )
     }
     if (iv.max_tokens <= iv.min_tokens) {
-      return `区间 #${idx + 1}: 最大 token 数 (${iv.max_tokens}) 必须大于最小 token 数 (${iv.min_tokens})`
+      return validationMessage(
+        t,
+        'maxTokensGreaterThanMin',
+        { index, max: iv.max_tokens, min: iv.min_tokens },
+        `Interval #${index}: maximum token count (${iv.max_tokens}) must be greater than minimum token count (${iv.min_tokens})`,
+      )
     }
   }
-  return validateIntervalPrices(iv, idx)
+  return validateIntervalPrices(iv, idx, t)
 }
 
-function validateIntervalPrices(iv: IntervalFormEntry, idx: number): string | null {
-  const prices: [string, number | string | null][] = [
-    ['输入价格', iv.input_price],
-    ['输出价格', iv.output_price],
-    ['缓存写入价格', iv.cache_write_price],
-    ['缓存读取价格', iv.cache_read_price],
-    ['单次价格', iv.per_request_price],
+function validateIntervalPrices(
+  iv: IntervalFormEntry,
+  idx: number,
+  t?: ChannelValidationTranslator,
+): string | null {
+  const prices: [string, string, number | string | null][] = [
+    ['inputPrice', 'input price', iv.input_price],
+    ['outputPrice', 'output price', iv.output_price],
+    ['cacheWritePrice', 'cache write price', iv.cache_write_price],
+    ['cacheReadPrice', 'cache read price', iv.cache_read_price],
+    ['perRequestPrice', 'per-request price', iv.per_request_price],
   ]
-  for (const [name, val] of prices) {
+  for (const [fieldKey, fallbackName, val] of prices) {
     if (val != null && val !== '' && Number(val) < 0) {
-      return `区间 #${idx + 1}: ${name}不能为负数`
+      const index = idx + 1
+      return validationMessage(
+        t,
+        'priceNegative',
+        { index, field: t ? t(`admin.channels.form.validation.fields.${fieldKey}`) : fallbackName },
+        `Interval #${index}: ${fallbackName} cannot be negative`,
+      )
     }
   }
   return null
 }
 
-function checkIntervalOverlap(sorted: IntervalFormEntry[]): string | null {
+function checkIntervalOverlap(
+  sorted: IntervalFormEntry[],
+  t?: ChannelValidationTranslator,
+): string | null {
   for (let i = 0; i < sorted.length; i++) {
     // 无上限区间必须是最后一个
     if (sorted[i].max_tokens == null && i < sorted.length - 1) {
-      return `区间 #${i + 1}: 无上限区间（最大 token 数为空）只能是最后一个`
+      const index = i + 1
+      return validationMessage(
+        t,
+        'unlimitedLast',
+        { index },
+        `Interval #${index}: unlimited interval (empty maximum token count) must be the last interval`,
+      )
     }
     if (i === 0) continue
     const prev = sorted[i - 1]
     // (min, max] 语义：前一个区间上界 > 当前区间下界则重叠
     if (prev.max_tokens == null || prev.max_tokens > sorted[i].min_tokens) {
       const prevMax = prev.max_tokens == null ? '∞' : String(prev.max_tokens)
-      return `区间 #${i} 和 #${i + 1} 重叠：前一个区间上界 (${prevMax}) 大于当前区间下界 (${sorted[i].min_tokens})`
+      return validationMessage(
+        t,
+        'overlap',
+        {
+          previousIndex: i,
+          currentIndex: i + 1,
+          previousMax: prevMax,
+          currentMin: sorted[i].min_tokens,
+        },
+        `Intervals #${i} and #${i + 1} overlap: previous upper bound (${prevMax}) is greater than current lower bound (${sorted[i].min_tokens})`,
+      )
     }
   }
   return null

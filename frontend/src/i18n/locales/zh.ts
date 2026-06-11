@@ -2570,6 +2570,21 @@ export default {
         tierLabel: '层级',
         resolution: '分辨率',
         inclusiveSuffix: '(含)',
+        validation: {
+          minTokensNegative: '区间 #{index}: 最小 token 数 ({value}) 不能为负数',
+          maxTokensPositive: '区间 #{index}: 最大 token 数 ({value}) 必须大于 0',
+          maxTokensGreaterThanMin: '区间 #{index}: 最大 token 数 ({max}) 必须大于最小 token 数 ({min})',
+          priceNegative: '区间 #{index}: {field}不能为负数',
+          unlimitedLast: '区间 #{index}: 无上限区间（最大 token 数为空）只能是最后一个',
+          overlap: '区间 #{previousIndex} 和 #{currentIndex} 重叠：前一个区间上界 ({previousMax}) 大于当前区间下界 ({currentMin})',
+          fields: {
+            inputPrice: '输入价格',
+            outputPrice: '输出价格',
+            cacheWritePrice: '缓存写入价格',
+            cacheReadPrice: '缓存读取价格',
+            perRequestPrice: '单次价格'
+          }
+        },
         modelMapping: '模型映射',
         modelMappingHint: '将请求中的模型名映射为实际模型名。在账号级别映射之前执行。',
         noMappingRules: '暂无映射规则，点击"添加"创建',
@@ -2741,6 +2756,7 @@ export default {
       queueSize: '异步队列大小',
       blockStatus: '拦截 HTTP 状态码',
       blockMessage: '自定义拦截提示',
+      defaultBlockMessage: '内容审计命中风险规则，请调整输入后重试',
       emailOnHit: '命中后发送邮件',
       emailOnHitHint: '开启后每次达到阈值都会向用户发送风控提醒邮件；自动封禁通知始终发送。',
       autoBan: '自动封禁用户',
@@ -5704,6 +5720,12 @@ export default {
         routeSlug: '路由标识',
         markdownContent: 'Markdown 内容',
         markdownContentPlaceholder: '在这里填写正式 Markdown 内容。',
+        defaultDocuments: {
+          terms: '服务条款',
+          usagePolicy: '使用政策',
+          supportedRegions: '支持的国家和地区',
+          serviceSpecificTerms: '服务特定条款'
+        },
         errors: {
           documentRequired: '启用登录条款确认时，至少需要保留一份文档。',
           documentTitleRequired: '登录条款文档名称不能为空。',
@@ -6419,6 +6441,56 @@ export default {
           admin: '管理告警',
           riskControl: '风控',
           ops: '运维'
+        },
+        events: {
+          authVerifyCode: {
+            label: '邮箱验证码',
+            timing: '注册、绑定邮箱、OAuth 补全邮箱或 TOTP 邮箱校验时发送。'
+          },
+          authPasswordReset: {
+            label: '密码重置',
+            timing: '用户请求密码重置链接时发送。'
+          },
+          notificationEmailVerifyCode: {
+            label: '通知邮箱验证码',
+            timing: '用户添加并验证额外通知邮箱时发送。'
+          },
+          subscriptionPurchaseSuccess: {
+            label: '订阅开通成功',
+            timing: '订阅订单完成支付并成功开通或续期后发送。'
+          },
+          subscriptionExpiryReminder: {
+            label: '订阅到期提醒',
+            timing: '后台任务在订阅仍有效且距离到期剩余 7 天、3 天、1 天时各发送一次，可通过邮件设置中的开关关闭。'
+          },
+          balanceLow: {
+            label: '余额不足提醒',
+            timing: '用户余额低于全局或个人配置的提醒阈值时发送。'
+          },
+          balanceRechargeSuccess: {
+            label: '余额充值成功',
+            timing: '余额充值订单支付完成并入账后发送。'
+          },
+          accountQuotaAlert: {
+            label: '账号限额告警',
+            timing: '上游账号的用量达到配置的额度告警阈值时发送给管理员通知邮箱。'
+          },
+          contentModerationViolationNotice: {
+            label: '内容审计违规提醒',
+            timing: '用户请求命中内容审计或风控规则、但尚未被禁用时发送。'
+          },
+          contentModerationAccountDisabled: {
+            label: '内容审计禁用账号',
+            timing: '内容审计违规次数达到封禁阈值并自动禁用用户账号时发送。'
+          },
+          opsAlert: {
+            label: '运维告警',
+            timing: '运维监控规则触发告警并满足邮件通知配置时发送给运维收件人。'
+          },
+          opsScheduledReport: {
+            label: '运维定时报表',
+            timing: '运维日报、周报、错误摘要或账号健康报表到达配置的发送时间时发送。'
+          }
         }
       },
       opsMonitoring: {
@@ -6770,7 +6842,14 @@ export default {
         methodHint: '控制前台结算页是否展示该方式，以及展示时使用的来源键。',
         sourceLabel: '支付来源',
         sourceHint: '启用后必须明确选择一个来源；未配置状态不会对外展示该支付方式。',
-        sourceRequiredError: '{title} 已启用，请先选择支付来源。'
+        sourceRequiredError: '{title} 已启用，请先选择支付来源。',
+        sources: {
+          notConfigured: '未配置',
+          officialAlipay: '支付宝官方',
+          easyPayAlipay: '易支付支付宝',
+          officialWechatPay: '微信官方',
+          easyPayWechatPay: '易支付微信'
+        }
       },
       openaiExperimentalScheduler: {
         title: 'OpenAI 实验调度策略',

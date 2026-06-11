@@ -2493,6 +2493,21 @@ export default {
         tierLabel: 'Tier',
         resolution: 'Resolution',
         inclusiveSuffix: '(incl.)',
+        validation: {
+          minTokensNegative: 'Interval #{index}: minimum token count ({value}) cannot be negative',
+          maxTokensPositive: 'Interval #{index}: maximum token count ({value}) must be greater than 0',
+          maxTokensGreaterThanMin: 'Interval #{index}: maximum token count ({max}) must be greater than minimum token count ({min})',
+          priceNegative: 'Interval #{index}: {field} cannot be negative',
+          unlimitedLast: 'Interval #{index}: unlimited interval (empty maximum token count) must be the last interval',
+          overlap: 'Intervals #{previousIndex} and #{currentIndex} overlap: previous upper bound ({previousMax}) is greater than current lower bound ({currentMin})',
+          fields: {
+            inputPrice: 'input price',
+            outputPrice: 'output price',
+            cacheWritePrice: 'cache write price',
+            cacheReadPrice: 'cache read price',
+            perRequestPrice: 'per-request price'
+          }
+        },
         modelMapping: 'Model Mapping',
         modelMappingHint: 'Map request model names to actual model names. Runs before account-level mapping.',
         noMappingRules: 'No mapping rules. Click "Add" to create one.',
@@ -2664,6 +2679,7 @@ export default {
       queueSize: 'Async Queue Size',
       blockStatus: 'Block HTTP Status',
       blockMessage: 'Custom Block Message',
+      defaultBlockMessage: 'Content moderation matched a risk rule. Please revise your input and try again.',
       emailOnHit: 'Email on Hit',
       emailOnHitHint: 'When enabled, send a risk-control email on every hit; auto-ban notices are always sent.',
       autoBan: 'Auto Ban User',
@@ -5544,6 +5560,12 @@ export default {
         routeSlug: 'Route slug',
         markdownContent: 'Markdown content',
         markdownContentPlaceholder: 'Write the final Markdown content here.',
+        defaultDocuments: {
+          terms: 'Terms of Service',
+          usagePolicy: 'Usage Policy',
+          supportedRegions: 'Supported Countries and Regions',
+          serviceSpecificTerms: 'Service-Specific Terms'
+        },
         errors: {
           documentRequired: 'At least one document is required when login agreement is enabled.',
           documentTitleRequired: 'Login agreement document title cannot be empty.',
@@ -6263,6 +6285,56 @@ export default {
           admin: 'Admin',
           riskControl: 'Risk Control',
           ops: 'Ops'
+        },
+        events: {
+          authVerifyCode: {
+            label: 'Email Verification Code',
+            timing: 'Sent for registration, email binding, OAuth pending email completion, or TOTP email verification.'
+          },
+          authPasswordReset: {
+            label: 'Password Reset',
+            timing: 'Sent when a user requests a password reset link.'
+          },
+          notificationEmailVerifyCode: {
+            label: 'Notification Email Verification',
+            timing: 'Sent when a user adds and verifies an extra notification email address.'
+          },
+          subscriptionPurchaseSuccess: {
+            label: 'Subscription Activated',
+            timing: 'Sent after a subscription order is paid and the subscription is activated or extended.'
+          },
+          subscriptionExpiryReminder: {
+            label: 'Subscription Expiry Reminder',
+            timing: 'Sent by the background job when an active subscription has 7, 3, or 1 day remaining. It can be disabled in Email settings.'
+          },
+          balanceLow: {
+            label: 'Low Balance Alert',
+            timing: "Sent when a user's balance drops below the global or personal reminder threshold."
+          },
+          balanceRechargeSuccess: {
+            label: 'Balance Recharge Success',
+            timing: 'Sent after a balance recharge order is paid and credited.'
+          },
+          accountQuotaAlert: {
+            label: 'Account Quota Alert',
+            timing: 'Sent to admin notification emails when an upstream account reaches the configured quota alert threshold.'
+          },
+          contentModerationViolationNotice: {
+            label: 'Risk Control Violation Notice',
+            timing: 'Sent when a user request triggers content moderation or risk-control rules but the account is not disabled yet.'
+          },
+          contentModerationAccountDisabled: {
+            label: 'Risk Control Account Disabled',
+            timing: 'Sent when content moderation reaches the ban threshold and automatically disables the user account.'
+          },
+          opsAlert: {
+            label: 'Ops Alert',
+            timing: 'Sent to ops recipients when an ops monitoring rule fires and email notification settings allow it.'
+          },
+          opsScheduledReport: {
+            label: 'Ops Scheduled Report',
+            timing: 'Sent when a configured daily, weekly, error digest, or account health report reaches its scheduled send time.'
+          }
         }
       },
       opsMonitoring: {
@@ -6615,7 +6687,14 @@ export default {
         methodHint: 'Controls whether checkout shows this method and which source key it exposes.',
         sourceLabel: 'Payment source',
         sourceHint: 'Choose an explicit source before enabling the method. Not configured methods are not exposed.',
-        sourceRequiredError: 'Select a payment source before enabling {title}.'
+        sourceRequiredError: 'Select a payment source before enabling {title}.',
+        sources: {
+          notConfigured: 'Not configured',
+          officialAlipay: 'Official Alipay',
+          easyPayAlipay: 'EasyPay Alipay',
+          officialWechatPay: 'Official WeChat Pay',
+          easyPayWechatPay: 'EasyPay WeChat Pay'
+        }
       },
       openaiExperimentalScheduler: {
         title: 'OpenAI experimental scheduler policy',

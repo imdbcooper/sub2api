@@ -2493,6 +2493,21 @@ export default {
         tierLabel: 'Тариф',
         resolution: 'Разрешение',
         inclusiveSuffix: '(вкл.)',
+        validation: {
+          minTokensNegative: 'Интервал #{index}: минимальное количество token ({value}) не может быть отрицательным',
+          maxTokensPositive: 'Интервал #{index}: максимальное количество token ({value}) должно быть больше 0',
+          maxTokensGreaterThanMin: 'Интервал #{index}: максимальное количество token ({max}) должно быть больше минимального ({min})',
+          priceNegative: 'Интервал #{index}: {field} не может быть отрицательной',
+          unlimitedLast: 'Интервал #{index}: интервал без верхнего предела (пустой максимум token) должен быть последним',
+          overlap: 'Интервалы #{previousIndex} и #{currentIndex} пересекаются: верхняя граница предыдущего ({previousMax}) больше нижней границы текущего ({currentMin})',
+          fields: {
+            inputPrice: 'цена входа',
+            outputPrice: 'цена выхода',
+            cacheWritePrice: 'цена записи кэша',
+            cacheReadPrice: 'цена чтения кэша',
+            perRequestPrice: 'цена за запрос'
+          }
+        },
         modelMapping: 'Маппинг моделей',
         modelMappingHint: 'Сопоставляет имена моделей в запросах с фактическими именами. Выполняется до маппинга аккаунта.',
         noMappingRules: 'Правил маппинга нет. Нажмите "Добавить", чтобы создать первое.',
@@ -2664,6 +2679,7 @@ export default {
       queueSize: 'Размер async-очереди',
       blockStatus: 'HTTP-статус блокировки',
       blockMessage: 'Пользовательское сообщение блокировки',
+      defaultBlockMessage: 'Модерация контента обнаружила риск-правило. Измените ввод и повторите попытку.',
       emailOnHit: 'Email при срабатывании',
       emailOnHitHint: 'Когда включено, при каждом срабатывании отправляется email risk-control; уведомления об авто-бане отправляются всегда.',
       autoBan: 'Автоматически банить пользователя',
@@ -5544,6 +5560,12 @@ export default {
         routeSlug: 'Route slug',
         markdownContent: 'Markdown-содержимое',
         markdownContentPlaceholder: 'Введите итоговый Markdown-текст здесь.',
+        defaultDocuments: {
+          terms: 'Условия сервиса',
+          usagePolicy: 'Политика использования',
+          supportedRegions: 'Поддерживаемые страны и регионы',
+          serviceSpecificTerms: 'Специальные условия сервиса'
+        },
         errors: {
           documentRequired: 'Когда соглашение при входе включено, нужен хотя бы один документ.',
           documentTitleRequired: 'Название документа соглашения не может быть пустым.',
@@ -6263,6 +6285,56 @@ export default {
           admin: 'Администрирование',
           riskControl: 'Риск-контроль',
           ops: 'Ops'
+        },
+        events: {
+          authVerifyCode: {
+            label: 'Код подтверждения email',
+            timing: 'Отправляется при регистрации, привязке email, заполнении email после OAuth или TOTP-проверке email.'
+          },
+          authPasswordReset: {
+            label: 'Сброс пароля',
+            timing: 'Отправляется, когда пользователь запрашивает ссылку для сброса пароля.'
+          },
+          notificationEmailVerifyCode: {
+            label: 'Код подтверждения email для уведомлений',
+            timing: 'Отправляется, когда пользователь добавляет и подтверждает дополнительный email для уведомлений.'
+          },
+          subscriptionPurchaseSuccess: {
+            label: 'Подписка активирована',
+            timing: 'Отправляется после оплаты заказа подписки и её активации или продления.'
+          },
+          subscriptionExpiryReminder: {
+            label: 'Напоминание об окончании подписки',
+            timing: 'Отправляется фоновой задачей, когда до окончания активной подписки остаётся 7, 3 или 1 день. Можно отключить в настройках email.'
+          },
+          balanceLow: {
+            label: 'Низкий баланс',
+            timing: 'Отправляется, когда баланс пользователя опускается ниже глобального или персонального порога напоминания.'
+          },
+          balanceRechargeSuccess: {
+            label: 'Баланс пополнен',
+            timing: 'Отправляется после оплаты заказа пополнения баланса и зачисления средств.'
+          },
+          accountQuotaAlert: {
+            label: 'Предупреждение о лимите аккаунта',
+            timing: 'Отправляется на админские email для уведомлений, когда upstream-аккаунт достигает настроенного порога лимита.'
+          },
+          contentModerationViolationNotice: {
+            label: 'Уведомление о нарушении риск-контроля',
+            timing: 'Отправляется, когда запрос пользователя срабатывает на content moderation или risk-control правила, но аккаунт ещё не отключён.'
+          },
+          contentModerationAccountDisabled: {
+            label: 'Аккаунт отключён риск-контролем',
+            timing: 'Отправляется, когда количество нарушений content moderation достигает порога блокировки и аккаунт пользователя автоматически отключается.'
+          },
+          opsAlert: {
+            label: 'Ops-оповещение',
+            timing: 'Отправляется ops-получателям, когда срабатывает правило ops monitoring и настройки email-уведомлений это разрешают.'
+          },
+          opsScheduledReport: {
+            label: 'Плановый ops-отчёт',
+            timing: 'Отправляется, когда настроенный ежедневный, еженедельный, error digest или account health отчёт достигает времени отправки.'
+          }
         }
       },
       opsMonitoring: {
@@ -6615,7 +6687,14 @@ export default {
         methodHint: 'Управляет тем, показывает ли checkout этот метод и какой source key он раскрывает.',
         sourceLabel: 'Источник оплаты',
         sourceHint: 'Выберите явный источник перед включением метода. Ненастроенные методы не раскрываются.',
-        sourceRequiredError: 'Выберите источник оплаты перед включением {title}.'
+        sourceRequiredError: 'Выберите источник оплаты перед включением {title}.',
+        sources: {
+          notConfigured: 'Не настроено',
+          officialAlipay: 'Официальный Alipay',
+          easyPayAlipay: 'EasyPay Alipay',
+          officialWechatPay: 'Официальный WeChat Pay',
+          easyPayWechatPay: 'EasyPay WeChat Pay'
+        }
       },
       openaiExperimentalScheduler: {
         title: 'Экспериментальная политика OpenAI scheduler',
