@@ -160,6 +160,11 @@ export default {
     resetNow: '即将重置',
     subscriptionType: '订阅类型',
     subscriptionExpires: '订阅到期',
+    periodUnits: {
+      day: '日',
+      week: '周',
+      month: '月'
+    },
     // Usage stat cells
     todayRequests: '今日请求',
     todayInputTokens: '今日输入',
@@ -329,6 +334,7 @@ export default {
     tomorrow: '明天',
     unknown: '未知',
     minutes: '分钟',
+    rateMultiplierValue: '{rate}x 倍率',
     time: {
       never: '从未',
       justNow: '刚刚',
@@ -495,6 +501,23 @@ export default {
     invitationCodeValidating: '正在验证邀请码...',
     invitationCodeInvalidCannotRegister: '邀请码无效，请检查后重试',
     oauthOrContinue: '或使用其他继续',
+    loginAgreement: {
+      checkboxPrefix: '我已阅读并同意',
+      documentSeparator: '、',
+      inlineNoticeTitle: '继续登录前需要先同意最新条款。',
+      inlineNoticeDescription: '未同意前，账号密码输入和快捷登录会保持禁用。',
+      viewTerms: '查看条款',
+      updatedTitle: '条款更新通知',
+      updatedDescription: '我们的服务条款已于 {date} 更新。在继续使用服务之前，请仔细阅读并同意以下条款。',
+      recently: '近期',
+      relatedDocuments: '相关文档',
+      reject: '拒绝',
+      acceptAndContinue: '同意并继续',
+      rejectLoginWarning: '未同意最新条款前，无法输入账号密码或使用快捷登录。',
+      loginRequiredWarning: '请先阅读并同意最新条款后再登录。',
+      rejectRegisterWarning: '未同意最新条款前，无法注册或使用快捷登录。',
+      registerRequiredWarning: '请先阅读并同意最新条款后再注册。'
+    },
     linuxdo: {
       signIn: '使用 Linux.do 登录',
       orContinue: '或使用邮箱密码继续',
@@ -581,6 +604,7 @@ export default {
       wechatAvailabilityUnknown: '暂时无法确认微信登录可用性，请刷新后重试。',
       wechatSystemBrowserOnly: '当前微信登录流程仅支持在系统浏览器中继续。',
       wechatBrowserOnly: '当前微信登录流程仅支持在微信内置浏览器中继续。',
+      wechatNativeAppRequired: '当前仅配置微信移动应用登录，需要在原生 App 中通过微信 SDK 发起授权。',
       wechatNotConfigured: '微信登录尚未配置。'
     },
     linuxdoCallbackPageTitle: 'LinuxDo 登录回调',
@@ -588,6 +612,7 @@ export default {
     oidcCallbackPageTitle: 'OIDC 登录回调',
     oauthCallbackPageTitle: 'OAuth 回调',
     wechatProviderName: '微信',
+    dingtalkProviderName: '钉钉',
     wechatCallbackPageTitle: '微信登录回调',
     wechatPaymentCallbackPageTitle: '微信支付回调',
     wechatPayment: {
@@ -2529,6 +2554,7 @@ export default {
         perRequestPriceRequired: '按次/图片计费模式必须设置默认价格或至少一个计费层级',
         tierLabel: '层级',
         resolution: '分辨率',
+        inclusiveSuffix: '(含)',
         modelMapping: '模型映射',
         modelMappingHint: '将请求中的模型名映射为实际模型名。在账号级别映射之前执行。',
         noMappingRules: '暂无映射规则，点击"添加"创建',
@@ -4056,6 +4082,7 @@ export default {
         oauthType: {
           builtInTitle: '内置授权（Gemini CLI / Code Assist）',
           builtInDesc: '使用 Google 内置客户端 ID，无需管理员配置。',
+          googleOneDesc: '个人账号',
           builtInRequirement: '需要 GCP 项目并填写 Project ID。',
           gcpProjectLink: '创建项目',
           customTitle: '自定义授权（AI Studio OAuth）',
@@ -5575,6 +5602,33 @@ export default {
         backup: '数据备份',
         payment: '支付设置',
       },
+      loginAgreement: {
+        title: '登录条款确认',
+        description: '控制登录页是否要求用户先阅读并同意服务条款、隐私政策或其他 Markdown 文档。',
+        statusEnabled: '已启用',
+        statusDisabled: '未启用',
+        displayMode: '展示形式',
+        modeModal: '弹窗',
+        modeCheckbox: '复选框',
+        checkboxHint: '复选框会显示在登录按钮下方，未勾选前所有登录入口禁用。',
+        modalHint: '弹窗会在登录页打开，用户拒绝后所有登录入口保持禁用。',
+        updatedDate: '条款更新日期',
+        updatedDateHint: '日期或文档内容变化后，用户需要重新同意。',
+        documentsTitle: '协议文档',
+        documentsHint: '文档名称可自定义，内容按 Markdown 保存。可参考：服务条款、使用政策、支持的国家和地区、服务特定条款。',
+        addDocument: '添加文档',
+        untitledDocument: '未命名文档',
+        documentTitle: '文档名称',
+        documentTitlePlaceholder: '例如：服务条款',
+        routeSlug: '路由标识',
+        markdownContent: 'Markdown 内容',
+        markdownContentPlaceholder: '在这里填写正式 Markdown 内容。',
+        errors: {
+          documentRequired: '启用登录条款确认时，至少需要保留一份文档。',
+          documentTitleRequired: '登录条款文档名称不能为空。',
+          duplicateDocumentRoute: '登录条款文档路由不能重复：{route}'
+        }
+      },
       features: {
         channelMonitor: {
           title: '渠道监控',
@@ -6254,7 +6308,18 @@ export default {
         validationRequired: '主题和 HTML 模板不能为空',
         empty: '暂无可用的邮件模板事件或语言。',
         noPreview: '刷新预览后查看渲染后的邮件主题。',
-        customized: '已自定义'
+        customized: '已自定义',
+        optional: '可退订通知',
+        transactional: '事务邮件',
+        categories: {
+          notification: '通知',
+          auth: '认证安全',
+          subscription: '订阅',
+          billing: '计费',
+          admin: '管理告警',
+          riskControl: '风控',
+          ops: '运维'
+        }
       },
       opsMonitoring: {
         title: '运维监控',

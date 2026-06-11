@@ -113,7 +113,7 @@
                   : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300'
               "
             >
-              {{ selectedEventMeta.optional ? localText("可退订通知", "Optional") : localText("事务邮件", "Transactional") }}
+              {{ selectedEventMeta.optional ? t("admin.settings.emailTemplates.optional") : t("admin.settings.emailTemplates.transactional") }}
             </span>
           </div>
           <p class="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
@@ -312,10 +312,6 @@ interface EventDisplayMeta {
   categoryLabel: string;
 }
 
-function localText(zh: string, en: string): string {
-  return locale.value.toLowerCase().startsWith("zh") ? zh : en;
-}
-
 const eventDisplayMeta: Record<string, EventDisplayMeta> = {
   "auth.verify_code": {
     label: "邮箱验证码",
@@ -476,17 +472,17 @@ function formatEventOptionLabel(option: EmailTemplateOption): string {
 
 function formatCategory(category: string): string {
   const normalized = category.trim().toLowerCase();
-  if (!normalized) return localText("通知", "Notification");
-  const labels: Record<string, { zh: string; en: string }> = {
-    auth: { zh: "认证安全", en: "Auth" },
-    subscription: { zh: "订阅", en: "Subscription" },
-    billing: { zh: "计费", en: "Billing" },
-    admin: { zh: "管理告警", en: "Admin" },
-    risk_control: { zh: "风控", en: "Risk Control" },
-    ops: { zh: "运维", en: "Ops" },
+  if (!normalized) return t("admin.settings.emailTemplates.categories.notification");
+  const labels: Record<string, string> = {
+    auth: "auth",
+    subscription: "subscription",
+    billing: "billing",
+    admin: "admin",
+    risk_control: "riskControl",
+    ops: "ops",
   };
-  const item = labels[normalized];
-  return item ? localText(item.zh, item.en) : category;
+  const label = labels[normalized];
+  return label ? t(`admin.settings.emailTemplates.categories.${label}`) : category;
 }
 
 const selectedEventOption = computed(() => {

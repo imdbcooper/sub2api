@@ -160,6 +160,11 @@ export default {
     resetNow: 'Resetting soon',
     subscriptionType: 'Subscription Type',
     subscriptionExpires: 'Subscription Expires',
+    periodUnits: {
+      day: 'D',
+      week: 'W',
+      month: 'M'
+    },
     // Usage stat cells
     todayRequests: 'Today Requests',
     todayInputTokens: 'Today Input',
@@ -329,6 +334,7 @@ export default {
     tomorrow: 'Tomorrow',
     unknown: 'Unknown',
     minutes: 'min',
+    rateMultiplierValue: '{rate}x rate',
     time: {
       never: 'Never',
       justNow: 'Just now',
@@ -496,6 +502,23 @@ export default {
     invitationCodeValidating: 'Validating invitation code...',
     invitationCodeInvalidCannotRegister: 'Invalid invitation code. Please check and try again',
     oauthOrContinue: 'or continue with others',
+    loginAgreement: {
+      checkboxPrefix: 'I have read and agree to',
+      documentSeparator: ', ',
+      inlineNoticeTitle: 'You must agree to the latest terms before continuing.',
+      inlineNoticeDescription: 'Email/password input and quick sign-in stay disabled until you agree.',
+      viewTerms: 'View terms',
+      updatedTitle: 'Terms update notice',
+      updatedDescription: 'Our terms were updated on {date}. Please read and agree to the following terms before continuing.',
+      recently: 'recently',
+      relatedDocuments: 'Related documents',
+      reject: 'Decline',
+      acceptAndContinue: 'Agree and continue',
+      rejectLoginWarning: 'You cannot enter email/password or use quick sign-in until you agree to the latest terms.',
+      loginRequiredWarning: 'Please read and agree to the latest terms before signing in.',
+      rejectRegisterWarning: 'You cannot register or use quick sign-in until you agree to the latest terms.',
+      registerRequiredWarning: 'Please read and agree to the latest terms before registering.'
+    },
     linuxdo: {
       signIn: 'Continue with Linux.do',
       orContinue: 'or continue with email',
@@ -583,6 +606,7 @@ export default {
       wechatAvailabilityUnknown: 'WeChat sign-in availability could not be confirmed. Refresh and retry.',
       wechatSystemBrowserOnly: 'This WeChat sign-in flow is only available in your system browser.',
       wechatBrowserOnly: 'This WeChat sign-in flow is only available inside the WeChat browser.',
+      wechatNativeAppRequired: 'This site only has WeChat mobile app login configured. Continue from the native app through the WeChat SDK.',
       wechatNotConfigured: 'WeChat sign-in is not configured yet.'
     },
     linuxdoCallbackPageTitle: 'LinuxDo Sign-In Callback',
@@ -590,6 +614,7 @@ export default {
     oidcCallbackPageTitle: 'OIDC Sign-In Callback',
     oauthCallbackPageTitle: 'OAuth Callback',
     wechatProviderName: 'WeChat',
+    dingtalkProviderName: 'DingTalk',
     wechatCallbackPageTitle: 'WeChat Sign-In Callback',
     wechatPaymentCallbackPageTitle: 'WeChat Payment Callback',
     wechatPayment: {
@@ -2452,6 +2477,7 @@ export default {
         perRequestPriceRequired: 'Per-request price or billing tiers required for per-request/image billing mode',
         tierLabel: 'Tier',
         resolution: 'Resolution',
+        inclusiveSuffix: '(incl.)',
         modelMapping: 'Model Mapping',
         modelMappingHint: 'Map request model names to actual model names. Runs before account-level mapping.',
         noMappingRules: 'No mapping rules. Click "Add" to create one.',
@@ -3929,6 +3955,7 @@ export default {
         oauthType: {
           builtInTitle: 'Built-in OAuth (Gemini CLI / Code Assist)',
           builtInDesc: 'Uses Google built-in client ID. No admin configuration required.',
+          googleOneDesc: 'Personal account',
           builtInRequirement: 'Requires a GCP project and Project ID.',
           gcpProjectLink: 'Create project',
           customTitle: 'Custom OAuth (AI Studio OAuth)',
@@ -5415,6 +5442,33 @@ export default {
         backup: 'Backup',
         payment: 'Payment',
       },
+      loginAgreement: {
+        title: 'Login agreement',
+        description: 'Control whether the login page requires users to accept Markdown policy documents first.',
+        statusEnabled: 'Enabled',
+        statusDisabled: 'Disabled',
+        displayMode: 'Display mode',
+        modeModal: 'Modal',
+        modeCheckbox: 'Checkbox',
+        checkboxHint: 'The checkbox appears below the login button and gates all login actions.',
+        modalHint: 'The modal opens on the login page and gates all login actions until accepted.',
+        updatedDate: 'Updated date',
+        updatedDateHint: 'Changing the date or content requires fresh consent.',
+        documentsTitle: 'Agreement documents',
+        documentsHint: 'Document titles are customizable and content is saved as Markdown.',
+        addDocument: 'Add document',
+        untitledDocument: 'Untitled document',
+        documentTitle: 'Document title',
+        documentTitlePlaceholder: 'Example: Terms of Service',
+        routeSlug: 'Route slug',
+        markdownContent: 'Markdown content',
+        markdownContentPlaceholder: 'Write the final Markdown content here.',
+        errors: {
+          documentRequired: 'At least one document is required when login agreement is enabled.',
+          documentTitleRequired: 'Login agreement document title cannot be empty.',
+          duplicateDocumentRoute: 'Login agreement document routes cannot be duplicated: {route}'
+        }
+      },
       features: {
         channelMonitor: {
           title: 'Channel Monitor',
@@ -6098,7 +6152,18 @@ export default {
         validationRequired: 'Subject and HTML template are required',
         empty: 'No email template events or locales are available yet.',
         noPreview: 'Refresh the preview to see the rendered email subject.',
-        customized: 'Customized'
+        customized: 'Customized',
+        optional: 'Optional',
+        transactional: 'Transactional',
+        categories: {
+          notification: 'Notification',
+          auth: 'Auth',
+          subscription: 'Subscription',
+          billing: 'Billing',
+          admin: 'Admin',
+          riskControl: 'Risk Control',
+          ops: 'Ops'
+        }
       },
       opsMonitoring: {
         title: 'Ops Monitoring',

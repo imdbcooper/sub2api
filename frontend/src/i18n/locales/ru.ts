@@ -160,6 +160,11 @@ export default {
     resetNow: 'Скоро сброс',
     subscriptionType: 'Тип подписки',
     subscriptionExpires: 'Подписка истекает',
+    periodUnits: {
+      day: 'д',
+      week: 'нед',
+      month: 'мес'
+    },
     // Usage stat cells
     todayRequests: 'Запросов сегодня',
     todayInputTokens: 'Вход сегодня',
@@ -329,6 +334,7 @@ export default {
     tomorrow: 'Завтра',
     unknown: 'Неизвестно',
     minutes: 'мин',
+    rateMultiplierValue: 'тариф {rate}x',
     time: {
       never: 'Никогда',
       justNow: 'Только что',
@@ -496,6 +502,23 @@ export default {
     invitationCodeValidating: 'Проверка кода приглашения...',
     invitationCodeInvalidCannotRegister: 'Недействительный код приглашения. Проверьте и попробуйте снова.',
     oauthOrContinue: 'или продолжить другим способом',
+    loginAgreement: {
+      checkboxPrefix: 'Я прочитал(а) и принимаю',
+      documentSeparator: ', ',
+      inlineNoticeTitle: 'Перед входом нужно принять актуальные условия.',
+      inlineNoticeDescription: 'Поля email/пароля и быстрый вход останутся недоступны, пока вы не примете условия.',
+      viewTerms: 'Посмотреть условия',
+      updatedTitle: 'Условия обновлены',
+      updatedDescription: 'Условия были обновлены {date}. Перед продолжением внимательно прочитайте и примите следующие документы.',
+      recently: 'недавно',
+      relatedDocuments: 'Связанные документы',
+      reject: 'Отклонить',
+      acceptAndContinue: 'Принять и продолжить',
+      rejectLoginWarning: 'Пока актуальные условия не приняты, ввод email/пароля и быстрый вход недоступны.',
+      loginRequiredWarning: 'Сначала прочитайте и примите актуальные условия, затем войдите.',
+      rejectRegisterWarning: 'Пока актуальные условия не приняты, регистрация и быстрый вход недоступны.',
+      registerRequiredWarning: 'Сначала прочитайте и примите актуальные условия, затем зарегистрируйтесь.'
+    },
     linuxdo: {
       signIn: 'Продолжить через Linux.do',
       orContinue: 'или продолжить через email',
@@ -583,6 +606,7 @@ export default {
       wechatAvailabilityUnknown: 'Не удалось проверить доступность входа через WeChat. Обновите страницу и повторите.',
       wechatSystemBrowserOnly: 'Вход через WeChat доступен только в системном браузере.',
       wechatBrowserOnly: 'Вход через WeChat доступен только в браузере WeChat.',
+      wechatNativeAppRequired: 'На сайте настроен только вход через мобильное приложение WeChat. Продолжите из нативного приложения через WeChat SDK.',
       wechatNotConfigured: 'Вход через WeChat ещё не настроен.'
     },
     linuxdoCallbackPageTitle: 'Callback входа LinuxDo',
@@ -590,6 +614,7 @@ export default {
     oidcCallbackPageTitle: 'Callback входа OIDC',
     oauthCallbackPageTitle: 'OAuth callback',
     wechatProviderName: 'WeChat',
+    dingtalkProviderName: 'DingTalk',
     wechatCallbackPageTitle: 'Callback входа WeChat',
     wechatPaymentCallbackPageTitle: 'Callback платежа WeChat',
     wechatPayment: {
@@ -2452,6 +2477,7 @@ export default {
         perRequestPriceRequired: 'Для режима за запрос/изображение нужна цена за запрос или тарифные уровни',
         tierLabel: 'Тариф',
         resolution: 'Разрешение',
+        inclusiveSuffix: '(вкл.)',
         modelMapping: 'Маппинг моделей',
         modelMappingHint: 'Сопоставляет имена моделей в запросах с фактическими именами. Выполняется до маппинга аккаунта.',
         noMappingRules: 'Правил маппинга нет. Нажмите "Добавить", чтобы создать первое.',
@@ -3929,6 +3955,7 @@ export default {
         oauthType: {
           builtInTitle: 'Встроенный OAuth (Gemini CLI / Code Assist)',
           builtInDesc: 'Использует встроенный client ID Google. Настройка админом не требуется.',
+          googleOneDesc: 'Личный аккаунт',
           builtInRequirement: 'Требуется проект GCP и Project ID.',
           gcpProjectLink: 'Создать проект',
           customTitle: 'Пользовательский OAuth (AI Studio OAuth)',
@@ -5415,6 +5442,33 @@ export default {
         backup: 'Бэкап',
         payment: 'Оплата',
       },
+      loginAgreement: {
+        title: 'Соглашение при входе',
+        description: 'Определяет, должен ли пользователь принять Markdown-документы с условиями перед входом.',
+        statusEnabled: 'Включено',
+        statusDisabled: 'Отключено',
+        displayMode: 'Формат показа',
+        modeModal: 'Модальное окно',
+        modeCheckbox: 'Чекбокс',
+        checkboxHint: 'Чекбокс отображается под кнопкой входа и блокирует все варианты входа, пока не отмечен.',
+        modalHint: 'Модальное окно открывается на странице входа и блокирует все варианты входа до принятия.',
+        updatedDate: 'Дата обновления',
+        updatedDateHint: 'Изменение даты или содержимого документов потребует повторного согласия.',
+        documentsTitle: 'Документы соглашения',
+        documentsHint: 'Названия документов можно настроить; содержимое сохраняется как Markdown.',
+        addDocument: 'Добавить документ',
+        untitledDocument: 'Документ без названия',
+        documentTitle: 'Название документа',
+        documentTitlePlaceholder: 'Например: Terms of Service',
+        routeSlug: 'Route slug',
+        markdownContent: 'Markdown-содержимое',
+        markdownContentPlaceholder: 'Введите итоговый Markdown-текст здесь.',
+        errors: {
+          documentRequired: 'Когда соглашение при входе включено, нужен хотя бы один документ.',
+          documentTitleRequired: 'Название документа соглашения не может быть пустым.',
+          duplicateDocumentRoute: 'Маршруты документов соглашения не должны повторяться: {route}'
+        }
+      },
       features: {
         channelMonitor: {
           title: 'Монитор каналов',
@@ -6098,7 +6152,18 @@ export default {
         validationRequired: 'Тема и HTML-шаблон обязательны',
         empty: 'События или локали email-шаблонов пока недоступны.',
         noPreview: 'Обновите preview, чтобы увидеть отрендеренную тему email.',
-        customized: 'Настроено'
+        customized: 'Настроено',
+        optional: 'Необязательное',
+        transactional: 'Транзакционное',
+        categories: {
+          notification: 'Уведомление',
+          auth: 'Авторизация',
+          subscription: 'Подписка',
+          billing: 'Биллинг',
+          admin: 'Администрирование',
+          riskControl: 'Риск-контроль',
+          ops: 'Ops'
+        }
       },
       opsMonitoring: {
         title: 'Ops Monitoring',
