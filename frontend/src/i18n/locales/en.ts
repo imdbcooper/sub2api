@@ -2441,6 +2441,8 @@ export default {
       updateError: 'Failed to update channel',
       deleteError: 'Failed to delete channel',
       nameRequired: 'Please enter a channel name',
+      noGroupsSelected: '{platform} platform has no group selected. Select at least one group or disable the platform.',
+      emptyModelsInPricing: '{platform} platform has a pricing entry without models. Add models or delete the entry.',
       duplicateModels: 'Model "{0}" appears in multiple pricing entries',
       modelConflict: "Model patterns '{model1}' and '{model2}' conflict: overlapping match range",
       mappingConflict: "Mapping source patterns '{model1}' and '{model2}' conflict: overlapping match range",
@@ -3556,6 +3558,16 @@ export default {
       requestModel: 'Request model',
       actualModel: 'Actual model',
       addMapping: 'Add Mapping',
+      modelPresets: {
+        antigravity: {
+          gemini31ProHighPassThrough: '3.1-Pro-High pass-through',
+          gemini31ProLowPassThrough: '3.1-Pro-Low pass-through',
+          gemini25FlashImagePassThrough: '2.5-Flash-Image pass-through',
+          gemini31FlashImagePassThrough: '3.1-Flash-Image pass-through',
+          gemini3FlashPassThrough: '3-Flash pass-through',
+          gemini25FlashLitePassThrough: '2.5-Flash-Lite pass-through'
+        }
+      },
       mappingExists: 'Mapping for {model} already exists',
       wildcardOnlyAtEnd: 'Wildcard * can only be at the end',
       targetNoWildcard: 'Target model cannot contain wildcard *',
@@ -3835,6 +3847,8 @@ export default {
           },
           // Refresh Token auth
           refreshTokenAuth: 'Manual RT Input',
+          mobileRefreshTokenAuth: 'Manual Mobile RT Input',
+          accessTokenAuth: 'Manual AT Input',
           refreshTokenDesc: 'Enter your existing OpenAI Refresh Token(s). Supports batch input (one per line). The system will automatically validate and create accounts.',
           refreshTokenPlaceholder: 'Paste your OpenAI Refresh Token...\nSupports multiple, one per line',
           codexSessionAuth: 'Codex JSON / AT Batch Input',
@@ -4730,6 +4744,7 @@ export default {
       goroutines: 'Goroutines',
       jobs: 'Jobs',
       jobsHelp: 'Click “Details” to view job heartbeats and recent errors',
+      result: 'Result',
       active: 'active',
       idle: 'idle',
       waiting: 'waiting',
@@ -4815,7 +4830,12 @@ export default {
         '6h': 'Last 6 hours',
         '24h': 'Last 24 hours',
         '7d': 'Last 7 days',
-        '30d': 'Last 30 days'
+        '30d': 'Last 30 days',
+        custom: 'Custom'
+      },
+      customTimeRange: {
+        startTime: 'Start time',
+        endTime: 'End time'
       },
       openaiTokenStats: {
         title: 'OpenAI Token Request Stats',

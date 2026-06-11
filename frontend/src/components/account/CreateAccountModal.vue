@@ -974,12 +974,12 @@
           <div class="flex flex-wrap gap-2">
             <button
               v-for="preset in antigravityPresetMappings"
-              :key="preset.label"
+              :key="`${preset.from}=>${preset.to}`"
               type="button"
               @click="addAntigravityPresetMapping(preset.from, preset.to)"
               :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
             >
-              + {{ preset.label }}
+              + {{ presetMappingLabel(preset) }}
             </button>
           </div>
         </div>
@@ -1232,12 +1232,12 @@
               <div class="flex flex-wrap gap-2">
                 <button
                   v-for="preset in presetMappings"
-                  :key="preset.label"
+                  :key="`${preset.from}=>${preset.to}`"
                   type="button"
                   @click="addPresetMapping(preset.from, preset.to)"
                   :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
                 >
-                  + {{ preset.label }}
+                  + {{ presetMappingLabel(preset) }}
                 </button>
               </div>
             </div>
@@ -1595,7 +1595,7 @@
                 @click="addPresetMapping(preset.from, preset.to)"
                 :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
               >
-                + {{ preset.label }}
+                + {{ presetMappingLabel(preset) }}
               </button>
             </div>
           </div>
@@ -1894,12 +1894,12 @@
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="preset in presetMappings"
-                :key="'oauth-' + preset.label"
+                :key="`oauth-${preset.from}=>${preset.to}`"
                 type="button"
                 @click="addPresetMapping(preset.from, preset.to)"
                 :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
               >
-                + {{ preset.label }}
+                + {{ presetMappingLabel(preset) }}
               </button>
             </div>
           </div>
@@ -3271,6 +3271,12 @@ interface OAuthFlowExposed {
 }
 
 const { t } = useI18n()
+
+function presetMappingLabel(preset: ReturnType<typeof getPresetMappingsByPlatform>[number]): string {
+  const labelKey = (preset as { labelKey?: string }).labelKey
+  return labelKey ? t(labelKey) : preset.label
+}
+
 const authStore = useAuthStore()
 
 const oauthStepTitle = computed(() => {

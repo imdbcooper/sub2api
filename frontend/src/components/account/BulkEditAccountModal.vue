@@ -333,12 +333,12 @@
               <div class="flex flex-wrap gap-2">
                 <button
                   v-for="preset in filteredPresets"
-                  :key="preset.label"
+                  :key="`${preset.from}=>${preset.to}`"
                   type="button"
                   :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
                   @click="addPresetMapping(preset.from, preset.to)"
                 >
-                  + {{ preset.label }}
+                  + {{ presetMappingLabel(preset) }}
                 </button>
               </div>
             </div>
@@ -1180,6 +1180,12 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+
+function presetMappingLabel(preset: ReturnType<typeof getPresetMappingsByPlatform>[number]): string {
+  const labelKey = (preset as { labelKey?: string }).labelKey
+  return labelKey ? t(labelKey) : preset.label
+}
+
 const appStore = useAppStore()
 
 // Platform awareness

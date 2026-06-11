@@ -2518,6 +2518,8 @@ export default {
       updateError: '更新渠道失败',
       deleteError: '删除渠道失败',
       nameRequired: '请输入渠道名称',
+      noGroupsSelected: '{platform} 平台未选择分组，请至少选择一个分组或禁用该平台',
+      emptyModelsInPricing: '{platform} 平台下有定价条目未添加模型，请添加模型或删除该条目',
       duplicateModels: '模型「{0}」在多个定价条目中重复',
       modelConflict: "模型模式 '{model1}' 和 '{model2}' 冲突：匹配范围重叠",
       mappingConflict: "模型映射源 '{model1}' 和 '{model2}' 冲突：匹配范围重叠",
@@ -3698,6 +3700,16 @@ export default {
       requestModel: '请求模型',
       actualModel: '实际模型',
       addMapping: '添加映射',
+      modelPresets: {
+        antigravity: {
+          gemini31ProHighPassThrough: '3.1-Pro-High透传',
+          gemini31ProLowPassThrough: '3.1-Pro-Low透传',
+          gemini25FlashImagePassThrough: '2.5-Flash-Image透传',
+          gemini31FlashImagePassThrough: '3.1-Flash-Image透传',
+          gemini3FlashPassThrough: '3-Flash透传',
+          gemini25FlashLitePassThrough: '2.5-Flash-Lite透传'
+        }
+      },
       mappingExists: '模型 {model} 的映射已存在',
       wildcardOnlyAtEnd: '通配符 * 只能放在末尾',
       targetNoWildcard: '目标模型不能包含通配符 *',
@@ -3967,6 +3979,8 @@ export default {
           },
           // Refresh Token auth
           refreshTokenAuth: '手动输入 RT',
+          mobileRefreshTokenAuth: '手动输入 Mobile RT',
+          accessTokenAuth: '手动输入 AT',
           refreshTokenDesc: '输入您已有的 OpenAI Refresh Token，支持批量输入（每行一个），系统将自动验证并创建账号。',
           refreshTokenPlaceholder: '粘贴您的 OpenAI Refresh Token...\n支持多个，每行一个',
           codexSessionAuth: 'Codex JSON / AT 批量输入',

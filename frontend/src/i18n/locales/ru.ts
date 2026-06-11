@@ -2441,6 +2441,8 @@ export default {
       updateError: 'Не удалось обновить канал',
       deleteError: 'Не удалось удалить канал',
       nameRequired: 'Введите имя канала',
+      noGroupsSelected: 'Для платформы {platform} не выбраны группы. Выберите хотя бы одну группу или отключите платформу.',
+      emptyModelsInPricing: 'У платформы {platform} есть ценовая запись без моделей. Добавьте модели или удалите запись.',
       duplicateModels: 'Модель "{0}" указана в нескольких ценовых записях',
       modelConflict: "Шаблоны моделей '{model1}' и '{model2}' конфликтуют: диапазоны совпадений пересекаются",
       mappingConflict: "Исходные шаблоны маппинга '{model1}' и '{model2}' конфликтуют: диапазоны совпадений пересекаются",
@@ -3556,6 +3558,16 @@ export default {
       requestModel: 'Запрошенная модель',
       actualModel: 'Фактическая модель',
       addMapping: 'Добавить mapping',
+      modelPresets: {
+        antigravity: {
+          gemini31ProHighPassThrough: '3.1-Pro-High pass-through',
+          gemini31ProLowPassThrough: '3.1-Pro-Low pass-through',
+          gemini25FlashImagePassThrough: '2.5-Flash-Image pass-through',
+          gemini31FlashImagePassThrough: '3.1-Flash-Image pass-through',
+          gemini3FlashPassThrough: '3-Flash pass-through',
+          gemini25FlashLitePassThrough: '2.5-Flash-Lite pass-through'
+        }
+      },
       mappingExists: 'Mapping для {model} уже существует',
       wildcardOnlyAtEnd: 'Wildcard * может быть только в конце',
       targetNoWildcard: 'Целевая модель не может содержать wildcard *',
@@ -3835,6 +3847,8 @@ export default {
           },
           // Refresh Token auth
           refreshTokenAuth: 'Ручной ввод RT',
+          mobileRefreshTokenAuth: 'Ручной ввод Mobile RT',
+          accessTokenAuth: 'Ручной ввод AT',
           refreshTokenDesc: 'Введите существующие OpenAI Refresh Token. Поддерживается массовый ввод (по одному на строку). Система автоматически проверит их и создаст аккаунты.',
           refreshTokenPlaceholder: 'Вставьте OpenAI Refresh Token...\nПоддерживается несколько, по одному на строку',
           codexSessionAuth: 'Массовый ввод Codex JSON / AT',
@@ -4730,6 +4744,7 @@ export default {
       goroutines: 'Goroutines',
       jobs: 'Jobs',
       jobsHelp: 'Нажмите «Details», чтобы посмотреть heartbeat задач и последние ошибки',
+      result: 'Результат',
       active: 'активно',
       idle: 'idle',
       waiting: 'waiting',
@@ -4815,7 +4830,12 @@ export default {
         '6h': 'Последние 6 часов',
         '24h': 'Последние 24 часа',
         '7d': 'Последние 7 дней',
-        '30d': 'Последние 30 дней'
+        '30d': 'Последние 30 дней',
+        custom: 'Произвольный'
+      },
+      customTimeRange: {
+        startTime: 'Начало',
+        endTime: 'Конец'
       },
       openaiTokenStats: {
         title: 'Статистика запросов Token OpenAI',
