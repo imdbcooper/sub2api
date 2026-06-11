@@ -284,6 +284,7 @@ export default {
     all: 'Все',
     none: 'Нет',
     selectAll: 'Выбрать все',
+    invertSelection: 'Инвертировать выбор',
     noData: 'Нет данных',
     expand: 'Развернуть',
     collapse: 'Свернуть',
@@ -2273,7 +2274,20 @@ export default {
         title: 'Свой список моделей /v1/models',
         hint: 'Меняет только ответ /v1/models. Белый список вызовов моделей и маршрутизация аккаунтов не меняются.',
         loading: 'Загрузка списка моделей...',
-        empty: 'Нет моделей для отображения'
+        empty: 'Нет моделей для отображения',
+        selectedCount: 'Выбрано {selected} / {total}'
+      },
+      accountFilter: {
+        title: 'Управление фильтрацией аккаунтов',
+        notEnabled: 'Не включено',
+        oauthOnly: {
+          label: 'Разрешать только OAuth-аккаунты',
+          enabledHint: 'Включено - аккаунты API Key исключаются'
+        },
+        privacySet: {
+          label: 'Разрешать только аккаунты с настроенной Privacy',
+          enabledHint: 'Включено - аккаунты без настроенной Privacy исключаются'
+        }
       },
       claudeCode: {
         title: 'Ограничение клиента Claude Code',
@@ -2317,7 +2331,8 @@ export default {
         tooltipEdit: 'Выберите одну или несколько групп той же платформы. После сохранения аккаунты текущей группы будут заменены аккаунтами из этих групп (без дублей).',
         selectPlaceholder: 'Выберите группы, из которых копировать аккаунты...',
         hint: 'Можно выбрать несколько групп, аккаунты будут дедуплицированы',
-        hintEdit: '⚠️ Внимание: это заменит все текущие привязки аккаунтов'
+        hintEdit: '⚠️ Внимание: это заменит все текущие привязки аккаунтов',
+        optionLabel: '{name} ({count} аккаунтов)'
       },
       modelRouting: {
         title: 'Маршрутизация моделей',
@@ -3956,6 +3971,9 @@ export default {
           builtInTitle: 'Встроенный OAuth (Gemini CLI / Code Assist)',
           builtInDesc: 'Использует встроенный client ID Google. Настройка админом не требуется.',
           googleOneDesc: 'Личный аккаунт',
+          googleOneCardDesc: 'Личный аккаунт с квотой подписки Google One',
+          codeAssistCardDesc: 'Корпоративный вариант, требуется проект GCP',
+          codeAssistRequirement: 'Требуется активированный проект GCP с привязанной кредитной картой',
           builtInRequirement: 'Требуется проект GCP и Project ID.',
           gcpProjectLink: 'Создать проект',
           customTitle: 'Пользовательский OAuth (AI Studio OAuth)',
@@ -3963,10 +3981,17 @@ export default {
           customRequirement: 'Админ должен настроить Client ID и добавить вас как test user.',
           badges: {
             recommended: 'Рекомендуется',
+            recommendedPersonal: 'Рекомендуется для личных пользователей',
             highConcurrency: 'Высокий параллелизм',
+            enterpriseUsers: 'Корпоративные пользователи',
+            noGcp: 'GCP не требуется',
             noAdmin: 'Без настройки админом',
             orgManaged: 'Управляется организацией',
             adminRequired: 'Требуется админ'
+          },
+          advancedOptions: {
+            showLabel: 'Показать дополнительные параметры (собственный OAuth Client)',
+            hideLabel: 'Скрыть дополнительные параметры (собственный OAuth Client)'
           }
         },
         setupGuide: {
@@ -3983,6 +4008,7 @@ export default {
           },
           links: {
             countryCheck: 'Проверить привязку страны',
+            changeCountryAssociation: 'Изменить привязку страны',
             geminiWebActivation: 'Активировать Gemini Web',
             gcpProject: 'Открыть GCP Console'
           }

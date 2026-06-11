@@ -284,6 +284,7 @@ export default {
     all: '全部',
     none: '无',
     selectAll: '全选',
+    invertSelection: '反选',
     noData: '暂无数据',
     expand: '展开',
     collapse: '收起',
@@ -2356,7 +2357,20 @@ export default {
         title: '自定义 /v1/models 模型列表',
         hint: '仅影响 /v1/models 展示结果，不影响白名单模型调用和账号调度。',
         loading: '正在加载模型列表...',
-        empty: '暂无可展示模型'
+        empty: '暂无可展示模型',
+        selectedCount: '已选 {selected} / {total}'
+      },
+      accountFilter: {
+        title: '账号过滤控制',
+        notEnabled: '未启用',
+        oauthOnly: {
+          label: '仅允许 OAuth 账号',
+          enabledHint: '已启用 - 排除 API Key 类型账号'
+        },
+        privacySet: {
+          label: '仅允许隐私保护已设置的账号',
+          enabledHint: '已启用 - Privacy 未设置的账号将被排除'
+        }
       },
       claudeCode: {
         title: 'Claude Code 客户端限制',
@@ -2401,7 +2415,8 @@ export default {
         tooltipEdit: '选择一个或多个相同平台的分组，保存后当前分组的账号会被替换为这些分组的账号（去重）。',
         selectPlaceholder: '选择分组以复制其账号...',
         hint: '可选多个分组，账号会自动去重',
-        hintEdit: '⚠️ 注意：这会替换当前分组的所有账号绑定'
+        hintEdit: '⚠️ 注意：这会替换当前分组的所有账号绑定',
+        optionLabel: '{name}（{count} 个账号）'
       },
       modelRouting: {
         title: '模型路由配置',
@@ -4083,6 +4098,9 @@ export default {
           builtInTitle: '内置授权（Gemini CLI / Code Assist）',
           builtInDesc: '使用 Google 内置客户端 ID，无需管理员配置。',
           googleOneDesc: '个人账号',
+          googleOneCardDesc: '个人账号，享受 Google One 订阅配额',
+          codeAssistCardDesc: '企业级，需要 GCP 项目',
+          codeAssistRequirement: '需要激活 GCP 项目并绑定信用卡',
           builtInRequirement: '需要 GCP 项目并填写 Project ID。',
           gcpProjectLink: '创建项目',
           customTitle: '自定义授权（AI Studio OAuth）',
@@ -4090,10 +4108,17 @@ export default {
           customRequirement: '需管理员配置 Client ID 并加入测试用户白名单。',
           badges: {
             recommended: '推荐',
+            recommendedPersonal: '推荐个人用户',
             highConcurrency: '高并发',
+            enterpriseUsers: '企业用户',
+            noGcp: '无需 GCP',
             noAdmin: '无需管理员配置',
             orgManaged: '组织管理',
             adminRequired: '需要管理员'
+          },
+          advancedOptions: {
+            showLabel: '显示高级选项（自建 OAuth Client）',
+            hideLabel: '隐藏高级选项（自建 OAuth Client）'
           }
         },
         setupGuide: {
@@ -4110,6 +4135,7 @@ export default {
           },
           links: {
             countryCheck: '检查归属地',
+            changeCountryAssociation: '修改归属地',
             geminiWebActivation: '激活 Gemini Web',
             gcpProject: '打开 GCP 控制台'
           }

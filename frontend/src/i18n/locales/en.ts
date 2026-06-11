@@ -284,6 +284,7 @@ export default {
     all: 'All',
     none: 'None',
     selectAll: 'Select all',
+    invertSelection: 'Invert selection',
     noData: 'No data',
     expand: 'Expand',
     collapse: 'Collapse',
@@ -2273,7 +2274,20 @@ export default {
         title: 'Custom /v1/models Model List',
         hint: 'Only changes the /v1/models response. Whitelist model calls and account routing are unchanged.',
         loading: 'Loading model list...',
-        empty: 'No displayable models'
+        empty: 'No displayable models',
+        selectedCount: 'Selected {selected} / {total}'
+      },
+      accountFilter: {
+        title: 'Account filter controls',
+        notEnabled: 'Not enabled',
+        oauthOnly: {
+          label: 'Allow OAuth accounts only',
+          enabledHint: 'Enabled - API Key accounts are excluded'
+        },
+        privacySet: {
+          label: 'Allow only accounts with Privacy configured',
+          enabledHint: 'Enabled - accounts without Privacy configured are excluded'
+        }
       },
       claudeCode: {
         title: 'Claude Code Client Restriction',
@@ -2317,7 +2331,8 @@ export default {
         tooltipEdit: 'Select one or more groups of the same platform. After saving, current group accounts will be replaced with accounts from these groups (deduplicated).',
         selectPlaceholder: 'Select groups to copy accounts from...',
         hint: 'Multiple groups can be selected, accounts will be deduplicated',
-        hintEdit: '⚠️ Warning: This will replace all existing account bindings'
+        hintEdit: '⚠️ Warning: This will replace all existing account bindings',
+        optionLabel: '{name} ({count} accounts)'
       },
       modelRouting: {
         title: 'Model Routing',
@@ -3956,6 +3971,9 @@ export default {
           builtInTitle: 'Built-in OAuth (Gemini CLI / Code Assist)',
           builtInDesc: 'Uses Google built-in client ID. No admin configuration required.',
           googleOneDesc: 'Personal account',
+          googleOneCardDesc: 'Personal account with Google One subscription quota',
+          codeAssistCardDesc: 'Enterprise-grade, requires a GCP project',
+          codeAssistRequirement: 'Requires an activated GCP project with a linked credit card',
           builtInRequirement: 'Requires a GCP project and Project ID.',
           gcpProjectLink: 'Create project',
           customTitle: 'Custom OAuth (AI Studio OAuth)',
@@ -3963,10 +3981,17 @@ export default {
           customRequirement: 'Admin must configure Client ID and add you as a test user.',
           badges: {
             recommended: 'Recommended',
+            recommendedPersonal: 'Recommended for personal users',
             highConcurrency: 'High concurrency',
+            enterpriseUsers: 'Enterprise users',
+            noGcp: 'No GCP required',
             noAdmin: 'No admin setup',
             orgManaged: 'Org managed',
             adminRequired: 'Admin required'
+          },
+          advancedOptions: {
+            showLabel: 'Show advanced options (self-hosted OAuth Client)',
+            hideLabel: 'Hide advanced options (self-hosted OAuth Client)'
           }
         },
         setupGuide: {
@@ -3983,6 +4008,7 @@ export default {
           },
           links: {
             countryCheck: 'Check country association',
+            changeCountryAssociation: 'Change country association',
             geminiWebActivation: 'Activate Gemini Web',
             gcpProject: 'Open GCP Console'
           }
