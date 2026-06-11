@@ -5655,7 +5655,10 @@ export default {
         syncCorpEmailTargetHint: 'Defaults to dingtalk_email / DingTalk Corporate Email. Saving settings auto-creates the user attribute by the key and display name above (existing definition only has its display name synced).',
         syncDeptTarget: 'Attribute key',
         syncDeptTargetHint: 'Defaults to dingtalk_department / DingTalk Department. Saving settings auto-creates the user attribute by the key and display name above (existing definition only has its display name synced).',
-        syncAttrDisplayName: 'Display name'
+        syncAttrDisplayName: 'Display name',
+        syncDisplayNameAttrName: 'DingTalk Name',
+        syncCorpEmailAttrName: 'DingTalk Corporate Email',
+        syncDeptAttrName: 'DingTalk Department'
       },
       oidc: {
         title: 'OIDC Login',

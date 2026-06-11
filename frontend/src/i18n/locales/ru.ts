@@ -5655,7 +5655,10 @@ export default {
         syncCorpEmailTargetHint: 'По умолчанию dingtalk_email / DingTalk Corporate Email. При сохранении настроек автоматически создаётся атрибут пользователя по ключу и отображаемому имени выше (у существующего определения синхронизируется только отображаемое имя).',
         syncDeptTarget: 'Ключ атрибута',
         syncDeptTargetHint: 'По умолчанию dingtalk_department / DingTalk Department. При сохранении настроек автоматически создаётся атрибут пользователя по ключу и отображаемому имени выше (у существующего определения синхронизируется только отображаемое имя).',
-        syncAttrDisplayName: 'Отображаемое имя'
+        syncAttrDisplayName: 'Отображаемое имя',
+        syncDisplayNameAttrName: 'Имя DingTalk',
+        syncCorpEmailAttrName: 'Корпоративный email DingTalk',
+        syncDeptAttrName: 'Отдел DingTalk'
       },
       oidc: {
         title: 'Вход через OIDC',

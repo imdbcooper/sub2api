@@ -5813,7 +5813,10 @@ export default {
         syncCorpEmailTargetHint: '默认 dingtalk_email / 钉钉企业邮箱；保存设置时按上述属性键和显示名称自动创建用户属性（已存在则仅同步显示名称）',
         syncDeptTarget: '属性键',
         syncDeptTargetHint: '默认 dingtalk_department / 钉钉部门；保存设置时按上述属性键和显示名称自动创建用户属性（已存在则仅同步显示名称）',
-        syncAttrDisplayName: '显示名称'
+        syncAttrDisplayName: '显示名称',
+        syncDisplayNameAttrName: '钉钉姓名',
+        syncCorpEmailAttrName: '钉钉企业邮箱',
+        syncDeptAttrName: '钉钉部门'
       },
       oidc: {
         title: 'OIDC 登录',
