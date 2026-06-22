@@ -202,6 +202,12 @@ func (s *OpenAIGatewayService) ForwardAsChatCompletions(
 			}
 		}
 	}
+	if isResponsesShape && isResponsesBodyInstructionsEmpty(responsesBody) {
+		responsesBody, err = sjson.SetBytes(responsesBody, "instructions", defaultCodexSynthInstructions(upstreamModel))
+		if err != nil {
+			return nil, fmt.Errorf("set default instructions in responses-shape body: %w", err)
+		}
+	}
 
 	// 4b. Apply OpenAI fast policy (may filter service_tier or block the request).
 	updatedBody, policyErr := s.applyOpenAIFastPolicyToBody(ctx, account, upstreamModel, responsesBody)
@@ -908,6 +914,11 @@ func (s *OpenAIGatewayService) handleChatStreamingResponse(
 			c.Writer.Flush()
 		}
 	}
+}
+
+func isResponsesBodyInstructionsEmpty(body []byte) bool {
+	instructions := gjson.GetBytes(body, "instructions")
+	return !instructions.Exists() || instructions.Type != gjson.String || strings.TrimSpace(instructions.String()) == ""
 }
 
 // writeChatCompletionsError writes an error response in OpenAI Chat Completions format.
