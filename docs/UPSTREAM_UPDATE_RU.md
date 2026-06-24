@@ -181,26 +181,40 @@ gh run list --workflow docker-image.yml --limit 5
 
 ## Обновление сервера
 
-После успешной публикации образа зайти на сервер через Cloudflare SSH:
+Серверный SSH закрыт от прямого доступа по публичному IP. Доступ выполняется через Cloudflare Tunnel и локальный SSH alias `sub2api`.
+
+После успешной публикации образа проверить доступ:
 
 ```bash
 ssh sub2api
 ```
 
-Дальше в директории деплоя выполнить:
+Не пытаться подключаться напрямую к IP сервера или публичному `:22`: SSH daemon слушает локально за Cloudflare Tunnel.
 
-```bash
-docker compose pull
-docker compose up -d
-docker compose logs -f --tail=100
+Для production используется compose-файл:
+
+```text
+/opt/sub2api/docker-compose.yml
 ```
 
-Если compose-файл использует другое имя сервиса, обновить только нужный сервис:
+Имя сервиса приложения:
+
+```text
+sub2api
+```
+
+Обновить только контейнер приложения:
 
 ```bash
-docker compose pull backend
-docker compose up -d backend
-docker compose logs -f --tail=100 backend
+ssh sub2api "docker compose -f /opt/sub2api/docker-compose.yml pull sub2api"
+ssh sub2api "docker compose -f /opt/sub2api/docker-compose.yml up -d sub2api"
+ssh sub2api "docker compose -f /opt/sub2api/docker-compose.yml ps sub2api"
+```
+
+Логи после запуска:
+
+```bash
+ssh sub2api "docker compose -f /opt/sub2api/docker-compose.yml logs --tail=100 sub2api"
 ```
 
 ## Проверка после деплоя
@@ -208,8 +222,8 @@ docker compose logs -f --tail=100 backend
 Проверить, что контейнер запущен с новым образом:
 
 ```bash
-docker compose ps
-docker image ls | grep sub2api
+ssh sub2api "docker compose -f /opt/sub2api/docker-compose.yml ps sub2api"
+ssh sub2api "docker inspect sub2api --format '{{.Image}} {{.Config.Image}} {{.State.Status}} {{if .State.Health}}{{.State.Health.Status}}{{end}}'"
 ```
 
 Затем повторить запрос, который раньше падал с `Instructions required`. Для API-key OpenAI аккаунта Responses-shaped `/v1/chat/completions` запрос должен уходить upstream с непустым `instructions`.
