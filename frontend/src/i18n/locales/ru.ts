@@ -2245,6 +2245,7 @@ export default {
         openai: 'OpenAI',
         gemini: 'Gemini',
         antigravity: 'Antigravity',
+        grok: 'Grok',
       },
       deleteConfirm:
         "Удалить группу '{name}'? Все связанные API-ключи больше не будут принадлежать группе.",
@@ -3194,10 +3195,15 @@ export default {
         googleOauth: 'Google OAuth',
         codeAssist: 'Code Assist',
         antigravityOauth: 'Antigravity OAuth',
+        grokOauth: 'Grok OAuth',
         antigravityApikey: 'Connect via Base URL + API Key',
         upstream: 'Апстрим',
         upstreamDesc: 'Connect via Base URL + API Key'
       },
+      antigravityProjectIdLabel: 'GCP Project ID (необязательно)',
+      antigravityProjectIdPlaceholder: 'your-gcp-project-id',
+      antigravityProjectIdHint:
+        'Для Antigravity standard-tier аккаунтов без автоматического project_id нужен собственный GCP project пользователя.',
       status: {
         active: 'Активен',
         inactive: 'Неактивен',
@@ -3514,9 +3520,9 @@ export default {
         codexCLIOnly: 'Только официальные клиенты Codex',
         codexCLIOnlyDesc:
           'Применяется только к OpenAI OAuth. Если включено, разрешены только семейства официальных клиентов Codex; если отключено, шлюз обходит это ограничение и сохраняет прежнее поведение.',
-        codexCLIOnlyAllowClaudeCode: 'Также разрешить Codex-плагин Claude Code',
-        codexCLIOnlyAllowClaudeCodeDesc:
-          'Действует только когда включён переключатель выше. Дополнительно разрешает запросы от Codex-плагина Claude Code (точное совпадение originator=Claude Code), не ослабляя блокировку других неофициальных клиентов.',
+        codexCLIOnlyAppServer: 'Разрешить Codex app-server клиенты',
+        codexCLIOnlyAppServerDesc:
+          'Действует только когда включён переключатель выше. Разрешает сторонние клиенты, которые встраивают Codex engine через app-server протокол (например, Codex-плагин Claude Code); они всё равно проходят глобальную проверку engine fingerprint. Объединяется по OR с глобальным app-server переключателем.',
         codexImageGenerationBridge: 'Мост генерации изображений Codex',
         codexImageGenerationBridgeDesc:
           'Политика аккаунта имеет приоритет над настройками канала и глобальными настройками. Управляет только тем, получают ли запросы Codex через текстовый endpoint /responses инструмент image_generation; отдельные endpoint-ы генерации изображений не затрагиваются.',
@@ -3547,6 +3553,10 @@ export default {
         testModeDefault: 'Запрос по умолчанию',
         testModeCompact: 'Compact probe',
         modelRestrictionDisabledByPassthrough: 'Автоматический passthrough включён: whitelist/mapping моделей не будет применяться.',
+      },
+      grok: {
+        baseUrlHint: 'Grok OAuth аккаунты пересылаются на официальный xAI API Base URL.',
+        apiKeyHint: 'Поддержка подписки Grok использует OAuth refresh tokens; API keys не входят в этот тип аккаунта.'
       },
       anthropic: {
         apiKeyPassthrough: 'Автоматический passthrough (только auth)',
@@ -3873,6 +3883,14 @@ export default {
           codexSessionImportFailed: 'Не удалось импортировать аккаунт Codex',
           codexSessionImportSuccess: 'Импорт завершён: создано {created}, обновлено {updated}, пропущено {skipped}',
           codexSessionImportPartial: 'Частичный успех: создано {created}, обновлено {updated}, пропущено {skipped}, ошибок {failed}',
+          codexPatAuth: 'Codex Personal Access Token',
+          codexPatDesc: 'Введите Codex PAT с префиксом at-. Система проверит его через OpenAI whoami перед созданием аккаунта.',
+          codexPatInputLabel: 'Codex PAT',
+          codexPatPlaceholder: 'at-...',
+          codexPatHint: 'Это отдельный режим авторизации. Он не сохраняет refresh_token и не записывает срок действия OAuth access_token.',
+          codexPatImportAndCreate: 'Проверить и создать Codex PAT аккаунт',
+          codexPatEmpty: 'Введите Codex personal access token',
+          codexPatImportFailed: 'Не удалось создать Codex PAT аккаунт',
           sessionTokenAuth: 'Ручной ввод ST',
           sessionTokenDesc: 'Введите существующие Session Token. Поддерживается массовый ввод (по одному на строку). Система автоматически проверит их и создаст аккаунты.',
           sessionTokenPlaceholder: 'Вставьте Session Token...\nПоддерживается несколько, по одному на строку',
@@ -3889,6 +3907,31 @@ export default {
           validateAndCreate: 'Проверить и создать аккаунт',
           pleaseEnterRefreshToken: 'Введите Refresh Token',
           pleaseEnterSessionToken: 'Введите Session Token'
+        },
+        grok: {
+          title: 'Авторизация аккаунта Grok',
+          followSteps: 'Выполните шаги для авторизации аккаунта xAI/Grok:',
+          step1GenerateUrl: 'Сгенерируйте URL авторизации xAI',
+          generateAuthUrl: 'Сгенерировать Auth URL',
+          step2OpenUrl: 'Откройте URL в браузере и завершите авторизацию',
+          openUrlDesc: 'Откройте URL авторизации в новой вкладке, войдите в xAI и разрешите API-доступ.',
+          importantNotice: 'Когда браузер перейдёт на локальный callback URL, скопируйте полный URL или параметр code сюда.',
+          step3EnterCode: 'Введите Authorization URL или код',
+          authCodeDesc: 'После авторизации вставьте callback URL, query string или authorization code:',
+          authCode: 'Authorization URL или код',
+          authCodePlaceholder: 'Вставьте полный callback URL, ?code=... query string или значение code',
+          authCodeHint: 'Поддерживаются полный callback URL, query string и голый code.',
+          refreshTokenAuth: 'Ручной ввод RT',
+          refreshTokenDesc: 'Введите существующие xAI refresh token. Поддерживается массовый ввод, по одному на строку.',
+          refreshTokenPlaceholder: 'Вставьте xAI refresh token...\nПоддерживается несколько, по одному на строку',
+          validating: 'Проверка...',
+          validateAndCreate: 'Проверить и создать аккаунт',
+          pleaseEnterRefreshToken: 'Введите Refresh Token',
+          failedToGenerateUrl: 'Не удалось сгенерировать auth URL Grok',
+          missingExchangeParams: 'Отсутствует authorization code, state или OAuth session',
+          failedToExchangeCode: 'Не удалось обменять authorization code Grok',
+          failedToValidateRT: 'Не удалось проверить Grok refresh token',
+          oauthOnlyHint: 'Начальная поддержка Grok включает только OAuth subscription-backed Responses API для текста и reasoning.'
         },
         // Gemini specific
 	        gemini: {
@@ -4123,6 +4166,7 @@ export default {
       openaiAccount: 'Аккаунт OpenAI',
       geminiAccount: 'Аккаунт Gemini',
       antigravityAccount: 'Аккаунт Antigravity',
+      grokAccount: 'Аккаунт Grok',
       inputMethod: 'Способ ввода',
       reAuthorizedSuccess: 'Аккаунт повторно авторизован',
       // Test Modal
@@ -4197,6 +4241,18 @@ export default {
         gemini3Flash: 'G3F',
         gemini3Image: 'G31FI',
         claude: 'Claude',
+        grokRequests: 'Запр.',
+        grokTokens: 'Ток.',
+        grokUnknown: 'Квота Grok неизвестна, пока первый upstream-ответ не вернёт xAI rate-limit headers.',
+        grokRetryAfter: 'Повтор через {time}',
+        grokProbe: 'Проверить',
+        grokProbeTooltip: 'Отправить минимальный xAI Responses probe и прочитать quota headers',
+        grokResetUnsupported: 'Сброс не поддерживается',
+        grokResetUnsupportedTooltip: 'xAI не предоставляет reset credits для Grok OAuth аккаунтов',
+        grokNoHeaders: 'Quota headers не получены',
+        grokLastStatus: 'Статус {status}',
+        grokLastProbe: 'Проверка {time}',
+        grokLastHeadersSeen: 'Headers {time}',
         passiveSampled: 'Passive',
         activeQuery: 'Запросить'
       },
@@ -4209,7 +4265,9 @@ export default {
         resetTooltipNeedQuery: 'Сначала нажмите «Кредиты», чтобы загрузить доступное число',
         resetTooltipNoCredits: 'Нет доступных reset-кредитов',
         noCreditsAvailable: 'Нет доступных reset-кредитов',
-        resetSuccess: 'Сброшено окон: {windows}'
+        resetSuccess: 'Сброшено окон: {windows}',
+        confirmTitle: 'Подтвердите сброс недельного лимита',
+        confirmMessage: 'Будет потрачен 1 reset-кредит для немедленного восстановления текущего окна (осталось {count}). Это действие нельзя отменить. Продолжить?'
       },
       tier: {
         free: 'Free',
@@ -5944,9 +6002,41 @@ export default {
         openaiCodexUserAgent: 'OpenAI Codex UA',
         openaiCodexUserAgentPlaceholder: 'codex-tui/0.125.0 (Ubuntu 22.4.0; x86_64) xterm-256color (codex-tui; 0.125.0)',
         openaiCodexUserAgentHint: 'Используется для обхода Cloudflare browser-UA challenges на OpenAI upstream. Применяется только когда клиентский User-Agent определяется как браузер (Mozilla/...). Оставьте пустым, чтобы использовать встроенное значение по умолчанию.',
-        openaiAllowClaudeCodeCodexPlugin: 'Разрешить использование Codex-плагина в Claude Code',
-        openaiAllowClaudeCodeCodexPluginDesc:
-          'Глобальный переключатель; влияет только на OpenAI OAuth-аккаунты с включённым режимом "только официальные клиенты Codex". Если включено, такие аккаунты дополнительно разрешают запросы от Codex-плагина Claude Code (точное совпадение originator=Claude Code) без настройки каждого аккаунта; upstream-запросы остаются в passthrough.',
+        codexHardeningTitle: 'Настройки Codex',
+        codexClientRestrictionTitle: 'Ограничение клиентов Codex',
+        codexHardeningDesc:
+          'Влияет только на OpenAI OAuth аккаунты с включённым режимом "только официальные клиенты Codex". Помимо User-Agent/Originator, усиливает проверку диапазоном версий, engine-fingerprint gate и списками запрета/разрешения.',
+        minCodexVersion: 'Минимальная версия Codex',
+        minCodexVersionPlaceholder: 'например 0.142.0',
+        maxCodexVersion: 'Максимальная версия Codex',
+        maxCodexVersionPlaceholder: 'например 0.200.0',
+        codexVersionHint:
+          'Только для официальных клиентов: проверяет, что версия попадает в диапазон [min, max]. Оставьте сторону пустой, чтобы не ограничивать её.',
+        codexFingerprintSignals: 'Codex engine fingerprint signals',
+        codexFingerprintSignalsDesc:
+          'Задайте признаки engine fingerprint: все Required-признаки должны совпасть (AND); варианты внутри строки через / работают как OR. Если Required не отмечены, проверка не применяется. По умолчанию проверяется только префикс x-codex-. Типы: точный header / префикс header / body path.',
+        codexFpTypeHeaderExact: 'Точный header',
+        codexFpTypeHeaderPrefix: 'Префикс header',
+        codexFpTypeBodyPath: 'Body path',
+        codexFpMatchPlaceholder: 'match; варианты через / (например session-id / session_id или x-codex-)',
+        codexFpRequired: 'Обязательно',
+        codexFingerprintNoRequiredWarn: 'Ни один признак не отмечен как Required — engine-fingerprint gate неактивен и пропустит всех кандидатов после проверки identity/version. Отметьте хотя бы один признак, чтобы включить проверку.',
+        codexAllowAppServer: 'Codex app-server',
+        codexAllowAppServerDesc:
+          'Разрешить сторонние клиенты, которые встраивают Codex engine и подключаются через app-server протокол (например, Codex-плагин Claude Code). По умолчанию выключено; при включении такие клиенты разрешены после прохождения engine-fingerprint gate. Если выключено, разрешены только официальные клиенты и whitelist.',
+        codexBlacklist: 'Blacklist User-Agent/Originator',
+        codexBlacklistDesc:
+          'Отклонять при совпадении любого поля; имеет приоритет над любым разрешением. originator сравнивается точно, User-Agent — по contains (через запятую).',
+        codexWhitelist: 'Whitelist User-Agent/Originator',
+        codexWhitelistDesc:
+          'Разрешить клиентов вне официального набора: требуется точный originator и все маркеры User-Agent. Всё равно применяется fingerprint gate, если не включено "Skip engine fingerprint".',
+        codexWhitelistSkipFingerprint: 'Skip engine fingerprint',
+        codexWhitelistSkipFingerprintTooltip:
+          'Риск: если включено, запись разрешается только по originator + User-Agent (оба можно подделать), без engine-fingerprint проверки. Используйте только для доверенных сторонних клиентов, которые действительно не отправляют Codex fingerprint.',
+        codexOriginatorPlaceholder: 'originator (точно, например opencode)',
+        codexUaContainsPlaceholder: 'User-Agent содержит маркеры через запятую (например opencode/)',
+        codexAddRow: 'Добавить запись',
+        codexRemoveRow: 'Удалить',
         claudeOAuthSystemPromptInjection: 'Системные блоки Claude OAuth',
         claudeOAuthSystemPromptInjectionHint: 'Внедрять системные блоки в стиле Claude Code для запросов Claude OAuth от клиентов не-Claude-Code. По умолчанию включено.',
         claudeOAuthSystemPrompt: 'Расширяющий prompt Claude OAuth',
@@ -7222,6 +7312,7 @@ export default {
       failed: 'Ошибка',
       refund_requested: 'Запрошен возврат',
       refunding: 'Возврат',
+      refund_pending: 'Возврат ожидает подтверждения',
       refunded: 'Возвращено',
       partially_refunded: 'Частично возвращено',
       refund_failed: 'Возврат не удался',
@@ -7410,6 +7501,8 @@ export default {
       refundReasonPlaceholder: 'Введите причину возврата',
       confirmRefund: 'Подтвердить возврат',
       refundSuccess: 'Возврат выполнен',
+      refundPending: 'Возврат ожидает подтверждения платёжного шлюза',
+      queryRefundStatus: 'Проверить статус возврата',
       refundInfo: 'Информация о возврате',
       refundEnabled: 'Возвраты включены',
       allowUserRefund: 'Разрешить возврат пользователю',
