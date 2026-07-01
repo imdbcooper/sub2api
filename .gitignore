@@ -120,6 +120,7 @@ CLAUDE.md
 .claude
 scripts
 .code-review-state
+.kilo/skills/
 #openspec/
 code-reviews/
 AGENTS.md

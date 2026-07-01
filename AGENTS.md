@@ -37,6 +37,34 @@ ssh sub2api "docker compose -f /opt/sub2api/docker-compose.yml ps sub2api"
 ghcr.io/imdbcooper/sub2api:latest
 ```
 
+## Admin API Access
+
+- Production Sub2API admin API can be managed with the root-only admin key on the server.
+- Do not print, copy into the repo, or expose the key value.
+- Preferred server-side key path:
+
+```text
+/etc/sub2api/admin-api-key
+```
+
+- Compatibility path:
+
+```text
+/root/sub2api-admin-key -> /etc/sub2api/admin-api-key
+```
+
+- Use the header:
+
+```http
+x-api-key: <admin-api-key>
+```
+
+- Project skill with full workflow and endpoint map:
+
+```text
+.kilo/skills/sub2api-admin-api/SKILL.md
+```
+
 ## Local Fork Requirements
 
 - Preserve Russian localization in `frontend/src/i18n/locales/ru.ts` when merging upstream changes.
