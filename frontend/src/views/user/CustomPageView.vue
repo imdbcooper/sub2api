@@ -35,7 +35,7 @@
             class="toc-sidebar"
           >
             <div class="toc-header">
-              <span class="toc-title">{{ t('customPage.tocTitle') }}</span>
+              <span class="toc-title">{{ t('customPage.tableOfContents') }}</span>
               <button class="toc-close-btn" @click="tocVisible = false">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
               </button>
@@ -64,7 +64,7 @@
             @click="tocVisible = true"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-            <span class="ml-1 text-xs">{{ t('customPage.tocTitle') }}</span>
+            <span class="ml-1 text-xs">{{ t('customPage.tableOfContents') }}</span>
           </button>
 
           <!-- Content -->
@@ -221,16 +221,6 @@ function buildPageImageUrl(slug: string, src: string): string {
   return buildApiUrl(`/pages/${encodeURIComponent(slug)}/images/${encodedPath}${suffix}`)
 }
 
-function renderInlineError(key: string): string {
-  const text = String(t(key))
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-  return `<p class="text-red-500">${text}</p>`
-}
-
 async function fetchAndRenderMarkdown(slug: string) {
   loading.value = true
   tocItems.value = []
@@ -240,7 +230,7 @@ async function fetchAndRenderMarkdown(slug: string) {
       headers: authStore.token ? { Authorization: `Bearer ${authStore.token}` } : {},
     })
     if (!resp.ok) {
-      renderedHtml.value = renderInlineError('customPage.pageNotFoundInline')
+      renderedHtml.value = '<p class="text-red-500">Page not found</p>'
       return
     }
     let raw = await resp.text()
@@ -273,7 +263,7 @@ async function fetchAndRenderMarkdown(slug: string) {
     renderedHtml.value = withIds
     tocItems.value = toc
   } catch {
-    renderedHtml.value = renderInlineError('customPage.loadFailedInline')
+    renderedHtml.value = '<p class="text-red-500">Failed to load page</p>'
   } finally {
     loading.value = false
     await nextTick()
@@ -327,16 +317,16 @@ function injectCopyButtons() {
     if (pre.querySelector('.copy-btn')) return
     const btn = document.createElement('button')
     btn.className = 'copy-btn'
-    btn.textContent = t('common.copy')
+    btn.textContent = t('customPage.copyCode')
     btn.addEventListener('click', async () => {
       const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? ''
       try {
         await navigator.clipboard.writeText(code)
-        btn.textContent = t('customPage.copySuccess')
-        setTimeout(() => { btn.textContent = t('common.copy') }, 2000)
+        btn.textContent = t('customPage.copiedCode')
+        setTimeout(() => { btn.textContent = t('customPage.copyCode') }, 2000)
       } catch {
-        btn.textContent = t('common.copyFailed')
-        setTimeout(() => { btn.textContent = t('common.copy') }, 2000)
+        btn.textContent = t('customPage.copyCodeFailed')
+        setTimeout(() => { btn.textContent = t('customPage.copyCode') }, 2000)
       }
     })
     pre.style.position = 'relative'

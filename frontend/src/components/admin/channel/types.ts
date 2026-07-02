@@ -1,9 +1,6 @@
 import type { BillingMode, PricingInterval } from '@/api/admin/channels'
 
-type ChannelValidationTranslator = (
-  key: string,
-  params?: Record<string, string | number>,
-) => string
+type TranslateFn = (key: string, params?: Record<string, unknown>) => string
 
 export interface IntervalFormEntry {
   min_tokens: number
@@ -129,8 +126,8 @@ export function findModelConflict(models: string[]): [string, string] | null {
  */
 export function validateIntervals(
   intervals: IntervalFormEntry[],
-  mode: BillingMode = 'token',
-  t?: ChannelValidationTranslator,
+  mode: BillingMode,
+  t: TranslateFn,
 ): string | null {
   if (!intervals || intervals.length === 0) return null
 
@@ -147,89 +144,76 @@ export function validateIntervals(
   return checkIntervalOverlap(sorted, t)
 }
 
-function validationMessage(
-  t: ChannelValidationTranslator | undefined,
+function intervalValidationMessage(
+  t: TranslateFn,
   key: string,
-  params: Record<string, string | number>,
-  fallback: string,
+  params: Record<string, unknown>,
 ): string {
-  return t ? t(`admin.channels.form.validation.${key}`, params) : fallback
+  return t(`admin.channels.intervalValidation.${key}`, params)
 }
 
-function validateSingleInterval(
-  iv: IntervalFormEntry,
-  idx: number,
-  t?: ChannelValidationTranslator,
-): string | null {
+function intervalPriceLabel(t: TranslateFn, key: string): string {
+  return t(`admin.channels.intervalValidation.price.${key}`)
+}
+
+function validateSingleInterval(iv: IntervalFormEntry, idx: number, t: TranslateFn): string | null {
   const index = idx + 1
   if (iv.min_tokens < 0) {
-    return validationMessage(
+    return intervalValidationMessage(
       t,
-      'minTokensNegative',
+      'negativeMin',
       { index, value: iv.min_tokens },
-      `Interval #${index}: minimum token count (${iv.min_tokens}) cannot be negative`,
     )
   }
   if (iv.max_tokens != null) {
     if (iv.max_tokens <= 0) {
-      return validationMessage(
+      return intervalValidationMessage(
         t,
-        'maxTokensPositive',
+        'maxPositive',
         { index, value: iv.max_tokens },
-        `Interval #${index}: maximum token count (${iv.max_tokens}) must be greater than 0`,
       )
     }
     if (iv.max_tokens <= iv.min_tokens) {
-      return validationMessage(
+      return intervalValidationMessage(
         t,
-        'maxTokensGreaterThanMin',
+        'maxGreaterThanMin',
         { index, max: iv.max_tokens, min: iv.min_tokens },
-        `Interval #${index}: maximum token count (${iv.max_tokens}) must be greater than minimum token count (${iv.min_tokens})`,
       )
     }
   }
   return validateIntervalPrices(iv, idx, t)
 }
 
-function validateIntervalPrices(
-  iv: IntervalFormEntry,
-  idx: number,
-  t?: ChannelValidationTranslator,
-): string | null {
-  const prices: [string, string, number | string | null][] = [
-    ['inputPrice', 'input price', iv.input_price],
-    ['outputPrice', 'output price', iv.output_price],
-    ['cacheWritePrice', 'cache write price', iv.cache_write_price],
-    ['cacheReadPrice', 'cache read price', iv.cache_read_price],
-    ['perRequestPrice', 'per-request price', iv.per_request_price],
+function validateIntervalPrices(iv: IntervalFormEntry, idx: number, t: TranslateFn): string | null {
+  const index = idx + 1
+  const prices: [string, number | string | null][] = [
+    ['inputPrice', iv.input_price],
+    ['outputPrice', iv.output_price],
+    ['cacheWritePrice', iv.cache_write_price],
+    ['cacheReadPrice', iv.cache_read_price],
+    ['perRequestPrice', iv.per_request_price],
   ]
-  for (const [fieldKey, fallbackName, val] of prices) {
+  for (const [key, val] of prices) {
     if (val != null && val !== '' && Number(val) < 0) {
-      const index = idx + 1
-      return validationMessage(
+      const field = intervalPriceLabel(t, key)
+      return intervalValidationMessage(
         t,
-        'priceNegative',
-        { index, field: t ? t(`admin.channels.form.validation.fields.${fieldKey}`) : fallbackName },
-        `Interval #${index}: ${fallbackName} cannot be negative`,
+        'negativePrice',
+        { index, field },
       )
     }
   }
   return null
 }
 
-function checkIntervalOverlap(
-  sorted: IntervalFormEntry[],
-  t?: ChannelValidationTranslator,
-): string | null {
+function checkIntervalOverlap(sorted: IntervalFormEntry[], t: TranslateFn): string | null {
   for (let i = 0; i < sorted.length; i++) {
     // 无上限区间必须是最后一个
     if (sorted[i].max_tokens == null && i < sorted.length - 1) {
-      const index = i + 1
-      return validationMessage(
+      return intervalValidationMessage(
         t,
-        'unlimitedLast',
-        { index },
-        `Interval #${index}: unlimited interval (empty maximum token count) must be the last interval`,
+        'unboundedLast',
+        { index: i + 1 },
       )
     }
     if (i === 0) continue
@@ -237,16 +221,10 @@ function checkIntervalOverlap(
     // (min, max] 语义：前一个区间上界 > 当前区间下界则重叠
     if (prev.max_tokens == null || prev.max_tokens > sorted[i].min_tokens) {
       const prevMax = prev.max_tokens == null ? '∞' : String(prev.max_tokens)
-      return validationMessage(
+      return intervalValidationMessage(
         t,
         'overlap',
-        {
-          previousIndex: i,
-          currentIndex: i + 1,
-          previousMax: prevMax,
-          currentMin: sorted[i].min_tokens,
-        },
-        `Intervals #${i} and #${i + 1} overlap: previous upper bound (${prevMax}) is greater than current lower bound (${sorted[i].min_tokens})`,
+        { previousIndex: i, currentIndex: i + 1, previousMax: prevMax, currentMin: sorted[i].min_tokens },
       )
     }
   }

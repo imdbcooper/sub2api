@@ -567,7 +567,7 @@ function rejectLoginAgreement(): void {
   localStorage.removeItem(LOGIN_AGREEMENT_STORAGE_KEY)
   agreementAccepted.value = false
   showAgreementModal.value = false
-  appStore.showWarning(t('auth.loginAgreement.rejectRegisterWarning'))
+  appStore.showWarning(t('legal.loginAgreementPrompt.registerRejectedWarning'))
 }
 
 // ==================== Promo Code Validation ====================
@@ -757,7 +757,7 @@ function validateForm(): boolean {
   let isValid = true
 
   if (agreementGateActive.value) {
-    appStore.showWarning(t('auth.loginAgreement.registerRequiredWarning'))
+    appStore.showWarning(t('legal.loginAgreementPrompt.registerRequiredWarning'))
     if (loginAgreementMode.value !== 'checkbox') {
       showAgreementModal.value = true
     }

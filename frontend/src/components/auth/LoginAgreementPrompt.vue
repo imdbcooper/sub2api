@@ -17,7 +17,7 @@
             for="login-agreement-consent"
             class="cursor-pointer text-gray-700 dark:text-dark-200"
           >
-            {{ t('auth.loginAgreement.checkboxPrefix') }}
+            {{ t('legal.loginAgreementPrompt.checkboxPrefix') }}
           </label>
           <template v-for="(doc, index) in documents" :key="doc.id || doc.title">
             <RouterLink
@@ -28,7 +28,7 @@
             >
               {{ doc.title }}
             </RouterLink>
-            <span v-if="index < documents.length - 1">{{ t('auth.loginAgreement.documentSeparator') }}</span>
+            <span v-if="index < documents.length - 1">{{ t('legal.loginAgreementPrompt.documentSeparator') }}</span>
           </template>
         </p>
       </div>
@@ -42,9 +42,9 @@
     <div class="flex items-start gap-3">
       <Icon name="shield" size="sm" class="mt-0.5 flex-shrink-0 text-primary-600 dark:text-primary-300" />
       <div class="min-w-0 flex-1">
-        <p class="font-medium">{{ t('auth.loginAgreement.inlineNoticeTitle') }}</p>
+        <p class="font-medium">{{ t('legal.loginAgreementPrompt.noticeTitle') }}</p>
         <p class="mt-1 text-primary-700 dark:text-primary-200/80">
-          {{ t('auth.loginAgreement.inlineNoticeDescription') }}
+          {{ t('legal.loginAgreementPrompt.noticeDescription') }}
         </p>
       </div>
       <button
@@ -52,7 +52,7 @@
         class="flex-shrink-0 rounded-md bg-primary-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-primary-700"
         @click="emit('open')"
       >
-        {{ t('auth.loginAgreement.viewTerms') }}
+        {{ t('legal.loginAgreementPrompt.viewTerms') }}
       </button>
     </div>
   </div>
@@ -72,7 +72,7 @@
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2">
                   <h2 class="text-xl font-bold tracking-normal text-gray-950 dark:text-white">
-                    {{ t('auth.loginAgreement.updatedTitle') }}
+                    {{ t('legal.loginAgreementPrompt.dialogTitle') }}
                   </h2>
                   <span
                     v-if="updatedAt"
@@ -82,7 +82,11 @@
                   </span>
                 </div>
                 <p class="mt-2 text-sm leading-6 text-gray-600 dark:text-dark-300">
-                  {{ t('auth.loginAgreement.updatedDescription', { date: updatedAt || t('auth.loginAgreement.recently') }) }}
+                  {{
+                    t('legal.loginAgreementPrompt.dialogDescription', {
+                      date: updatedAt || t('legal.loginAgreementPrompt.recently'),
+                    })
+                  }}
                 </p>
               </div>
             </div>
@@ -90,7 +94,7 @@
 
           <div class="max-h-[58vh] overflow-y-auto px-6 py-5">
             <div class="mb-3 flex items-center justify-between gap-3">
-              <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ t('auth.loginAgreement.relatedDocuments') }}</p>
+              <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ t('legal.loginAgreementPrompt.relatedDocuments') }}</p>
             </div>
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <RouterLink
@@ -102,7 +106,7 @@
                 class="group flex min-h-[72px] w-full items-center gap-3 rounded-xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-left transition hover:-translate-y-0.5 hover:border-primary-200 hover:bg-white hover:shadow-sm dark:border-dark-700 dark:bg-dark-800/70 dark:hover:border-primary-500/30 dark:hover:bg-dark-800"
               >
                 <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white text-gray-700 ring-1 ring-gray-200 transition group-hover:bg-primary-50 group-hover:text-primary-700 group-hover:ring-primary-100 dark:bg-dark-900 dark:text-dark-200 dark:ring-dark-700 dark:group-hover:bg-primary-500/10 dark:group-hover:text-primary-200 dark:group-hover:ring-primary-500/20">
-                  <Icon :name="documentIcon(index, doc)" size="sm" />
+                  <Icon :name="documentIcon(index, doc.title)" size="sm" />
                 </span>
                 <span class="min-w-0 flex-1">
                   <span class="block truncate text-sm font-semibold text-gray-950 dark:text-white">{{ doc.title }}</span>
@@ -121,14 +125,14 @@
                 class="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 dark:border-dark-700 dark:bg-dark-800 dark:text-dark-200 dark:hover:bg-dark-700"
                 @click="emit('reject')"
               >
-                {{ t('auth.loginAgreement.reject') }}
+                {{ t('legal.loginAgreementPrompt.reject') }}
               </button>
               <button
                 type="button"
                 class="rounded-xl bg-primary-600 px-4 py-3 text-sm font-semibold text-white shadow-sm shadow-primary-600/20 transition hover:bg-primary-700"
                 @click="emit('accept')"
               >
-                {{ t('auth.loginAgreement.acceptAndContinue') }}
+                {{ t('legal.loginAgreementPrompt.accept') }}
               </button>
             </div>
           </div>
@@ -186,15 +190,25 @@ function handleCheckboxChange(event: Event): void {
   }
 }
 
-function documentIcon(index: number, doc: LoginAgreementDocument): 'document' | 'shield' | 'globe' | 'cog' {
-  const id = (doc.id || '').toLowerCase()
-  if (id.includes('policy') || id.includes('privacy')) {
+function documentIcon(index: number, title: string): 'document' | 'shield' | 'globe' | 'cog' {
+  const normalizedTitle = title.toLowerCase()
+  if (
+    normalizedTitle.includes('policy') ||
+    normalizedTitle.includes('privacy') ||
+    title.includes('政策') ||
+    title.includes('隐私')
+  ) {
     return 'shield'
   }
-  if (id.includes('region') || id.includes('country')) {
+  if (
+    normalizedTitle.includes('country') ||
+    normalizedTitle.includes('region') ||
+    title.includes('国家') ||
+    title.includes('地区')
+  ) {
     return 'globe'
   }
-  if (id.includes('specific') || index === 3) {
+  if (index === 3) {
     return 'cog'
   }
   return 'document'

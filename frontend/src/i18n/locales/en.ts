@@ -160,11 +160,6 @@ export default {
     resetNow: 'Resetting soon',
     subscriptionType: 'Subscription Type',
     subscriptionExpires: 'Subscription Expires',
-    periodUnits: {
-      day: 'D',
-      week: 'W',
-      month: 'M'
-    },
     // Usage stat cells
     todayRequests: 'Today Requests',
     todayInputTokens: 'Today Input',
@@ -284,7 +279,6 @@ export default {
     all: 'All',
     none: 'None',
     selectAll: 'Select all',
-    invertSelection: 'Invert selection',
     noData: 'No data',
     expand: 'Expand',
     collapse: 'Collapse',
@@ -335,7 +329,6 @@ export default {
     tomorrow: 'Tomorrow',
     unknown: 'Unknown',
     minutes: 'min',
-    rateMultiplierValue: '{rate}x rate',
     time: {
       never: 'Never',
       justNow: 'Just now',
@@ -376,7 +369,24 @@ export default {
     updatedAt: 'Updated: {date}',
     empty: 'No content',
     loginAgreement: 'Login Agreement',
-    adminCompliance: 'Deployment and Operation Compliance Commitment'
+    adminCompliance: 'Deployment and Operation Compliance Commitment',
+    loginAgreementPrompt: {
+      checkboxPrefix: 'I have read and agree to ',
+      documentSeparator: ', ',
+      noticeTitle: 'Accept the latest terms before continuing.',
+      noticeDescription: 'Account/password login and quick sign-in stay disabled until you accept.',
+      viewTerms: 'View terms',
+      dialogTitle: 'Terms Update Notice',
+      dialogDescription: 'Our service terms were updated on {date}. Please read and accept the following terms before continuing.',
+      recently: 'recently',
+      relatedDocuments: 'Related documents',
+      reject: 'Reject',
+      accept: 'Accept and continue',
+      loginRejectedWarning: 'Account/password login and quick sign-in are disabled until you accept the latest terms.',
+      loginRequiredWarning: 'Please read and accept the latest terms before logging in.',
+      registerRejectedWarning: 'Registration and quick sign-in are disabled until you accept the latest terms.',
+      registerRequiredWarning: 'Please read and accept the latest terms before registering.'
+    }
   },
 
   // Navigation
@@ -503,23 +513,6 @@ export default {
     invitationCodeValidating: 'Validating invitation code...',
     invitationCodeInvalidCannotRegister: 'Invalid invitation code. Please check and try again',
     oauthOrContinue: 'or continue with others',
-    loginAgreement: {
-      checkboxPrefix: 'I have read and agree to',
-      documentSeparator: ', ',
-      inlineNoticeTitle: 'You must agree to the latest terms before continuing.',
-      inlineNoticeDescription: 'Email/password input and quick sign-in stay disabled until you agree.',
-      viewTerms: 'View terms',
-      updatedTitle: 'Terms update notice',
-      updatedDescription: 'Our terms were updated on {date}. Please read and agree to the following terms before continuing.',
-      recently: 'recently',
-      relatedDocuments: 'Related documents',
-      reject: 'Decline',
-      acceptAndContinue: 'Agree and continue',
-      rejectLoginWarning: 'You cannot enter email/password or use quick sign-in until you agree to the latest terms.',
-      loginRequiredWarning: 'Please read and agree to the latest terms before signing in.',
-      rejectRegisterWarning: 'You cannot register or use quick sign-in until you agree to the latest terms.',
-      registerRequiredWarning: 'Please read and agree to the latest terms before registering.'
-    },
     linuxdo: {
       signIn: 'Continue with Linux.do',
       orContinue: 'or continue with email',
@@ -607,15 +600,14 @@ export default {
       wechatAvailabilityUnknown: 'WeChat sign-in availability could not be confirmed. Refresh and retry.',
       wechatSystemBrowserOnly: 'This WeChat sign-in flow is only available in your system browser.',
       wechatBrowserOnly: 'This WeChat sign-in flow is only available inside the WeChat browser.',
-      wechatNativeAppRequired: 'This site only has WeChat mobile app login configured. Continue from the native app through the WeChat SDK.',
       wechatNotConfigured: 'WeChat sign-in is not configured yet.'
     },
     linuxdoCallbackPageTitle: 'LinuxDo Sign-In Callback',
     dingtalkCallbackPageTitle: 'DingTalk Sign-In Callback',
+    dingtalkProviderName: 'DingTalk',
     oidcCallbackPageTitle: 'OIDC Sign-In Callback',
     oauthCallbackPageTitle: 'OAuth Callback',
     wechatProviderName: 'WeChat',
-    dingtalkProviderName: 'DingTalk',
     wechatCallbackPageTitle: 'WeChat Sign-In Callback',
     wechatPaymentCallbackPageTitle: 'WeChat Payment Callback',
     wechatPayment: {
@@ -2177,6 +2169,15 @@ export default {
       accountsUnit: '',
       rateAndAccounts: '{rate}x rate · {count} accounts',
       accountsCount: '{count} accounts',
+      rateLabel: 'rate',
+      accountFilters: {
+        title: 'Account Filter Controls',
+        oauthOnly: 'Only allow OAuth accounts',
+        oauthOnlyEnabled: 'Enabled — API Key accounts will be excluded',
+        privacySetOnly: 'Only allow accounts with privacy protection set',
+        privacySetOnlyEnabled: 'Enabled — accounts with unset Privacy will be excluded',
+        disabled: 'Disabled'
+      },
       form: {
         name: 'Name',
         description: 'Description',
@@ -2278,24 +2279,21 @@ export default {
         finalPricePreview: 'Final per-image price preview',
         notConfigured: 'Not configured'
       },
+      peakRate: {
+        enable: 'Enable peak rate multiplier',
+        peakStart: 'Peak start',
+        peakEnd: 'Peak end',
+        peakMultiplier: 'Peak multiplier',
+        multiplierHint: 'Applies to token billing multiplier; image tokens in token billing are also affected. 0 means peak token requests are billed at 0x.'
+      },
       modelsList: {
         title: 'Custom /v1/models Model List',
         hint: 'Only changes the /v1/models response. Whitelist model calls and account routing are unchanged.',
         loading: 'Loading model list...',
         empty: 'No displayable models',
-        selectedCount: 'Selected {selected} / {total}'
-      },
-      accountFilter: {
-        title: 'Account filter controls',
-        notEnabled: 'Not enabled',
-        oauthOnly: {
-          label: 'Allow OAuth accounts only',
-          enabledHint: 'Enabled - API Key accounts are excluded'
-        },
-        privacySet: {
-          label: 'Allow only accounts with Privacy configured',
-          enabledHint: 'Enabled - accounts without Privacy configured are excluded'
-        }
+        selectedSummary: 'Selected {selected} / {total}',
+        selectAll: 'Select all',
+        invertSelection: 'Invert'
       },
       claudeCode: {
         title: 'Claude Code Client Restriction',
@@ -2339,8 +2337,7 @@ export default {
         tooltipEdit: 'Select one or more groups of the same platform. After saving, current group accounts will be replaced with accounts from these groups (deduplicated).',
         selectPlaceholder: 'Select groups to copy accounts from...',
         hint: 'Multiple groups can be selected, accounts will be deduplicated',
-        hintEdit: '⚠️ Warning: This will replace all existing account bindings',
-        optionLabel: '{name} ({count} accounts)'
+        hintEdit: '⚠️ Warning: This will replace all existing account bindings'
       },
       modelRouting: {
         title: 'Model Routing',
@@ -2449,11 +2446,24 @@ export default {
       updateError: 'Failed to update channel',
       deleteError: 'Failed to delete channel',
       nameRequired: 'Please enter a channel name',
-      noGroupsSelected: '{platform} platform has no group selected. Select at least one group or disable the platform.',
-      emptyModelsInPricing: '{platform} platform has a pricing entry without models. Add models or delete the entry.',
       duplicateModels: 'Model "{0}" appears in multiple pricing entries',
       modelConflict: "Model patterns '{model1}' and '{model2}' conflict: overlapping match range. Model names are matched case-insensitively, so an existing entry already covers all case variants — no need to add the variant separately.",
       mappingConflict: "Mapping source patterns '{model1}' and '{model2}' conflict: overlapping match range. Source patterns are matched case-insensitively, so an existing entry already covers all case variants.",
+      intervalValidation: {
+        negativeMin: 'Interval #{index}: minimum token count ({value}) cannot be negative',
+        maxPositive: 'Interval #{index}: maximum token count ({value}) must be greater than 0',
+        maxGreaterThanMin: 'Interval #{index}: maximum token count ({max}) must be greater than minimum token count ({min})',
+        negativePrice: 'Interval #{index}: {field} cannot be negative',
+        unboundedLast: 'Interval #{index}: an unbounded interval (empty maximum token count) must be last',
+        overlap: 'Intervals #{previousIndex} and #{currentIndex} overlap: previous upper bound ({previousMax}) is greater than current lower bound ({currentMin})',
+        price: {
+          inputPrice: 'input price',
+          outputPrice: 'output price',
+          cacheWritePrice: 'cache write price',
+          cacheReadPrice: 'cache read price',
+          perRequestPrice: 'per-request price'
+        }
+      },
       deleteConfirm: 'Are you sure you want to delete channel "{name}"? This cannot be undone.',
       columns: {
         name: 'Name',
@@ -2488,10 +2498,15 @@ export default {
         outputPrice: 'Output',
         cacheWritePrice: 'Cache Write',
         cacheReadPrice: 'Cache Read',
+        cacheWritePriceShort: 'Cache W',
+        cacheReadPriceShort: 'Cache R',
         imageTokenPrice: 'Image Output',
         imageOutputPrice: 'Image Output Price',
         pricePlaceholder: 'Default',
         intervals: 'Context Intervals (optional)',
+        minTokens: 'Min',
+        maxTokens: 'Max',
+        inclusive: '(inclusive)',
         addInterval: 'Add Interval',
         requestTiers: 'Request Tiers',
         imageTiers: 'Image Tiers (Per Request)',
@@ -2502,22 +2517,6 @@ export default {
         perRequestPriceRequired: 'Per-request price or billing tiers required for per-request/image billing mode',
         tierLabel: 'Tier',
         resolution: 'Resolution',
-        inclusiveSuffix: '(incl.)',
-        validation: {
-          minTokensNegative: 'Interval #{index}: minimum token count ({value}) cannot be negative',
-          maxTokensPositive: 'Interval #{index}: maximum token count ({value}) must be greater than 0',
-          maxTokensGreaterThanMin: 'Interval #{index}: maximum token count ({max}) must be greater than minimum token count ({min})',
-          priceNegative: 'Interval #{index}: {field} cannot be negative',
-          unlimitedLast: 'Interval #{index}: unlimited interval (empty maximum token count) must be the last interval',
-          overlap: 'Intervals #{previousIndex} and #{currentIndex} overlap: previous upper bound ({previousMax}) is greater than current lower bound ({currentMin})',
-          fields: {
-            inputPrice: 'input price',
-            outputPrice: 'output price',
-            cacheWritePrice: 'cache write price',
-            cacheReadPrice: 'cache read price',
-            perRequestPrice: 'per-request price'
-          }
-        },
         modelMapping: 'Model Mapping',
         modelMappingHint: 'Map request model names to actual model names. Runs before account-level mapping.',
         noMappingRules: 'No mapping rules. Click "Add" to create one.',
@@ -2689,7 +2688,7 @@ export default {
       queueSize: 'Async Queue Size',
       blockStatus: 'Block HTTP Status',
       blockMessage: 'Custom Block Message',
-      defaultBlockMessage: 'Content moderation matched a risk rule. Please revise your input and try again.',
+      defaultBlockMessage: 'Content audit matched a risk rule. Please adjust your input and try again.',
       emailOnHit: 'Email on Hit',
       emailOnHitHint: 'When enabled, send a risk-control email on every hit; auto-ban notices are always sent.',
       autoBan: 'Auto Ban User',
@@ -3116,6 +3115,7 @@ export default {
       dataExportConfirmMessage: 'The exported data contains sensitive account and proxy information. Store it securely.',
       dataExportConfirm: 'Confirm Export',
       dataExported: 'Data exported successfully',
+      dataExportedSkippedShadows: 'Data exported. Skipped {count} spark shadow account(s): their scheduling config is not included in the backup; recreate and re-tune them after restore.',
       dataExportFailed: 'Failed to export data',
       dataImportTitle: 'Import Data',
       dataImportHint: 'Upload the exported JSON file to import accounts and proxies.',
@@ -3190,6 +3190,7 @@ export default {
         openai: 'OpenAI',
         gemini: 'Gemini',
         antigravity: 'Antigravity',
+        grok: 'Grok',
       },
       types: {
         oauth: 'OAuth',
@@ -3425,6 +3426,10 @@ export default {
       revertProxy: 'Revert proxy',
       revertProxySuccess: 'Successfully reverted to original proxy',
       revertProxyFailed: 'Failed to revert proxy',
+      createSparkShadow: 'Create Spark Shadow',
+      createSparkShadowConfirm: 'Create a spark shadow account linked to "{name}"? It shares the parent\'s credentials and serves only spark models.',
+      createSparkShadowSuccess: 'Spark shadow account created',
+      createSparkShadowFailed: 'Failed to create spark shadow account',
       resetStatus: 'Reset Status',
       statusReset: 'Account status reset successfully',
       failedToResetStatus: 'Failed to reset account status',
@@ -3583,16 +3588,6 @@ export default {
       requestModel: 'Request model',
       actualModel: 'Actual model',
       addMapping: 'Add Mapping',
-      modelPresets: {
-        antigravity: {
-          gemini31ProHighPassThrough: '3.1-Pro-High pass-through',
-          gemini31ProLowPassThrough: '3.1-Pro-Low pass-through',
-          gemini25FlashImagePassThrough: '2.5-Flash-Image pass-through',
-          gemini31FlashImagePassThrough: '3.1-Flash-Image pass-through',
-          gemini3FlashPassThrough: '3-Flash pass-through',
-          gemini25FlashLitePassThrough: '2.5-Flash-Lite pass-through'
-        }
-      },
       mappingExists: 'Mapping for {model} already exists',
       wildcardOnlyAtEnd: 'Wildcard * can only be at the end',
       targetNoWildcard: 'Target model cannot contain wildcard *',
@@ -3872,8 +3867,6 @@ export default {
           },
           // Refresh Token auth
           refreshTokenAuth: 'Manual RT Input',
-          mobileRefreshTokenAuth: 'Manual Mobile RT Input',
-          accessTokenAuth: 'Manual AT Input',
           refreshTokenDesc: 'Enter your existing OpenAI Refresh Token(s). Supports batch input (one per line). The system will automatically validate and create accounts.',
           refreshTokenPlaceholder: 'Paste your OpenAI Refresh Token...\nSupports multiple, one per line',
           codexSessionAuth: 'Codex JSON / AT Batch Input',
@@ -4058,28 +4051,25 @@ export default {
         oauthType: {
           builtInTitle: 'Built-in OAuth (Gemini CLI / Code Assist)',
           builtInDesc: 'Uses Google built-in client ID. No admin configuration required.',
-          googleOneDesc: 'Personal account',
-          googleOneCardDesc: 'Personal account with Google One subscription quota',
-          codeAssistCardDesc: 'Enterprise-grade, requires a GCP project',
-          codeAssistRequirement: 'Requires an activated GCP project with a linked credit card',
           builtInRequirement: 'Requires a GCP project and Project ID.',
+          googleOneDesc: 'Personal account with Google One subscription quota',
+          codeAssistDesc: 'Enterprise-grade, requires a GCP project',
+          codeAssistRequirement: 'Requires an active GCP project with billing enabled',
+          showAdvanced: 'Show advanced options (custom OAuth Client)',
+          hideAdvanced: 'Hide advanced options (custom OAuth Client)',
           gcpProjectLink: 'Create project',
           customTitle: 'Custom OAuth (AI Studio OAuth)',
           customDesc: 'Uses admin-configured OAuth client for org management.',
           customRequirement: 'Admin must configure Client ID and add you as a test user.',
           badges: {
             recommended: 'Recommended',
-            recommendedPersonal: 'Recommended for personal users',
             highConcurrency: 'High concurrency',
-            enterpriseUsers: 'Enterprise users',
+            individuals: 'Recommended for individuals',
             noGcp: 'No GCP required',
+            enterprise: 'Enterprise users',
             noAdmin: 'No admin setup',
             orgManaged: 'Org managed',
             adminRequired: 'Admin required'
-          },
-          advancedOptions: {
-            showLabel: 'Show advanced options (self-hosted OAuth Client)',
-            hideLabel: 'Hide advanced options (self-hosted OAuth Client)'
           }
         },
         setupGuide: {
@@ -4096,7 +4086,7 @@ export default {
           },
           links: {
             countryCheck: 'Check country association',
-            changeCountryAssociation: 'Change country association',
+            countryChange: 'Change country association',
             geminiWebActivation: 'Activate Gemini Web',
             gcpProject: 'Open GCP Console'
           }
@@ -4267,6 +4257,7 @@ export default {
         resetTooltipReady: 'Consume 1 reset credit to immediately restore the window',
         resetTooltipNeedQuery: 'Click Credits first to load the available count',
         resetTooltipNoCredits: 'No reset credits available',
+        resetTooltipShadow: 'Spark shadow accounts cannot reset credits; reset on the parent account',
         noCreditsAvailable: 'No reset credits available',
         resetSuccess: 'Reset {windows} window(s)',
         confirmTitle: 'Confirm Weekly Limit Reset',
@@ -4828,7 +4819,6 @@ export default {
       goroutines: 'Goroutines',
       jobs: 'Jobs',
       jobsHelp: 'Click “Details” to view job heartbeats and recent errors',
-      result: 'Result',
       active: 'active',
       idle: 'idle',
       waiting: 'waiting',
@@ -4843,6 +4833,51 @@ export default {
       loadingText: 'loading',
       ready: 'ready',
       autoRefreshRemaining: 'Remaining {seconds}s',
+      systemLogs: {
+        title: 'System Logs',
+        description: 'Newest logs are shown first. Filter, search, and clean up by condition.',
+        queue: 'Queue',
+        written: 'Written',
+        dropped: 'Dropped',
+        failed: 'Failed',
+        runtimeConfig: 'Runtime Log Configuration (applies immediately)',
+        all: 'All',
+        level: 'Level',
+        stacktraceThreshold: 'Stacktrace threshold',
+        samplingInitial: 'Sampling initial',
+        samplingThereafter: 'Sampling thereafter',
+        retentionDays: 'Retention days',
+        caller: 'caller',
+        sampling: 'sampling',
+        saveAndApply: 'Save and apply',
+        resetDefaults: 'Reset defaults',
+        latestWriteError: 'Latest write error:',
+        timeRange: 'Time range',
+        startTime: 'Start time (optional)',
+        endTime: 'End time (optional)',
+        component: 'Component',
+        componentPlaceholder: 'e.g. http.access',
+        keyId: 'KEY ID',
+        platform: 'Platform',
+        model: 'Model',
+        keyword: 'Keyword',
+        keywordPlaceholder: 'message/request_id',
+        search: 'Search',
+        cleanCurrentFilters: 'Clean current filters',
+        refreshHealth: 'Refresh health',
+        empty: 'No system logs',
+        time: 'Time',
+        logDetails: 'Log Details',
+        loadFailed: 'Failed to load system logs',
+        runtimeConfigActive: 'Runtime log configuration is active',
+        runtimeConfigSaveFailed: 'Failed to save log configuration',
+        resetRuntimeConfigConfirm: 'Reset to startup configuration (env/yaml) and apply immediately?',
+        runtimeConfigReset: 'Reset to startup log configuration',
+        runtimeConfigResetFailed: 'Failed to reset log configuration',
+        cleanupConfirm: 'Clean up system logs matching the current filters? This cannot be undone.',
+        cleanupSuccess: 'Cleanup complete. Deleted {count} log entries.',
+        cleanupFailed: 'Failed to clean up system logs'
+      },
       requestsTotal: 'Requests (total)',
       slaScope: 'SLA scope:',
       tokens: 'Tokens',
@@ -4914,12 +4949,7 @@ export default {
         '6h': 'Last 6 hours',
         '24h': 'Last 24 hours',
         '7d': 'Last 7 days',
-        '30d': 'Last 30 days',
-        custom: 'Custom'
-      },
-      customTimeRange: {
-        startTime: 'Start time',
-        endTime: 'End time'
+        '30d': 'Last 30 days'
       },
       openaiTokenStats: {
         title: 'OpenAI Token Request Stats',
@@ -5536,60 +5566,6 @@ export default {
         raw: 'Raw',
         preagg: 'Preagg'
       },
-      systemLogs: {
-        title: 'System Logs',
-        description: 'Sorted by newest first by default. Supports filtering, search, and cleanup by conditions.',
-        cleanupCurrentFilter: 'Clean current filter',
-        refreshHealth: 'Refresh health metrics',
-        cleanupConfirm: 'Clean system logs matching the current filters? This action cannot be undone.',
-        cleanupSuccess: 'Cleanup complete. Deleted {count} logs.',
-        empty: 'No system logs',
-        health: {
-          queue: 'Queue {depth}/{capacity}',
-          written: 'Written {count}',
-          dropped: 'Dropped {count}',
-          failed: 'Failed {count}'
-        },
-        runtime: {
-          title: 'Runtime log config (applies immediately)',
-          level: 'Level',
-          stacktraceLevel: 'Stacktrace threshold',
-          samplingInitial: 'Sampling initial',
-          samplingThereafter: 'Sampling thereafter',
-          retentionDays: 'Retention days',
-          caller: 'caller',
-          sampling: 'sampling',
-          save: 'Save and apply',
-          saveSuccess: 'Runtime log config applied',
-          saveFailed: 'Failed to save log config',
-          reset: 'Rollback defaults',
-          resetConfirm: 'Rollback to startup config (env/yaml) and apply immediately?',
-          resetSuccess: 'Rolled back to startup log config',
-          resetFailed: 'Failed to rollback log config',
-          lastWriteError: 'Last write error: {error}'
-        },
-        filters: {
-          timeRange: 'Time range',
-          startTime: 'Start time (optional)',
-          endTime: 'End time (optional)',
-          level: 'Level',
-          component: 'Component',
-          componentPlaceholder: 'e.g. http.access',
-          platform: 'Platform',
-          model: 'Model',
-          keyword: 'Keyword',
-          keywordPlaceholder: 'message/request_id'
-        },
-        table: {
-          time: 'Time',
-          level: 'Level',
-          detail: 'Log details'
-        },
-        errors: {
-          loadFailed: 'Failed to load system logs',
-          cleanupFailed: 'Failed to clean system logs'
-        }
-      },
       accountAvailability: {
         available: 'Available',
         unavailable: 'Unavailable',
@@ -5642,39 +5618,6 @@ export default {
         email: 'Email',
         backup: 'Backup',
         payment: 'Payment',
-      },
-      loginAgreement: {
-        title: 'Login agreement',
-        description: 'Control whether the login page requires users to accept Markdown policy documents first.',
-        statusEnabled: 'Enabled',
-        statusDisabled: 'Disabled',
-        displayMode: 'Display mode',
-        modeModal: 'Modal',
-        modeCheckbox: 'Checkbox',
-        checkboxHint: 'The checkbox appears below the login button and gates all login actions.',
-        modalHint: 'The modal opens on the login page and gates all login actions until accepted.',
-        updatedDate: 'Updated date',
-        updatedDateHint: 'Changing the date or content requires fresh consent.',
-        documentsTitle: 'Agreement documents',
-        documentsHint: 'Document titles are customizable and content is saved as Markdown.',
-        addDocument: 'Add document',
-        untitledDocument: 'Untitled document',
-        documentTitle: 'Document title',
-        documentTitlePlaceholder: 'Example: Terms of Service',
-        routeSlug: 'Route slug',
-        markdownContent: 'Markdown content',
-        markdownContentPlaceholder: 'Write the final Markdown content here.',
-        defaultDocuments: {
-          terms: 'Terms of Service',
-          usagePolicy: 'Usage Policy',
-          supportedRegions: 'Supported Countries and Regions',
-          serviceSpecificTerms: 'Service-Specific Terms'
-        },
-        errors: {
-          documentRequired: 'At least one document is required when login agreement is enabled.',
-          documentTitleRequired: 'Login agreement document title cannot be empty.',
-          duplicateDocumentRoute: 'Login agreement document routes cannot be duplicated: {route}'
-        }
       },
       features: {
         channelMonitor: {
@@ -5826,22 +5769,6 @@ export default {
         quickSetCopy: 'Generate & Copy (current site)',
         redirectUrlSetAndCopied: 'Redirect URL generated and copied to clipboard'
       },
-      emailOAuth: {
-        title: 'Email OAuth Sign-in',
-        description: 'After GitHub or Google email OAuth is enabled, the system reads a verified email, signs in matching users, and auto-registers missing users.',
-        githubDescription: 'GitHub OAuth App needs read:user user:email scopes. Use the backend callback URL below.',
-        githubSetupGuidePrefix: 'Setup guide: GitHub Settings -> Developer settings -> ',
-        githubSetupGuideSuffix: ' -> New OAuth App. Use your site origin as Homepage URL and the backend callback URL below as Authorization callback URL.',
-        googleDescription: 'Google OAuth client needs openid email profile scopes and the backend callback URL registered in credentials.',
-        googleSetupGuide: 'Setup guide: Google Cloud Console -> APIs & Services -> OAuth consent screen, then Credentials -> Create Credentials -> OAuth client ID, choose Web application, and add the URL below to Authorized redirect URIs.',
-        clientId: 'Client ID',
-        clientSecret: 'Client Secret',
-        secretConfiguredPlaceholder: 'Secret configured. Leave empty to keep the current value.',
-        backendCallbackUrl: 'Backend Callback URL',
-        frontendCallbackUrl: 'Frontend Callback URL',
-        generateAndCopy: 'Generate and copy',
-        callbackUrlCopied: 'Callback URL set and copied.'
-      },
       dingtalk: {
         title: 'DingTalk Login',
         description: 'Configure DingTalk OAuth for Sub2API end-user login',
@@ -5881,10 +5808,7 @@ export default {
         syncCorpEmailTargetHint: 'Defaults to dingtalk_email / DingTalk Corporate Email. Saving settings auto-creates the user attribute by the key and display name above (existing definition only has its display name synced).',
         syncDeptTarget: 'Attribute key',
         syncDeptTargetHint: 'Defaults to dingtalk_department / DingTalk Department. Saving settings auto-creates the user attribute by the key and display name above (existing definition only has its display name synced).',
-        syncAttrDisplayName: 'Display name',
-        syncDisplayNameAttrName: 'DingTalk Name',
-        syncCorpEmailAttrName: 'DingTalk Corporate Email',
-        syncDeptAttrName: 'DingTalk Department'
+        syncAttrDisplayName: 'Display name'
       },
       oidc: {
         title: 'OIDC Login',
@@ -6023,6 +5947,8 @@ export default {
         anthropicCacheTTL1hInjectionHint: 'When enabled, existing ephemeral cache_control blocks in Anthropic OAuth/Setup Token request bodies are forced to 1h; response usage is billed back as 5m by default, with account-level TTL billing override taking priority.',
         rewriteMessageCacheControl: 'Rewrite Message Cache Breakpoints',
         rewriteMessageCacheControlHint: 'Default off: preserve client cache_control on message content blocks. When enabled, client breakpoints are stripped and proxy breakpoints are injected for clients that do not manage caching themselves.',
+        clientDatelineNormalization: 'Client Dateline Normalization',
+        clientDatelineNormalizationHint: 'Default on. Rewrites the "Today\'s date is …" sentence in Anthropic OAuth/Setup Token requests back to a canonical ASCII apostrophe and hyphen date format, erasing steganographic fingerprint bits some clients inject when they detect a non-official base URL. Applies to system prompts and <system-reminder> blocks only; API-Key accounts are unaffected.',
         antigravityUserAgentVersion: 'Antigravity UA Version',
         antigravityUserAgentVersionPlaceholder: '1.23.2',
         antigravityUserAgentVersionHint: 'Leave empty to use ANTIGRAVITY_USER_AGENT_VERSION or the built-in default 1.23.2; when set, the admin setting takes precedence.',
@@ -6437,68 +6363,7 @@ export default {
         validationRequired: 'Subject and HTML template are required',
         empty: 'No email template events or locales are available yet.',
         noPreview: 'Refresh the preview to see the rendered email subject.',
-        customized: 'Customized',
-        optional: 'Optional',
-        transactional: 'Transactional',
-        categories: {
-          notification: 'Notification',
-          auth: 'Auth',
-          subscription: 'Subscription',
-          billing: 'Billing',
-          admin: 'Admin',
-          riskControl: 'Risk Control',
-          ops: 'Ops'
-        },
-        events: {
-          authVerifyCode: {
-            label: 'Email Verification Code',
-            timing: 'Sent for registration, email binding, OAuth pending email completion, or TOTP email verification.'
-          },
-          authPasswordReset: {
-            label: 'Password Reset',
-            timing: 'Sent when a user requests a password reset link.'
-          },
-          notificationEmailVerifyCode: {
-            label: 'Notification Email Verification',
-            timing: 'Sent when a user adds and verifies an extra notification email address.'
-          },
-          subscriptionPurchaseSuccess: {
-            label: 'Subscription Activated',
-            timing: 'Sent after a subscription order is paid and the subscription is activated or extended.'
-          },
-          subscriptionExpiryReminder: {
-            label: 'Subscription Expiry Reminder',
-            timing: 'Sent by the background job when an active subscription has 7, 3, or 1 day remaining. It can be disabled in Email settings.'
-          },
-          balanceLow: {
-            label: 'Low Balance Alert',
-            timing: "Sent when a user's balance drops below the global or personal reminder threshold."
-          },
-          balanceRechargeSuccess: {
-            label: 'Balance Recharge Success',
-            timing: 'Sent after a balance recharge order is paid and credited.'
-          },
-          accountQuotaAlert: {
-            label: 'Account Quota Alert',
-            timing: 'Sent to admin notification emails when an upstream account reaches the configured quota alert threshold.'
-          },
-          contentModerationViolationNotice: {
-            label: 'Risk Control Violation Notice',
-            timing: 'Sent when a user request triggers content moderation or risk-control rules but the account is not disabled yet.'
-          },
-          contentModerationAccountDisabled: {
-            label: 'Risk Control Account Disabled',
-            timing: 'Sent when content moderation reaches the ban threshold and automatically disables the user account.'
-          },
-          opsAlert: {
-            label: 'Ops Alert',
-            timing: 'Sent to ops recipients when an ops monitoring rule fires and email notification settings allow it.'
-          },
-          opsScheduledReport: {
-            label: 'Ops Scheduled Report',
-            timing: 'Sent when a configured daily, weekly, error digest, or account health report reaches its scheduled send time.'
-          }
-        }
+        customized: 'Customized'
       },
       opsMonitoring: {
         title: 'Ops Monitoring',
@@ -6777,29 +6642,7 @@ export default {
         redirectUrlSetAndCopied: 'Redirect URL generated and copied to clipboard',
         frontendRedirectUrlLabel: 'Frontend redirect URL',
         frontendRedirectUrlPlaceholder: '/auth/wechat/callback',
-        frontendRedirectUrlHint: 'Usually the frontend route callback path; keep it aligned with the backend.',
-        openAppTitle: 'PC App',
-        openAppDescription: 'Desktop browsers sign in through WeChat Open Platform QR login. This can coexist with Official Account or Mobile App.',
-        openAppIdLabel: 'PC App ID',
-        openAppIdPlaceholder: 'WeChat Open Platform PC App ID',
-        openAppSecretLabel: 'PC App Secret',
-        openAppSecretPlaceholder: 'WeChat Open Platform PC App Secret',
-        mpAppTitle: 'Official Account',
-        mpAppDescription: 'Only available inside the WeChat browser. It is shown as unavailable outside WeChat.',
-        mpAppIdLabel: 'Official Account App ID',
-        mpAppIdPlaceholder: 'Official Account App ID',
-        mpAppSecretLabel: 'Official Account App Secret',
-        mpAppSecretPlaceholder: 'Official Account App Secret',
-        mobileAppTitle: 'Mobile App',
-        mobileAppDescription: 'Native mobile clients start authorization through the WeChat SDK. The web UI does not launch this flow directly.',
-        mobileAppIdLabel: 'Mobile App ID',
-        mobileAppIdPlaceholder: 'Mobile App ID',
-        mobileAppSecretLabel: 'Mobile App Secret',
-        mobileAppSecretPlaceholder: 'Mobile App Secret',
-        unionIdHint: 'When PC App is enabled together with Official Account or Mobile App, they should belong to the same WeChat Open Platform account so UnionID can merge identities reliably.',
-        browserRedirectUrlLabel: 'Browser Redirect URL',
-        browserRedirectUrlHint: 'Used by PC App and Official Account browser callbacks. Native mobile SDK flows do not start from this browser callback directly.',
-        mpMobileConflictError: 'Official Account and Mobile App cannot be enabled at the same time.'
+        frontendRedirectUrlHint: 'Usually the frontend route callback path; keep it aligned with the backend.'
       },
       authSourceDefaults: {
         title: 'Auth Source Defaults',
@@ -6823,18 +6666,6 @@ export default {
           wechat: {
             title: 'WeChat signup',
             description: 'Default quota grants for WeChat signups.'
-          },
-          github: {
-            title: 'GitHub signup',
-            description: 'Applied on first signup or first bind through a verified GitHub email.'
-          },
-          google: {
-            title: 'Google signup',
-            description: 'Applied on first signup or first bind through a verified Google email.'
-          },
-          dingtalk: {
-            title: 'DingTalk signup',
-            description: 'Applied on first signup or first bind through DingTalk.'
           }
         },
         grantOnFirstBindLabel: 'Grant on first bind',
@@ -6850,14 +6681,7 @@ export default {
         methodHint: 'Controls whether checkout shows this method and which source key it exposes.',
         sourceLabel: 'Payment source',
         sourceHint: 'Choose an explicit source before enabling the method. Not configured methods are not exposed.',
-        sourceRequiredError: 'Select a payment source before enabling {title}.',
-        sources: {
-          notConfigured: 'Not configured',
-          officialAlipay: 'Official Alipay',
-          easyPayAlipay: 'EasyPay Alipay',
-          officialWechatPay: 'Official WeChat Pay',
-          easyPayWechatPay: 'EasyPay WeChat Pay'
-        }
+        sourceRequiredError: 'Select a payment source before enabling {title}.'
       },
       openaiExperimentalScheduler: {
         title: 'OpenAI experimental scheduler policy',
@@ -7072,15 +6896,15 @@ export default {
   // Custom Page (iframe embed)
   customPage: {
     title: 'Custom Page',
-    tocTitle: 'Contents',
     openInNewTab: 'Open in new tab',
     notFoundTitle: 'Page not found',
     notFoundDesc: 'This custom page does not exist or has been removed.',
     notConfiguredTitle: 'Page URL not configured',
     notConfiguredDesc: 'The URL for this custom page has not been properly configured.',
-    pageNotFoundInline: 'Page not found',
-    loadFailedInline: 'Failed to load page',
-    copySuccess: 'Copied ✓',
+    tableOfContents: 'Contents',
+    copyCode: 'Copy',
+    copiedCode: 'Copied',
+    copyCodeFailed: 'Failed'
   },
 
   // Announcements Page
@@ -7448,6 +7272,7 @@ export default {
     planFeatures: 'Features',
     planCard: {
       rate: 'Rate',
+      peakRate: 'Peak Rate',
       dailyLimit: 'Daily',
       weeklyLimit: 'Weekly',
       monthlyLimit: 'Monthly',

@@ -160,11 +160,6 @@ export default {
     resetNow: '即将重置',
     subscriptionType: '订阅类型',
     subscriptionExpires: '订阅到期',
-    periodUnits: {
-      day: '日',
-      week: '周',
-      month: '月'
-    },
     // Usage stat cells
     todayRequests: '今日请求',
     todayInputTokens: '今日输入',
@@ -284,7 +279,6 @@ export default {
     all: '全部',
     none: '无',
     selectAll: '全选',
-    invertSelection: '反选',
     noData: '暂无数据',
     expand: '展开',
     collapse: '收起',
@@ -335,7 +329,6 @@ export default {
     tomorrow: '明天',
     unknown: '未知',
     minutes: '分钟',
-    rateMultiplierValue: '{rate}x 倍率',
     time: {
       never: '从未',
       justNow: '刚刚',
@@ -376,7 +369,24 @@ export default {
     updatedAt: '更新日期：{date}',
     empty: '暂无正文内容',
     loginAgreement: '登录条款',
-    adminCompliance: '部署与运营合规承诺'
+    adminCompliance: '部署与运营合规承诺',
+    loginAgreementPrompt: {
+      checkboxPrefix: '我已阅读并同意',
+      documentSeparator: '、',
+      noticeTitle: '继续登录前需要先同意最新条款。',
+      noticeDescription: '未同意前，账号密码输入和快捷登录会保持禁用。',
+      viewTerms: '查看条款',
+      dialogTitle: '条款更新通知',
+      dialogDescription: '我们的服务条款已于 {date} 更新。在继续使用服务之前，请仔细阅读并同意以下条款。',
+      recently: '近期',
+      relatedDocuments: '相关文档',
+      reject: '拒绝',
+      accept: '同意并继续',
+      loginRejectedWarning: '未同意最新条款前，无法输入账号密码或使用快捷登录。',
+      loginRequiredWarning: '请先阅读并同意最新条款后再登录。',
+      registerRejectedWarning: '未同意最新条款前，无法注册或使用快捷登录。',
+      registerRequiredWarning: '请先阅读并同意最新条款后再注册。'
+    }
   },
 
   // Navigation
@@ -502,23 +512,6 @@ export default {
     invitationCodeValidating: '正在验证邀请码...',
     invitationCodeInvalidCannotRegister: '邀请码无效，请检查后重试',
     oauthOrContinue: '或使用其他继续',
-    loginAgreement: {
-      checkboxPrefix: '我已阅读并同意',
-      documentSeparator: '、',
-      inlineNoticeTitle: '继续登录前需要先同意最新条款。',
-      inlineNoticeDescription: '未同意前，账号密码输入和快捷登录会保持禁用。',
-      viewTerms: '查看条款',
-      updatedTitle: '条款更新通知',
-      updatedDescription: '我们的服务条款已于 {date} 更新。在继续使用服务之前，请仔细阅读并同意以下条款。',
-      recently: '近期',
-      relatedDocuments: '相关文档',
-      reject: '拒绝',
-      acceptAndContinue: '同意并继续',
-      rejectLoginWarning: '未同意最新条款前，无法输入账号密码或使用快捷登录。',
-      loginRequiredWarning: '请先阅读并同意最新条款后再登录。',
-      rejectRegisterWarning: '未同意最新条款前，无法注册或使用快捷登录。',
-      registerRequiredWarning: '请先阅读并同意最新条款后再注册。'
-    },
     linuxdo: {
       signIn: '使用 Linux.do 登录',
       orContinue: '或使用邮箱密码继续',
@@ -605,15 +598,14 @@ export default {
       wechatAvailabilityUnknown: '暂时无法确认微信登录可用性，请刷新后重试。',
       wechatSystemBrowserOnly: '当前微信登录流程仅支持在系统浏览器中继续。',
       wechatBrowserOnly: '当前微信登录流程仅支持在微信内置浏览器中继续。',
-      wechatNativeAppRequired: '当前仅配置微信移动应用登录，需要在原生 App 中通过微信 SDK 发起授权。',
       wechatNotConfigured: '微信登录尚未配置。'
     },
     linuxdoCallbackPageTitle: 'LinuxDo 登录回调',
     dingtalkCallbackPageTitle: '钉钉登录回调',
+    dingtalkProviderName: '钉钉',
     oidcCallbackPageTitle: 'OIDC 登录回调',
     oauthCallbackPageTitle: 'OAuth 回调',
     wechatProviderName: '微信',
-    dingtalkProviderName: '钉钉',
     wechatCallbackPageTitle: '微信登录回调',
     wechatPaymentCallbackPageTitle: '微信支付回调',
     wechatPayment: {
@@ -2275,6 +2267,7 @@ export default {
         openai: 'OpenAI',
         gemini: 'Gemini',
         antigravity: 'Antigravity',
+        grok: 'Grok',
       },
       saving: '保存中...',
       noGroups: '暂无分组',
@@ -2293,6 +2286,15 @@ export default {
       public: '公开',
       rateAndAccounts: '{rate}x 费率 · {count} 个账号',
       accountsCount: '{count} 个账号',
+      rateLabel: '倍率',
+      accountFilters: {
+        title: '账号过滤控制',
+        oauthOnly: '仅允许 OAuth 账号',
+        oauthOnlyEnabled: '已启用 — 排除 API Key 类型账号',
+        privacySetOnly: '仅允许隐私保护已设置的账号',
+        privacySetOnlyEnabled: '已启用 — Privacy 未设置的账号将被排除',
+        disabled: '未启用'
+      },
       enterGroupName: '请输入分组名称',
       optionalDescription: '可选描述',
       platformHint: '选择此分组关联的平台',
@@ -2360,24 +2362,21 @@ export default {
         finalPricePreview: '最终单张价格预览',
         notConfigured: '未配置'
       },
+      peakRate: {
+        enable: '启用高峰倍率',
+        peakStart: '高峰开始',
+        peakEnd: '高峰结束',
+        peakMultiplier: '高峰倍率',
+        multiplierHint: '作用于 token 计费倍率；token 计费的图片 token 同样适用，0 表示高峰 token 请求按 0 倍计费'
+      },
       modelsList: {
         title: '自定义 /v1/models 模型列表',
         hint: '仅影响 /v1/models 展示结果，不影响白名单模型调用和账号调度。',
         loading: '正在加载模型列表...',
         empty: '暂无可展示模型',
-        selectedCount: '已选 {selected} / {total}'
-      },
-      accountFilter: {
-        title: '账号过滤控制',
-        notEnabled: '未启用',
-        oauthOnly: {
-          label: '仅允许 OAuth 账号',
-          enabledHint: '已启用 - 排除 API Key 类型账号'
-        },
-        privacySet: {
-          label: '仅允许隐私保护已设置的账号',
-          enabledHint: '已启用 - Privacy 未设置的账号将被排除'
-        }
+        selectedSummary: '已选 {selected} / {total}',
+        selectAll: '全选',
+        invertSelection: '反选'
       },
       claudeCode: {
         title: 'Claude Code 客户端限制',
@@ -2422,8 +2421,7 @@ export default {
         tooltipEdit: '选择一个或多个相同平台的分组，保存后当前分组的账号会被替换为这些分组的账号（去重）。',
         selectPlaceholder: '选择分组以复制其账号...',
         hint: '可选多个分组，账号会自动去重',
-        hintEdit: '⚠️ 注意：这会替换当前分组的所有账号绑定',
-        optionLabel: '{name}（{count} 个账号）'
+        hintEdit: '⚠️ 注意：这会替换当前分组的所有账号绑定'
       },
       modelRouting: {
         title: '模型路由配置',
@@ -2525,11 +2523,24 @@ export default {
       updateError: '更新渠道失败',
       deleteError: '删除渠道失败',
       nameRequired: '请输入渠道名称',
-      noGroupsSelected: '{platform} 平台未选择分组，请至少选择一个分组或禁用该平台',
-      emptyModelsInPricing: '{platform} 平台下有定价条目未添加模型，请添加模型或删除该条目',
       duplicateModels: '模型「{0}」在多个定价条目中重复',
       modelConflict: "模型模式 '{model1}' 和 '{model2}' 冲突：匹配范围重叠。模型名称按大小写不敏感匹配，已有条目已覆盖其所有大小写变体，无需重复添加。",
       mappingConflict: "模型映射源 '{model1}' 和 '{model2}' 冲突：匹配范围重叠。源模式按大小写不敏感匹配，已有条目已覆盖其所有大小写变体。",
+      intervalValidation: {
+        negativeMin: '区间 #{index}：最小 token 数（{value}）不能为负数',
+        maxPositive: '区间 #{index}：最大 token 数（{value}）必须大于 0',
+        maxGreaterThanMin: '区间 #{index}：最大 token 数（{max}）必须大于最小 token 数（{min}）',
+        negativePrice: '区间 #{index}：{field}不能为负数',
+        unboundedLast: '区间 #{index}：无上限区间（最大 token 数为空）必须放在最后',
+        overlap: '区间 #{previousIndex} 和 #{currentIndex} 重叠：前一个上界（{previousMax}）大于当前下界（{currentMin}）',
+        price: {
+          inputPrice: '输入价格',
+          outputPrice: '输出价格',
+          cacheWritePrice: '缓存写入价格',
+          cacheReadPrice: '缓存读取价格',
+          perRequestPrice: '单次价格'
+        }
+      },
       deleteConfirm: '确定要删除渠道「{name}」吗？此操作不可撤销。',
       columns: {
         name: '名称',
@@ -2564,10 +2575,15 @@ export default {
         outputPrice: '输出',
         cacheWritePrice: '缓存写入',
         cacheReadPrice: '缓存读取',
+        cacheWritePriceShort: '缓存写',
+        cacheReadPriceShort: '缓存读',
         imageTokenPrice: '图片输出',
         imageOutputPrice: '图片输出价格',
         pricePlaceholder: '默认',
         intervals: '上下文区间定价（可选）',
+        minTokens: '最小',
+        maxTokens: '最大',
+        inclusive: '（含）',
         addInterval: '添加区间',
         requestTiers: '按次计费层级',
         imageTiers: '图片计费层级（按次）',
@@ -2578,22 +2594,6 @@ export default {
         perRequestPriceRequired: '按次/图片计费模式必须设置默认价格或至少一个计费层级',
         tierLabel: '层级',
         resolution: '分辨率',
-        inclusiveSuffix: '(含)',
-        validation: {
-          minTokensNegative: '区间 #{index}: 最小 token 数 ({value}) 不能为负数',
-          maxTokensPositive: '区间 #{index}: 最大 token 数 ({value}) 必须大于 0',
-          maxTokensGreaterThanMin: '区间 #{index}: 最大 token 数 ({max}) 必须大于最小 token 数 ({min})',
-          priceNegative: '区间 #{index}: {field}不能为负数',
-          unlimitedLast: '区间 #{index}: 无上限区间（最大 token 数为空）只能是最后一个',
-          overlap: '区间 #{previousIndex} 和 #{currentIndex} 重叠：前一个区间上界 ({previousMax}) 大于当前区间下界 ({currentMin})',
-          fields: {
-            inputPrice: '输入价格',
-            outputPrice: '输出价格',
-            cacheWritePrice: '缓存写入价格',
-            cacheReadPrice: '缓存读取价格',
-            perRequestPrice: '单次价格'
-          }
-        },
         modelMapping: '模型映射',
         modelMappingHint: '将请求中的模型名映射为实际模型名。在账号级别映射之前执行。',
         noMappingRules: '暂无映射规则，点击"添加"创建',
@@ -3191,6 +3191,7 @@ export default {
       dataExportConfirmMessage: '导出的数据包含账号与代理的敏感信息，请妥善保存。',
       dataExportConfirm: '确认导出',
       dataExported: '数据导出成功',
+      dataExportedSkippedShadows: '数据已导出。已跳过 {count} 个 spark 影子账号：其调度配置不在备份内，还原后需在重建的影子上重新调优。',
       dataExportFailed: '数据导出失败',
       dataImportTitle: '导入数据',
       dataImportHint: '上传导出的 JSON 文件以批量导入账号与代理。',
@@ -3493,6 +3494,7 @@ export default {
         resetTooltipReady: '消耗 1 次重置次数以立即恢复当前窗口',
         resetTooltipNeedQuery: '先点击「次数」加载剩余重置次数',
         resetTooltipNoCredits: '没有可用的重置次数',
+        resetTooltipShadow: 'Spark 影子账号不能重置次数;请在母账号上重置',
         noCreditsAvailable: '没有可用的重置次数',
         resetSuccess: '已重置 {windows} 个窗口',
         confirmTitle: '确认重置周限',
@@ -3596,6 +3598,10 @@ export default {
       revertProxy: '切回原代理',
       revertProxySuccess: '已成功切回原代理',
       revertProxyFailed: '切回原代理失败',
+      createSparkShadow: '创建 Spark 影子账号',
+      createSparkShadowConfirm: '为「{name}」创建链接型 Spark 影子账号?影子共享母账号凭据、仅服务 spark 模型。',
+      createSparkShadowSuccess: 'Spark 影子账号已创建',
+      createSparkShadowFailed: '创建 Spark 影子账号失败',
       resetStatus: '重置状态',
       statusReset: '账号状态已重置',
       failedToResetStatus: '重置账号状态失败',
@@ -3750,16 +3756,6 @@ export default {
       requestModel: '请求模型',
       actualModel: '实际模型',
       addMapping: '添加映射',
-      modelPresets: {
-        antigravity: {
-          gemini31ProHighPassThrough: '3.1-Pro-High透传',
-          gemini31ProLowPassThrough: '3.1-Pro-Low透传',
-          gemini25FlashImagePassThrough: '2.5-Flash-Image透传',
-          gemini31FlashImagePassThrough: '3.1-Flash-Image透传',
-          gemini3FlashPassThrough: '3-Flash透传',
-          gemini25FlashLitePassThrough: '2.5-Flash-Lite透传'
-        }
-      },
       mappingExists: '模型 {model} 的映射已存在',
       wildcardOnlyAtEnd: '通配符 * 只能放在末尾',
       targetNoWildcard: '目标模型不能包含通配符 *',
@@ -4029,8 +4025,6 @@ export default {
           },
           // Refresh Token auth
           refreshTokenAuth: '手动输入 RT',
-          mobileRefreshTokenAuth: '手动输入 Mobile RT',
-          accessTokenAuth: '手动输入 AT',
           refreshTokenDesc: '输入您已有的 OpenAI Refresh Token，支持批量输入（每行一个），系统将自动验证并创建账号。',
           refreshTokenPlaceholder: '粘贴您的 OpenAI Refresh Token...\n支持多个，每行一个',
           codexSessionAuth: 'Codex JSON / AT 批量输入',
@@ -4210,28 +4204,25 @@ export default {
         oauthType: {
           builtInTitle: '内置授权（Gemini CLI / Code Assist）',
           builtInDesc: '使用 Google 内置客户端 ID，无需管理员配置。',
-          googleOneDesc: '个人账号',
-          googleOneCardDesc: '个人账号，享受 Google One 订阅配额',
-          codeAssistCardDesc: '企业级，需要 GCP 项目',
-          codeAssistRequirement: '需要激活 GCP 项目并绑定信用卡',
           builtInRequirement: '需要 GCP 项目并填写 Project ID。',
+          googleOneDesc: '个人账号，享受 Google One 订阅配额',
+          codeAssistDesc: '企业级，需要 GCP 项目',
+          codeAssistRequirement: '需要激活 GCP 项目并绑定信用卡',
+          showAdvanced: '显示高级选项（自建 OAuth Client）',
+          hideAdvanced: '隐藏高级选项（自建 OAuth Client）',
           gcpProjectLink: '创建项目',
           customTitle: '自定义授权（AI Studio OAuth）',
           customDesc: '使用管理员预设的 OAuth 客户端，适合组织管理。',
           customRequirement: '需管理员配置 Client ID 并加入测试用户白名单。',
           badges: {
             recommended: '推荐',
-            recommendedPersonal: '推荐个人用户',
             highConcurrency: '高并发',
-            enterpriseUsers: '企业用户',
+            individuals: '推荐个人用户',
             noGcp: '无需 GCP',
+            enterprise: '企业用户',
             noAdmin: '无需管理员配置',
             orgManaged: '组织管理',
             adminRequired: '需要管理员'
-          },
-          advancedOptions: {
-            showLabel: '显示高级选项（自建 OAuth Client）',
-            hideLabel: '隐藏高级选项（自建 OAuth Client）'
           }
         },
         setupGuide: {
@@ -4248,7 +4239,7 @@ export default {
           },
           links: {
             countryCheck: '检查归属地',
-            changeCountryAssociation: '修改归属地',
+            countryChange: '修改归属地',
             geminiWebActivation: '激活 Gemini Web',
             gcpProject: '打开 GCP 控制台'
           }
@@ -4996,6 +4987,51 @@ export default {
       loadingText: '加载中...',
       ready: '就绪',
       autoRefreshRemaining: '剩余 {seconds}s',
+      systemLogs: {
+        title: '系统日志',
+        description: '优先显示最新日志，可按条件筛选、搜索和清理。',
+        queue: '队列',
+        written: '已写入',
+        dropped: '已丢弃',
+        failed: '写入失败',
+        runtimeConfig: '运行时日志配置（立即生效）',
+        all: '全部',
+        level: '级别',
+        stacktraceThreshold: '堆栈阈值',
+        samplingInitial: '采样初始条数',
+        samplingThereafter: '后续采样间隔',
+        retentionDays: '保留天数',
+        caller: '调用方',
+        sampling: '采样',
+        saveAndApply: '保存并应用',
+        resetDefaults: '重置默认值',
+        latestWriteError: '最近写入错误：',
+        timeRange: '时间范围',
+        startTime: '开始时间（可选）',
+        endTime: '结束时间（可选）',
+        component: '组件',
+        componentPlaceholder: '例如 http.access',
+        keyId: 'KEY ID',
+        platform: '平台',
+        model: '模型',
+        keyword: '关键词',
+        keywordPlaceholder: 'message/request_id',
+        search: '搜索',
+        cleanCurrentFilters: '清理当前筛选结果',
+        refreshHealth: '刷新健康状态',
+        empty: '暂无系统日志',
+        time: '时间',
+        logDetails: '日志详情',
+        loadFailed: '加载系统日志失败',
+        runtimeConfigActive: '运行时日志配置已生效',
+        runtimeConfigSaveFailed: '保存日志配置失败',
+        resetRuntimeConfigConfirm: '确定要重置为启动配置（env/yaml）并立即应用吗？',
+        runtimeConfigReset: '已重置为启动日志配置',
+        runtimeConfigResetFailed: '重置日志配置失败',
+        cleanupConfirm: '确定要清理匹配当前筛选条件的系统日志吗？此操作不可撤销。',
+        cleanupSuccess: '清理完成，已删除 {count} 条日志。',
+        cleanupFailed: '清理系统日志失败'
+      },
       requestsTotal: '请求（总计）',
       slaScope: 'SLA 范围：',
       tokens: 'Token数',
@@ -5690,60 +5726,6 @@ export default {
         raw: 'Raw（不聚合）',
         preagg: 'Preagg（聚合）'
       },
-      systemLogs: {
-        title: '系统日志',
-        description: '默认按最新时间倒序，支持筛选搜索与按条件清理。',
-        cleanupCurrentFilter: '按当前筛选清理',
-        refreshHealth: '刷新健康指标',
-        cleanupConfirm: '确认按当前筛选条件清理系统日志？该操作不可撤销。',
-        cleanupSuccess: '清理完成，删除 {count} 条日志',
-        empty: '暂无系统日志',
-        health: {
-          queue: '队列 {depth}/{capacity}',
-          written: '写入 {count}',
-          dropped: '丢弃 {count}',
-          failed: '失败 {count}'
-        },
-        runtime: {
-          title: '运行时日志配置（实时生效）',
-          level: '级别',
-          stacktraceLevel: '堆栈阈值',
-          samplingInitial: '采样初始',
-          samplingThereafter: '采样后续',
-          retentionDays: '保留天数',
-          caller: 'caller',
-          sampling: 'sampling',
-          save: '保存并生效',
-          saveSuccess: '日志运行时配置已生效',
-          saveFailed: '保存日志配置失败',
-          reset: '回滚默认值',
-          resetConfirm: '确认回滚为启动配置（env/yaml）并立即生效？',
-          resetSuccess: '已回滚到启动日志配置',
-          resetFailed: '回滚日志配置失败',
-          lastWriteError: '最近写入错误：{error}'
-        },
-        filters: {
-          timeRange: '时间范围',
-          startTime: '开始时间（可选）',
-          endTime: '结束时间（可选）',
-          level: '级别',
-          component: '组件',
-          componentPlaceholder: '如 http.access',
-          platform: '平台',
-          model: '模型',
-          keyword: '关键词',
-          keywordPlaceholder: '消息/request_id'
-        },
-        table: {
-          time: '时间',
-          level: '级别',
-          detail: '日志详细信息'
-        },
-        errors: {
-          loadFailed: '系统日志加载失败',
-          cleanupFailed: '清理系统日志失败'
-        }
-      },
       accountAvailability: {
         available: '可用',
         unavailable: '不可用',
@@ -5796,39 +5778,6 @@ export default {
         email: '邮件设置',
         backup: '数据备份',
         payment: '支付设置',
-      },
-      loginAgreement: {
-        title: '登录条款确认',
-        description: '控制登录页是否要求用户先阅读并同意服务条款、隐私政策或其他 Markdown 文档。',
-        statusEnabled: '已启用',
-        statusDisabled: '未启用',
-        displayMode: '展示形式',
-        modeModal: '弹窗',
-        modeCheckbox: '复选框',
-        checkboxHint: '复选框会显示在登录按钮下方，未勾选前所有登录入口禁用。',
-        modalHint: '弹窗会在登录页打开，用户拒绝后所有登录入口保持禁用。',
-        updatedDate: '条款更新日期',
-        updatedDateHint: '日期或文档内容变化后，用户需要重新同意。',
-        documentsTitle: '协议文档',
-        documentsHint: '文档名称可自定义，内容按 Markdown 保存。可参考：服务条款、使用政策、支持的国家和地区、服务特定条款。',
-        addDocument: '添加文档',
-        untitledDocument: '未命名文档',
-        documentTitle: '文档名称',
-        documentTitlePlaceholder: '例如：服务条款',
-        routeSlug: '路由标识',
-        markdownContent: 'Markdown 内容',
-        markdownContentPlaceholder: '在这里填写正式 Markdown 内容。',
-        defaultDocuments: {
-          terms: '服务条款',
-          usagePolicy: '使用政策',
-          supportedRegions: '支持的国家和地区',
-          serviceSpecificTerms: '服务特定条款'
-        },
-        errors: {
-          documentRequired: '启用登录条款确认时，至少需要保留一份文档。',
-          documentTitleRequired: '登录条款文档名称不能为空。',
-          duplicateDocumentRoute: '登录条款文档路由不能重复：{route}'
-        }
       },
       features: {
         channelMonitor: {
@@ -5979,22 +5928,6 @@ export default {
         quickSetCopy: '使用当前站点生成并复制',
         redirectUrlSetAndCopied: '已使用当前站点生成回调地址并复制到剪贴板'
       },
-      emailOAuth: {
-        title: '邮箱快捷登录',
-        description: '开启 GitHub 或 Google 邮箱授权登录后，系统会读取已验证邮箱，存在则直接登录，不存在则自动注册。',
-        githubDescription: 'GitHub OAuth App 需要 read:user user:email 权限，回调地址填写下方后端地址。',
-        githubSetupGuidePrefix: '开通引导：GitHub Settings -> Developer settings -> ',
-        githubSetupGuideSuffix: ' -> New OAuth App；Homepage URL 填站点域名，Authorization callback URL 填下面的后端回调地址。',
-        googleDescription: 'Google OAuth 客户端需要 openid email profile 范围，并在凭据里登记后端回调地址。',
-        googleSetupGuide: '开通引导：Google Cloud Console -> APIs & Services -> OAuth consent screen 完成同意屏幕；Credentials -> Create Credentials -> OAuth client ID，类型选择 Web application，并把下面地址加入 Authorized redirect URIs。',
-        clientId: 'Client ID',
-        clientSecret: 'Client Secret',
-        secretConfiguredPlaceholder: '密钥已配置，留空以保留当前值。',
-        backendCallbackUrl: '后端回调地址',
-        frontendCallbackUrl: '前端回跳地址',
-        generateAndCopy: '生成并复制',
-        callbackUrlCopied: '回调地址已写入并复制。'
-      },
       dingtalk: {
         title: '钉钉登录',
         description: '配置钉钉 OAuth，用于 Sub2API 用户登录',
@@ -6033,10 +5966,7 @@ export default {
         syncCorpEmailTargetHint: '默认 dingtalk_email / 钉钉企业邮箱；保存设置时按上述属性键和显示名称自动创建用户属性（已存在则仅同步显示名称）',
         syncDeptTarget: '属性键',
         syncDeptTargetHint: '默认 dingtalk_department / 钉钉部门；保存设置时按上述属性键和显示名称自动创建用户属性（已存在则仅同步显示名称）',
-        syncAttrDisplayName: '显示名称',
-        syncDisplayNameAttrName: '钉钉姓名',
-        syncCorpEmailAttrName: '钉钉企业邮箱',
-        syncDeptAttrName: '钉钉部门'
+        syncAttrDisplayName: '显示名称'
       },
       oidc: {
         title: 'OIDC 登录',
@@ -6171,6 +6101,8 @@ export default {
         anthropicCacheTTL1hInjectionHint: '开启后，对 Anthropic OAuth/Setup Token 请求体中已有的 ephemeral 缓存块强制写入 1h；响应 usage 默认按 5m 回写计费，账号级 TTL 计费设置优先。',
         rewriteMessageCacheControl: '改写消息缓存断点',
         rewriteMessageCacheControlHint: '默认关闭，保留客户端在 messages 内容块中的 cache_control。开启后会清除客户端断点并注入代理断点，适合不自行管理缓存策略的客户端。',
+        clientDatelineNormalization: '客户端 dateline 归一化',
+        clientDatelineNormalizationHint: '默认开启。将 Anthropic OAuth/Setup Token 请求体中 "Today\'s date is …" 语句里的撇号与日期分隔符还原为 ASCII 撇号 + 短横线 (2026-07-01) 的规范形态，抹除某些客户端在检测到非官方 base URL 时注入的隐写指纹位。仅作用于 system prompt 与 <system-reminder> 块内，API Key 账号不受影响。',
         antigravityUserAgentVersion: 'Antigravity UA 版本',
         antigravityUserAgentVersionPlaceholder: '1.23.2',
         antigravityUserAgentVersionHint: '留空时使用 ANTIGRAVITY_USER_AGENT_VERSION 或内置默认值 1.23.2；填写后后台设置优先。',
@@ -6587,68 +6519,7 @@ export default {
         validationRequired: '主题和 HTML 模板不能为空',
         empty: '暂无可用的邮件模板事件或语言。',
         noPreview: '刷新预览后查看渲染后的邮件主题。',
-        customized: '已自定义',
-        optional: '可退订通知',
-        transactional: '事务邮件',
-        categories: {
-          notification: '通知',
-          auth: '认证安全',
-          subscription: '订阅',
-          billing: '计费',
-          admin: '管理告警',
-          riskControl: '风控',
-          ops: '运维'
-        },
-        events: {
-          authVerifyCode: {
-            label: '邮箱验证码',
-            timing: '注册、绑定邮箱、OAuth 补全邮箱或 TOTP 邮箱校验时发送。'
-          },
-          authPasswordReset: {
-            label: '密码重置',
-            timing: '用户请求密码重置链接时发送。'
-          },
-          notificationEmailVerifyCode: {
-            label: '通知邮箱验证码',
-            timing: '用户添加并验证额外通知邮箱时发送。'
-          },
-          subscriptionPurchaseSuccess: {
-            label: '订阅开通成功',
-            timing: '订阅订单完成支付并成功开通或续期后发送。'
-          },
-          subscriptionExpiryReminder: {
-            label: '订阅到期提醒',
-            timing: '后台任务在订阅仍有效且距离到期剩余 7 天、3 天、1 天时各发送一次，可通过邮件设置中的开关关闭。'
-          },
-          balanceLow: {
-            label: '余额不足提醒',
-            timing: '用户余额低于全局或个人配置的提醒阈值时发送。'
-          },
-          balanceRechargeSuccess: {
-            label: '余额充值成功',
-            timing: '余额充值订单支付完成并入账后发送。'
-          },
-          accountQuotaAlert: {
-            label: '账号限额告警',
-            timing: '上游账号的用量达到配置的额度告警阈值时发送给管理员通知邮箱。'
-          },
-          contentModerationViolationNotice: {
-            label: '内容审计违规提醒',
-            timing: '用户请求命中内容审计或风控规则、但尚未被禁用时发送。'
-          },
-          contentModerationAccountDisabled: {
-            label: '内容审计禁用账号',
-            timing: '内容审计违规次数达到封禁阈值并自动禁用用户账号时发送。'
-          },
-          opsAlert: {
-            label: '运维告警',
-            timing: '运维监控规则触发告警并满足邮件通知配置时发送给运维收件人。'
-          },
-          opsScheduledReport: {
-            label: '运维定时报表',
-            timing: '运维日报、周报、错误摘要或账号健康报表到达配置的发送时间时发送。'
-          }
-        }
+        customized: '已自定义'
       },
       opsMonitoring: {
         title: '运维监控',
@@ -6926,29 +6797,7 @@ export default {
         redirectUrlSetAndCopied: '已使用当前站点生成回调地址并复制到剪贴板',
         frontendRedirectUrlLabel: '前端回调地址',
         frontendRedirectUrlPlaceholder: '/auth/wechat/callback',
-        frontendRedirectUrlHint: '通常用于前端路由回调地址，需与后端配置保持一致。',
-        openAppTitle: 'PC 应用',
-        openAppDescription: '桌面浏览器通过微信开放平台扫码登录。可与公众号或移动应用同时存在。',
-        openAppIdLabel: 'PC AppID',
-        openAppIdPlaceholder: '微信开放平台 PC 应用 AppID',
-        openAppSecretLabel: 'PC AppSecret',
-        openAppSecretPlaceholder: '微信开放平台 PC 应用 AppSecret',
-        mpAppTitle: '公众号',
-        mpAppDescription: '仅在微信内浏览器可用；非微信环境下会显示不可用。',
-        mpAppIdLabel: '公众号 AppID',
-        mpAppIdPlaceholder: '公众号 AppID',
-        mpAppSecretLabel: '公众号 AppSecret',
-        mpAppSecretPlaceholder: '公众号 AppSecret',
-        mobileAppTitle: '移动应用',
-        mobileAppDescription: '原生移动端通过微信 SDK 唤起授权，网页端不会直接发起该流程。',
-        mobileAppIdLabel: '移动应用 AppID',
-        mobileAppIdPlaceholder: '移动应用 AppID',
-        mobileAppSecretLabel: '移动应用 AppSecret',
-        mobileAppSecretPlaceholder: '移动应用 AppSecret',
-        unionIdHint: '如果同时启用 PC 应用和公众号/移动应用，这些应用需要挂在同一个微信开放平台主体下，否则 UnionID 无法稳定归并账号。',
-        browserRedirectUrlLabel: '浏览器回调地址',
-        browserRedirectUrlHint: '用于 PC 应用和公众号的网页回调。移动应用走原生 SDK 时不直接使用这个浏览器回调。',
-        mpMobileConflictError: '公众号和移动应用不能同时启用。'
+        frontendRedirectUrlHint: '通常用于前端路由回调地址，需与后端配置保持一致。'
       },
       authSourceDefaults: {
         title: '认证来源默认值',
@@ -6972,18 +6821,6 @@ export default {
           wechat: {
             title: '微信登录',
             description: '适用于微信第三方注册的新用户默认配额。'
-          },
-          github: {
-            title: 'GitHub 登录',
-            description: '通过 GitHub 已验证邮箱首次注册或首次绑定时应用。'
-          },
-          google: {
-            title: 'Google 登录',
-            description: '通过 Google 已验证邮箱首次注册或首次绑定时应用。'
-          },
-          dingtalk: {
-            title: '钉钉登录',
-            description: '通过钉钉首次注册或首次绑定时应用。'
           }
         },
         grantOnFirstBindLabel: '首次绑定时授权',
@@ -6999,14 +6836,7 @@ export default {
         methodHint: '控制前台结算页是否展示该方式，以及展示时使用的来源键。',
         sourceLabel: '支付来源',
         sourceHint: '启用后必须明确选择一个来源；未配置状态不会对外展示该支付方式。',
-        sourceRequiredError: '{title} 已启用，请先选择支付来源。',
-        sources: {
-          notConfigured: '未配置',
-          officialAlipay: '支付宝官方',
-          easyPayAlipay: '易支付支付宝',
-          officialWechatPay: '微信官方',
-          easyPayWechatPay: '易支付微信'
-        }
+        sourceRequiredError: '{title} 已启用，请先选择支付来源。'
       },
       openaiExperimentalScheduler: {
         title: 'OpenAI 实验调度策略',
@@ -7220,15 +7050,15 @@ export default {
   // Custom Page (iframe embed)
   customPage: {
     title: '自定义页面',
-    tocTitle: '目录',
     openInNewTab: '新窗口打开',
     notFoundTitle: '页面不存在',
     notFoundDesc: '该自定义页面不存在或已被删除。',
     notConfiguredTitle: '页面链接未配置',
     notConfiguredDesc: '该自定义页面的 URL 未正确配置。',
-    pageNotFoundInline: '页面未找到',
-    loadFailedInline: '加载页面失败',
-    copySuccess: '已复制 ✓',
+    tableOfContents: '目录',
+    copyCode: '复制',
+    copiedCode: '已复制',
+    copyCodeFailed: '失败'
   },
 
   // Announcements Page
@@ -7622,6 +7452,7 @@ export default {
     planFeatures: '功能特性',
     planCard: {
       rate: '倍率',
+      peakRate: '高峰倍率',
       dailyLimit: '日限额',
       weeklyLimit: '周限额',
       monthlyLimit: '月限额',

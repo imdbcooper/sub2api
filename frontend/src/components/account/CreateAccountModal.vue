@@ -153,7 +153,7 @@
             :class="[
               'flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-all',
               form.platform === 'grok'
-                ? 'bg-white text-slate-700 shadow-sm dark:bg-dark-600 dark:text-slate-200'
+                ? 'bg-white text-zinc-900 shadow-sm dark:bg-dark-600 dark:text-zinc-100'
                 : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
             ]"
           >
@@ -362,15 +362,15 @@
             :class="[
               'flex items-center gap-3 rounded-lg border-2 p-3 text-left transition-all',
               accountCategory === 'oauth-based'
-                ? 'border-slate-500 bg-slate-50 dark:bg-slate-900/20'
-                : 'border-gray-200 hover:border-slate-300 dark:border-dark-600 dark:hover:border-slate-700'
+                ? 'border-zinc-800 bg-zinc-50 dark:bg-zinc-900/30'
+                : 'border-gray-200 hover:border-zinc-400 dark:border-dark-600 dark:hover:border-zinc-600'
             ]"
           >
             <div
               :class="[
                 'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
                 accountCategory === 'oauth-based'
-                  ? 'bg-slate-700 text-white'
+                  ? 'bg-zinc-900 text-white'
                   : 'bg-gray-100 text-gray-500 dark:bg-dark-600 dark:text-gray-400'
               ]"
             >
@@ -560,13 +560,13 @@
                   Google One
                 </span>
                 <span class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.oauthType.googleOneCardDesc') }}
+                  {{ t('admin.accounts.gemini.oauthType.googleOneDesc') }}
                 </span>
                 <div class="mt-2 flex flex-wrap gap-1">
                   <span
                     class="rounded bg-purple-100 px-2 py-0.5 text-[10px] font-semibold text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"
                   >
-                    {{ t('admin.accounts.gemini.oauthType.badges.recommendedPersonal') }}
+                    {{ t('admin.accounts.gemini.oauthType.badges.individuals') }}
                   </span>
                   <span
                     class="rounded bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
@@ -603,7 +603,7 @@
                   GCP Code Assist
                 </span>
                 <span class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ t('admin.accounts.gemini.oauthType.codeAssistCardDesc') }}
+                  {{ t('admin.accounts.gemini.oauthType.codeAssistDesc') }}
                 </span>
                 <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">
                   {{ t('admin.accounts.gemini.oauthType.codeAssistRequirement') }}
@@ -620,7 +620,7 @@
                   <span
                     class="rounded bg-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
                   >
-                    {{ t('admin.accounts.gemini.oauthType.badges.enterpriseUsers') }}
+                    {{ t('admin.accounts.gemini.oauthType.badges.enterprise') }}
                   </span>
                   <span
                     class="rounded bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"
@@ -649,9 +649,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
               </svg>
               <span>
-                {{ showAdvancedOAuth
-                  ? t('admin.accounts.gemini.oauthType.advancedOptions.hideLabel')
-                  : t('admin.accounts.gemini.oauthType.advancedOptions.showLabel') }}
+                {{
+                  showAdvancedOAuth
+                    ? t('admin.accounts.gemini.oauthType.hideAdvanced')
+                    : t('admin.accounts.gemini.oauthType.showAdvanced')
+                }}
               </span>
             </button>
           </div>
@@ -1034,12 +1036,12 @@
           <div class="flex flex-wrap gap-2">
             <button
               v-for="preset in antigravityPresetMappings"
-              :key="`${preset.from}=>${preset.to}`"
+              :key="preset.label"
               type="button"
               @click="addAntigravityPresetMapping(preset.from, preset.to)"
               :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
             >
-              + {{ presetMappingLabel(preset) }}
+              + {{ preset.label }}
             </button>
           </div>
         </div>
@@ -1292,12 +1294,12 @@
               <div class="flex flex-wrap gap-2">
                 <button
                   v-for="preset in presetMappings"
-                  :key="`${preset.from}=>${preset.to}`"
+                  :key="preset.label"
                   type="button"
                   @click="addPresetMapping(preset.from, preset.to)"
                   :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
                 >
-                  + {{ presetMappingLabel(preset) }}
+                  + {{ preset.label }}
                 </button>
               </div>
             </div>
@@ -1655,7 +1657,7 @@
                 @click="addPresetMapping(preset.from, preset.to)"
                 :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
               >
-                + {{ presetMappingLabel(preset) }}
+                + {{ preset.label }}
               </button>
             </div>
           </div>
@@ -1954,12 +1956,12 @@
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="preset in presetMappings"
-                :key="`oauth-${preset.from}=>${preset.to}`"
+                :key="'oauth-' + preset.label"
                 type="button"
                 @click="addPresetMapping(preset.from, preset.to)"
                 :class="['rounded-lg px-3 py-1 text-xs transition-colors', preset.color]"
               >
-                + {{ presetMappingLabel(preset) }}
+                + {{ preset.label }}
               </button>
             </div>
           </div>
@@ -3076,7 +3078,7 @@
                 rel="noreferrer"
                 class="text-sm text-blue-600 hover:underline dark:text-blue-400"
               >
-                {{ t('admin.accounts.gemini.setupGuide.links.changeCountryAssociation') }}
+                {{ t('admin.accounts.gemini.setupGuide.links.countryChange') }}
               </a>
               <span class="text-gray-400">·</span>
               <a
@@ -3339,12 +3341,6 @@ interface OAuthFlowExposed {
 }
 
 const { t } = useI18n()
-
-function presetMappingLabel(preset: ReturnType<typeof getPresetMappingsByPlatform>[number]): string {
-  const labelKey = (preset as { labelKey?: string }).labelKey
-  return labelKey ? t(labelKey) : preset.label
-}
-
 const authStore = useAuthStore()
 
 const oauthStepTitle = computed(() => {

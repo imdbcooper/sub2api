@@ -254,7 +254,7 @@ const emit = defineEmits<{
 const collapsed = ref(props.entry.models.length > 0)
 
 const billingModeOptions = computed(() => [
-  { value: 'token', label: 'Token' },
+  { value: 'token', label: t('admin.channels.billingMode.token') },
   { value: 'per_request', label: t('admin.channels.billingMode.perRequest') },
   { value: 'image', label: t('admin.channels.billingMode.image') }
 ])

@@ -73,18 +73,18 @@ const stacktraceLevelOptions = [
   { value: 'fatal', label: 'fatal' }
 ]
 
-const timeRangeOptions = computed(() => [
-  { value: '5m', label: t('admin.ops.timeRange.5m') },
-  { value: '30m', label: t('admin.ops.timeRange.30m') },
-  { value: '1h', label: t('admin.ops.timeRange.1h') },
-  { value: '6h', label: t('admin.ops.timeRange.6h') },
-  { value: '24h', label: t('admin.ops.timeRange.24h') },
-  { value: '7d', label: t('admin.ops.timeRange.7d') },
-  { value: '30d', label: t('admin.ops.timeRange.30d') }
-])
+const timeRangeOptions = [
+  { value: '5m', label: '5m' },
+  { value: '30m', label: '30m' },
+  { value: '1h', label: '1h' },
+  { value: '6h', label: '6h' },
+  { value: '24h', label: '24h' },
+  { value: '7d', label: '7d' },
+  { value: '30d', label: '30d' }
+]
 
 const filterLevelOptions = computed(() => [
-  { value: '', label: t('common.all') },
+  { value: '', label: t('admin.ops.systemLogs.all') },
   { value: 'debug', label: 'debug' },
   { value: 'info', label: 'info' },
   { value: 'warn', label: 'warn' },
@@ -205,7 +205,7 @@ const fetchLogs = async () => {
     total.value = res.total || 0
   } catch (err: any) {
     console.error('[OpsSystemLogTable] Failed to fetch logs', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.errors.loadFailed'))
+    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.loadFailed'))
   } finally {
     loading.value = false
   }
@@ -248,17 +248,17 @@ const saveRuntimeConfig = async () => {
     runtimeConfig.caller = saved.caller
     runtimeConfig.stacktrace_level = saved.stacktrace_level
     runtimeConfig.retention_days = saved.retention_days
-    appStore.showSuccess(t('admin.ops.systemLogs.runtime.saveSuccess'))
+    appStore.showSuccess(t('admin.ops.systemLogs.runtimeConfigActive'))
   } catch (err: any) {
     console.error('[OpsSystemLogTable] Failed to save runtime log config', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.runtime.saveFailed'))
+    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.runtimeConfigSaveFailed'))
   } finally {
     runtimeSaving.value = false
   }
 }
 
 const resetRuntimeConfig = async () => {
-  const ok = window.confirm(t('admin.ops.systemLogs.runtime.resetConfirm'))
+  const ok = window.confirm(t('admin.ops.systemLogs.resetRuntimeConfigConfirm'))
   if (!ok) return
 
   runtimeSaving.value = true
@@ -271,11 +271,11 @@ const resetRuntimeConfig = async () => {
     runtimeConfig.caller = saved.caller
     runtimeConfig.stacktrace_level = saved.stacktrace_level
     runtimeConfig.retention_days = saved.retention_days
-    appStore.showSuccess(t('admin.ops.systemLogs.runtime.resetSuccess'))
+    appStore.showSuccess(t('admin.ops.systemLogs.runtimeConfigReset'))
     await fetchHealth()
   } catch (err: any) {
     console.error('[OpsSystemLogTable] Failed to reset runtime log config', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.runtime.resetFailed'))
+    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.runtimeConfigResetFailed'))
   } finally {
     runtimeSaving.value = false
   }
@@ -305,7 +305,7 @@ const cleanupCurrentFilter = async () => {
     await Promise.all([fetchLogs(), fetchHealth()])
   } catch (err: any) {
     console.error('[OpsSystemLogTable] Failed to cleanup logs', err)
-    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.errors.cleanupFailed'))
+    appStore.showError(err?.response?.data?.detail || t('admin.ops.systemLogs.cleanupFailed'))
   }
 }
 
@@ -374,37 +374,37 @@ onMounted(async () => {
         <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ t('admin.ops.systemLogs.description') }}</p>
       </div>
       <div class="flex flex-wrap items-center gap-2 text-xs">
-        <span class="rounded-md bg-gray-100 px-2 py-1 text-gray-700 dark:bg-dark-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.health.queue', { depth: health.queue_depth, capacity: health.queue_capacity }) }}</span>
-        <span class="rounded-md bg-gray-100 px-2 py-1 text-gray-700 dark:bg-dark-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.health.written', { count: health.written_count }) }}</span>
-        <span class="rounded-md bg-amber-100 px-2 py-1 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">{{ t('admin.ops.systemLogs.health.dropped', { count: health.dropped_count }) }}</span>
-        <span class="rounded-md bg-red-100 px-2 py-1 text-red-700 dark:bg-red-900/30 dark:text-red-300">{{ t('admin.ops.systemLogs.health.failed', { count: health.write_failed_count }) }}</span>
+        <span class="rounded-md bg-gray-100 px-2 py-1 text-gray-700 dark:bg-dark-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.queue') }} {{ health.queue_depth }}/{{ health.queue_capacity }}</span>
+        <span class="rounded-md bg-gray-100 px-2 py-1 text-gray-700 dark:bg-dark-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.written') }} {{ health.written_count }}</span>
+        <span class="rounded-md bg-amber-100 px-2 py-1 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">{{ t('admin.ops.systemLogs.dropped') }} {{ health.dropped_count }}</span>
+        <span class="rounded-md bg-red-100 px-2 py-1 text-red-700 dark:bg-red-900/30 dark:text-red-300">{{ t('admin.ops.systemLogs.failed') }} {{ health.write_failed_count }}</span>
       </div>
     </div>
 
     <div class="mb-4 rounded-xl border border-gray-200 bg-gray-50 p-3 dark:border-dark-700 dark:bg-dark-800/70">
       <div class="mb-2 flex items-center justify-between">
-        <div class="text-xs font-semibold text-gray-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.runtime.title') }}</div>
+        <div class="text-xs font-semibold text-gray-700 dark:text-gray-200">{{ t('admin.ops.systemLogs.runtimeConfig') }}</div>
         <span v-if="runtimeLoading" class="text-xs text-gray-500">{{ t('common.loading') }}</span>
       </div>
       <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-6">
         <label class="text-xs text-gray-600 dark:text-gray-300">
-          {{ t('admin.ops.systemLogs.runtime.level') }}
+          {{ t('admin.ops.systemLogs.level') }}
           <Select v-model="runtimeConfig.level" class="mt-1" :options="runtimeLevelOptions" />
         </label>
         <label class="text-xs text-gray-600 dark:text-gray-300">
-          {{ t('admin.ops.systemLogs.runtime.stacktraceLevel') }}
+          {{ t('admin.ops.systemLogs.stacktraceThreshold') }}
           <Select v-model="runtimeConfig.stacktrace_level" class="mt-1" :options="stacktraceLevelOptions" />
         </label>
         <label class="text-xs text-gray-600 dark:text-gray-300">
-          {{ t('admin.ops.systemLogs.runtime.samplingInitial') }}
+          {{ t('admin.ops.systemLogs.samplingInitial') }}
           <input v-model.number="runtimeConfig.sampling_initial" type="number" min="1" class="input mt-1" />
         </label>
         <label class="text-xs text-gray-600 dark:text-gray-300">
-          {{ t('admin.ops.systemLogs.runtime.samplingThereafter') }}
+          {{ t('admin.ops.systemLogs.samplingThereafter') }}
           <input v-model.number="runtimeConfig.sampling_thereafter" type="number" min="1" class="input mt-1" />
         </label>
         <label class="text-xs text-gray-600 dark:text-gray-300">
-          {{ t('admin.ops.systemLogs.runtime.retentionDays') }}
+          {{ t('admin.ops.systemLogs.retentionDays') }}
           <input v-model.number="runtimeConfig.retention_days" type="number" min="1" max="3650" class="input mt-1" />
         </label>
         <div class="md:col-span-2 xl:col-span-6">
@@ -412,47 +412,47 @@ onMounted(async () => {
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
               <label class="inline-flex items-center gap-2 text-xs text-gray-600 dark:text-gray-300">
                 <input v-model="runtimeConfig.caller" type="checkbox" />
-                {{ t('admin.ops.systemLogs.runtime.caller') }}
+                {{ t('admin.ops.systemLogs.caller') }}
               </label>
               <label class="inline-flex items-center gap-2 text-xs text-gray-600 dark:text-gray-300">
                 <input v-model="runtimeConfig.enable_sampling" type="checkbox" />
-                {{ t('admin.ops.systemLogs.runtime.sampling') }}
+                {{ t('admin.ops.systemLogs.sampling') }}
               </label>
             </div>
             <div class="flex flex-wrap items-center gap-2 lg:justify-end">
               <button type="button" class="btn btn-primary btn-sm" :disabled="runtimeSaving" @click="saveRuntimeConfig">
-                {{ runtimeSaving ? t('common.saving') : t('admin.ops.systemLogs.runtime.save') }}
+                {{ runtimeSaving ? t('common.saving') : t('admin.ops.systemLogs.saveAndApply') }}
               </button>
               <button type="button" class="btn btn-secondary btn-sm" :disabled="runtimeSaving" @click="resetRuntimeConfig">
-                {{ t('admin.ops.systemLogs.runtime.reset') }}
+                {{ t('admin.ops.systemLogs.resetDefaults') }}
               </button>
             </div>
           </div>
         </div>
       </div>
-      <p v-if="health.last_error" class="mt-2 text-xs text-red-600 dark:text-red-400">{{ t('admin.ops.systemLogs.runtime.lastWriteError', { error: health.last_error }) }}</p>
+      <p v-if="health.last_error" class="mt-2 text-xs text-red-600 dark:text-red-400">{{ t('admin.ops.systemLogs.latestWriteError') }} {{ health.last_error }}</p>
     </div>
 
     <div class="mb-4 grid grid-cols-1 gap-3 md:grid-cols-5">
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.timeRange') }}
+        {{ t('admin.ops.systemLogs.timeRange') }}
         <Select v-model="filters.time_range" class="mt-1" :options="timeRangeOptions" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.startTime') }}
+        {{ t('admin.ops.systemLogs.startTime') }}
         <input v-model="filters.start_time" type="datetime-local" class="input mt-1" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.endTime') }}
+        {{ t('admin.ops.systemLogs.endTime') }}
         <input v-model="filters.end_time" type="datetime-local" class="input mt-1" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.level') }}
+        {{ t('admin.ops.systemLogs.level') }}
         <Select v-model="filters.level" class="mt-1" :options="filterLevelOptions" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.component') }}
-        <input v-model="filters.component" type="text" class="input mt-1" :placeholder="t('admin.ops.systemLogs.filters.componentPlaceholder')" />
+        {{ t('admin.ops.systemLogs.component') }}
+        <input v-model="filters.component" type="text" class="input mt-1" :placeholder="t('admin.ops.systemLogs.componentPlaceholder')" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
         request_id
@@ -467,7 +467,7 @@ onMounted(async () => {
         <input v-model="filters.user_id" type="text" class="input mt-1" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        KEY ID
+        {{ t('admin.ops.systemLogs.keyId') }}
         <input v-model="filters.api_key_id" type="text" class="input mt-1" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
@@ -475,23 +475,23 @@ onMounted(async () => {
         <input v-model="filters.account_id" type="text" class="input mt-1" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.platform') }}
+        {{ t('admin.ops.systemLogs.platform') }}
         <input v-model="filters.platform" type="text" class="input mt-1" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.model') }}
+        {{ t('admin.ops.systemLogs.model') }}
         <input v-model="filters.model" type="text" class="input mt-1" />
       </label>
       <label class="text-xs text-gray-600 dark:text-gray-300">
-        {{ t('admin.ops.systemLogs.filters.keyword') }}
-        <input v-model="filters.q" type="text" class="input mt-1" :placeholder="t('admin.ops.systemLogs.filters.keywordPlaceholder')" />
+        {{ t('admin.ops.systemLogs.keyword') }}
+        <input v-model="filters.q" type="text" class="input mt-1" :placeholder="t('admin.ops.systemLogs.keywordPlaceholder')" />
       </label>
     </div>
 
     <div class="mb-3 flex flex-wrap gap-2">
-      <button type="button" class="btn btn-primary btn-sm" @click="applyFilters">{{ t('common.search') }}</button>
+      <button type="button" class="btn btn-primary btn-sm" @click="applyFilters">{{ t('admin.ops.systemLogs.search') }}</button>
       <button type="button" class="btn btn-secondary btn-sm" @click="resetFilters">{{ t('common.reset') }}</button>
-      <button type="button" class="btn btn-danger btn-sm" @click="cleanupCurrentFilter">{{ t('admin.ops.systemLogs.cleanupCurrentFilter') }}</button>
+      <button type="button" class="btn btn-danger btn-sm" @click="cleanupCurrentFilter">{{ t('admin.ops.systemLogs.cleanCurrentFilters') }}</button>
       <button type="button" class="btn btn-secondary btn-sm" @click="fetchHealth">{{ t('admin.ops.systemLogs.refreshHealth') }}</button>
     </div>
 
@@ -502,9 +502,9 @@ onMounted(async () => {
         <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-dark-700">
           <thead class="bg-gray-50 dark:bg-dark-900">
             <tr>
-              <th class="w-[170px] px-3 py-2 text-left text-[11px] font-semibold text-gray-500">{{ t('admin.ops.systemLogs.table.time') }}</th>
-              <th class="w-[80px] px-3 py-2 text-left text-[11px] font-semibold text-gray-500">{{ t('admin.ops.systemLogs.table.level') }}</th>
-              <th class="px-3 py-2 text-left text-[11px] font-semibold text-gray-500">{{ t('admin.ops.systemLogs.table.detail') }}</th>
+              <th class="w-[170px] px-3 py-2 text-left text-[11px] font-semibold text-gray-500">{{ t('admin.ops.systemLogs.time') }}</th>
+              <th class="w-[80px] px-3 py-2 text-left text-[11px] font-semibold text-gray-500">{{ t('admin.ops.systemLogs.level') }}</th>
+              <th class="px-3 py-2 text-left text-[11px] font-semibold text-gray-500">{{ t('admin.ops.systemLogs.logDetails') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 dark:divide-dark-800">
