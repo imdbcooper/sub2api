@@ -7293,7 +7293,7 @@ const paymentGuideHref = computed(() =>
 
 const paymentMethodsHref = computed(() =>
   locale.value.startsWith("zh")
-    ? "https://github.com/Wei-Shaw/sub2api/blob/main/docs/PAYMENT_CN.md#支持的支付方式"
+    ? "https://github.com/Wei-Shaw/sub2api/blob/main/docs/PAYMENT_CN.md#%E6%94%AF%E6%8C%81%E7%9A%84%E6%94%AF%E4%BB%98%E6%96%B9%E5%BC%8F"
     : "https://github.com/Wei-Shaw/sub2api/blob/main/docs/PAYMENT.md#supported-payment-methods",
 );
 
