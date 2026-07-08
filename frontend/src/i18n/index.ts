@@ -27,6 +27,9 @@ function getDefaultLocale(): LocaleCode {
   if (browserLang.startsWith('zh')) {
     return 'zh'
   }
+  if (browserLang.startsWith('ru')) {
+    return 'ru'
+  }
 
   return DEFAULT_LOCALE
 }
@@ -46,6 +49,10 @@ const loadedLocales = new Set<LocaleCode>()
 export async function loadLocaleMessages(locale: LocaleCode): Promise<void> {
   if (loadedLocales.has(locale)) {
     return
+  }
+
+  if (locale !== DEFAULT_LOCALE && !loadedLocales.has(DEFAULT_LOCALE)) {
+    await loadLocaleMessages(DEFAULT_LOCALE)
   }
 
   const loader = localeLoaders[locale]

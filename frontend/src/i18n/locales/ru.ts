@@ -1,4 +1,9 @@
 export default {
+  batchImageGuide: {
+    title: 'Пакетная генерация изображений',
+    description: 'Отправляйте несколько промптов одним заданием и скачивайте готовые изображения после завершения'
+  },
+
   // Home Page
   home: {
     viewOnGithub: 'Смотреть на GitHub',
@@ -303,6 +308,9 @@ export default {
     disabled: 'Отключено',
     total: 'Итого',
     balance: 'Баланс',
+    availableBalance: 'Доступный баланс',
+    frozenBalance: 'Замороженный баланс',
+    totalBalance: 'Общий баланс',
     available: 'Доступно',
     copiedToClipboard: 'Скопировано в буфер',
     copied: 'Скопировано',
@@ -403,6 +411,7 @@ export default {
     dashboard: 'Панель',
     announcements: 'Объявления',
     apiKeys: 'API-ключи',
+    batchImage: 'Пакетные изображения',
     usage: 'Расход',
     redeem: 'Активировать',
     affiliate: 'Партнёрские бонусы',
@@ -736,6 +745,8 @@ export default {
     quickActions: 'Быстрые действия',
     createApiKey: 'Создать API-ключ',
     generateNewKey: 'Создать новый API-ключ',
+    batchImageAgent: 'Ассистент пакетных изображений',
+    batchImageAgentDesc: 'Скопировать инструкции для агента',
     viewUsage: 'Посмотреть расход',
     checkDetailedLogs: 'Открыть подробные логи расхода',
     redeemCode: 'Активировать код',
@@ -1543,6 +1554,11 @@ export default {
       spendShort: 'Расход',
       requestsShort: 'Запр.',
       tokensShort: 'Ток.',
+      quickActions: 'Быстрые действия',
+      batchImage: 'Пакетные изображения',
+      batchImageDesc: 'Запускайте задания и копируйте инструкции для агента',
+      groupPricing: 'Цены групп',
+      groupPricingDesc: 'Настройте пакетную скидку и коэффициент удержания',
       failedToLoad: 'Не удалось загрузить статистику панели'
     },
 
@@ -2317,8 +2333,14 @@ export default {
         title: 'Цены генерации изображений',
         description: 'Настройте доступ к генерации изображений и базовые цены. Оставьте пустым для цен по умолчанию.',
         allowImageGeneration: 'Разрешить генерацию изображений для этой группы',
+        allowBatchImageGeneration: 'Разрешить пакетную генерацию изображений для этой группы',
         independentMultiplier: 'Использовать отдельный коэффициент изображений',
         imageMultiplier: 'Коэффициент изображений',
+        batchDiscountMultiplier: 'Скидка для пакетных изображений',
+        batchHoldMultiplier: 'Коэффициент предварительной заморозки',
+        batchSectionHint: 'Настройки пакетных изображений применяются только к пакетным заданиям: при расчёте применяется пакетная скидка, а предварительная заморозка равна обычной цене изображения x коэффициент предварительной заморозки. Референсные изображения также создают расход входных токенов upstream, поэтому рекомендуется пакетная скидка выше 0.5.',
+        batchDisabledHint: 'Сначала включите генерацию изображений для этой группы, затем включайте пакетную генерацию.',
+        batchGeminiOnlyHint: 'Пакетная генерация изображений сейчас доступна только для групп Gemini.',
         modeHint: 'По умолчанию списание за изображения: цена изображения × текущий коэффициент группы. Отдельный режим: цена изображения × коэффициент изображений.',
         finalPricePreview: 'Итоговая цена за изображение',
         notConfigured: 'Не настроено'
@@ -3196,6 +3218,9 @@ export default {
       dataImporting: 'Импорт...',
       dataImportSelectFile: 'Выберите файл данных',
       dataImportParseFailed: 'Не удалось разобрать файл данных',
+      dataImportParseFailedFile: 'Не удалось разобрать {name}',
+      dataImportInvalidFile: '{name} не является поддерживаемым файлом экспорта данных',
+      dataImportIgnoredFiles: 'Пропущено файлов не в формате JSON: {count}',
       dataImportFailed: 'Импорт данных не удался',
       dataImportResult: 'Результат импорта',
       dataImportResultSummary: 'proxy: создано {proxy_created}, переиспользовано {proxy_reused}, ошибок {proxy_failed}; аккаунтов создано {account_created}, ошибок {account_failed}',
@@ -6926,6 +6951,7 @@ export default {
         action: 'Действие',
         actionPass: 'Пропустить (сохранить service_tier)',
         actionFilter: 'Фильтровать (удалить service_tier)',
+        actionForcePriority: 'Принудительно priority (fast)',
         actionBlock: 'Блокировать (отклонить запрос)',
         scope: 'Область',
         scopeAll: 'Все аккаунты',
@@ -7753,6 +7779,8 @@ export default {
       deletePlanConfirm: 'Удалить этот тариф?',
       originalPrice: 'Исходная цена',
       price: 'Цена',
+      subscriptionCnyPayPreview: 'Предпросмотр списания через CNY-канал: {amount}',
+      subscriptionCnyPayPreviewWithFee: '(комиссия {feeRate}% включена: {total})',
       validityDays: 'Срок действия (дни)',
       validityUnit: 'Единица срока действия',
       sortOrder: 'Порядок сортировки',
