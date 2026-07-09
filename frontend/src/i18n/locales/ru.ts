@@ -818,6 +818,7 @@ export default {
     total: 'Последние 30 дн.',
     quota: 'Квота',
     lastUsedAt: 'Последнее использование',
+    lastUsedIP: 'IP последнего использования',
     useKey: 'Использовать ключ',
     useKeyModal: {
       title: 'Использовать API-ключ',
@@ -982,6 +983,9 @@ export default {
     cost: 'Стоимость',
     firstToken: 'Первый токен',
     duration: 'Длительность',
+    latency: 'Задержка',
+    latencyDuration: 'Всего',
+    latencyFirstToken: 'Первый токен',
     time: 'Время',
     ws: 'WS',
     stream: 'Stream',
@@ -1049,7 +1053,7 @@ export default {
       detailAccuracy: 'Точность',
       detailCoordinates: 'Координаты',
     },
-    tabs: { usage: 'Расход', errors: 'Ошибочные запросы' },
+    tabs: { usage: 'Расход', errors: 'Ошибочные запросы', ranking: 'Рейтинг пользователей' },
     errors: {
       time: 'Время', model: 'Модель', endpoint: 'Endpoint', status: 'Статус',
       category: 'Категория', platform: 'Платформа', message: 'Сообщение ошибки',
@@ -1171,6 +1175,7 @@ export default {
       billingModeToken: 'За токен',
       billingModePerRequest: 'За запрос',
       billingModeImage: 'За изображение',
+      billingModeVideo: 'За видео',
       inputPrice: 'Вход',
       outputPrice: 'Выход',
       cacheWritePrice: 'Запись кэша',
@@ -1937,6 +1942,7 @@ export default {
       creating: 'Создание...',
       updating: 'Обновление...',
       form: {
+        roleLabel: 'Роль',
         rpmLimit: 'Запросов в минуту (RPM)',
         rpmLimitPlaceholder: '0 = без лимита',
         rpmLimitHint: 'Максимум запросов в минуту для пользователя; 0 = без лимита. Используется как резерв, если у группы не задан rpm_limit.'
@@ -2274,6 +2280,7 @@ export default {
       failedToLoad: 'Не удалось загрузить группы',
       failedToCreate: 'Не удалось создать группу',
       failedToUpdate: 'Не удалось обновить группу',
+      failedToSave: 'Не удалось сохранить группу',
       failedToDelete: 'Не удалось удалить группу',
       nameRequired: 'Введите имя группы',
       rateMultipliers: 'Коэффициенты тарифа',
@@ -2343,6 +2350,15 @@ export default {
         batchGeminiOnlyHint: 'Пакетная генерация изображений сейчас доступна только для групп Gemini.',
         modeHint: 'По умолчанию списание за изображения: цена изображения × текущий коэффициент группы. Отдельный режим: цена изображения × коэффициент изображений.',
         finalPricePreview: 'Итоговая цена за изображение',
+        notConfigured: 'Не настроено'
+      },
+      videoPricing: {
+        title: 'Цены генерации видео',
+        description: 'Настройте цены генерации видео Grok в USD за секунду готового видео. Оставьте пустым, чтобы использовать цены по умолчанию за секунду (grok-imagine-video: $0.05/с 480p, $0.07/с 720p; video-1.5: $0.08/с 480p, $0.14/с 720p, $0.25/с 1080p).',
+        independentMultiplier: 'Использовать отдельный коэффициент видео',
+        videoMultiplier: 'Коэффициент видео',
+        modeHint: 'Видео тарифицируется за секунду: цена за секунду x длительность (1-15 с, по умолчанию 8 с). По умолчанию применяется текущий эффективный коэффициент группы; отдельный режим использует коэффициент видео.',
+        finalPricePreview: 'Итоговая цена за секунду',
         notConfigured: 'Не настроено'
       },
       peakRate: {
@@ -2479,6 +2495,7 @@ export default {
         billingModeToken: 'За токен',
         billingModePerRequest: 'За запрос',
         billingModeImage: 'За изображение',
+        billingModeVideo: 'За видео',
         inputPrice: 'Вход',
         outputPrice: 'Выход',
         cacheWritePrice: 'Запись кэша',
@@ -4080,7 +4097,23 @@ export default {
           missingExchangeParams: 'Отсутствует authorization code, state или OAuth session',
           failedToExchangeCode: 'Не удалось обменять authorization code Grok',
           failedToValidateRT: 'Не удалось проверить Grok refresh token',
-          oauthOnlyHint: 'Начальная поддержка Grok включает только OAuth subscription-backed Responses API для текста и reasoning.'
+          oauthOnlyHint: 'Начальная поддержка Grok включает только OAuth subscription-backed Responses API для текста и reasoning.',
+          errors: {
+            GROK_OAUTH_CODE_REQUIRED:
+              'Отсутствует код авторизации Grok. Вставьте полный callback URL, query string или значение code.',
+            GROK_OAUTH_INVALID_STATE:
+              'OAuth state Grok не соответствует этой сессии. Вставьте callback URL из той же сгенерированной ссылки авторизации.',
+            GROK_OAUTH_NO_REFRESH_TOKEN:
+              'Ответ Grok не содержит refresh token. Сгенерируйте новый auth URL и снова разрешите offline access.',
+            GROK_OAUTH_PROXY_NOT_AVAILABLE:
+              'Поиск proxy для Grok OAuth недоступен. Проверьте выбранный proxy и повторите попытку.',
+            GROK_OAUTH_PROXY_NOT_FOUND:
+              'Выбранный proxy не найден. Выберите доступный proxy и повторите попытку.',
+            GROK_OAUTH_SESSION_NOT_FOUND:
+              'Сессия Grok OAuth не найдена или истекла. Сгенерируйте новый auth URL и вставьте самый свежий callback URL.',
+            GROK_OAUTH_STATE_REQUIRED:
+              'В callback URL отсутствует OAuth state. Вставьте полный callback URL, а не только code.'
+          }
         },
         // Gemini specific
 	        gemini: {
@@ -4932,11 +4965,26 @@ export default {
       billingModeToken: 'Token',
       billingModePerRequest: 'За запрос',
       billingModeImage: 'Изображение',
+      billingModeVideo: 'Видео',
       allBillingModes: 'Все режимы списания',
       ipAddress: 'IP',
       clickToViewBalance: 'Нажмите, чтобы посмотреть историю баланса',
       failedToLoadUser: 'Не удалось загрузить информацию пользователя',
       userDeletedBadge: 'Удалён',
+      tokenRanking: {
+        subtitle: 'Расход токенов по пользователям для текущих фильтров и периода',
+        userCount: 'Пользователей: {count}',
+        rowHint: 'Нажмите, чтобы посмотреть детали расхода этого пользователя',
+        columns: {
+          user: 'Пользователь',
+          requests: 'Запросы',
+          inputTokens: 'Входные токены',
+          outputTokens: 'Выходные токены',
+          cacheTokens: 'Токены кэша',
+          totalTokens: 'Всего токенов',
+          cost: 'Стоимость'
+        }
+      },
       cleanup: {
         button: 'Очистка',
         title: 'Очистка записей расхода',
@@ -7286,7 +7334,25 @@ export default {
     restartRequired: 'Перезапустите сервис, чтобы применить обновление',
     restartNow: 'Перезапустить сейчас',
     restarting: 'Перезапуск...',
-    retry: 'Повторить'
+    retry: 'Повторить',
+    rollback: 'Откат версии',
+    rollbackSelectVersion: 'Выберите версию для отката (последние 3 версии)',
+    rollbackConfirm: 'Откатиться на {version}',
+    rollbackWarning:
+      'Откат скачает выбранную версию и заменит текущий бинарный файл. После этого потребуется перезапуск сервиса.',
+    rollingBack: 'Откат версии...',
+    rollbackComplete: 'Откат завершён',
+    rollbackFailed: 'Откат не удался',
+    manualRollbackCommand: 'Ручной откат',
+    copyCommand: 'Копировать',
+    copied: 'Скопировано',
+    noRollbackVersions: 'Нет версий, доступных для отката',
+    loadVersionsFailed: 'Не удалось загрузить версии',
+    rollbackSourceHint: 'Онлайн-откат недоступен для сборок из исходников',
+    deployScript: 'Скрипт',
+    deployDocker: 'Docker',
+    dockerEditCompose: 'Измените тег image в docker-compose.yml',
+    dockerRecreate: 'Пересоздайте контейнер'
   },
 
   // Recharge / Subscription Page
