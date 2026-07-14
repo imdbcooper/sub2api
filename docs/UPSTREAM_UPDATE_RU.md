@@ -4,6 +4,7 @@
 
 - русскую локализацию интерфейса;
 - локальный фикс Responses-shaped `/v1/chat/completions` запросов для API-key OpenAI аккаунтов;
+- fork-specific compliance middleware and legal/admin documentation;
 - рабочую схему публикации Docker image через GitHub Actions.
 
 ## Репозитории
@@ -42,11 +43,11 @@ git log --oneline -10
 git fetch upstream
 ```
 
-Находясь в `main`, выполнить merge:
+Находясь в `main`, выполнить merge без немедленного коммита, чтобы проверить удалённые upstream файлы:
 
 ```bash
 git checkout main
-git merge upstream/main
+git merge --no-commit --no-ff upstream/main
 ```
 
 Если возникли конфликты, разрешать их вручную, не удаляя локальные изменения, описанные ниже.
@@ -70,6 +71,26 @@ git diff upstream/main -- frontend/src/i18n/locales/ru.ts
 ```
 
 Если upstream добавил новые i18n-ключи в другие локали, нужно синхронизировать их в `ru.ts`.
+
+В форке есть regression-тест полноты русской локали:
+
+```bash
+cd frontend
+pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
+```
+
+При каждом upstream merge нужно запускать этот тест и переводить все новые ключи, а не добавлять английский fallback в `ru.ts`.
+
+### Новые upstream возможности
+
+После обновления до версии `0.1.155` дополнительно проверить:
+
+- Grok SSO-cookie import и Grok CLI/OpenCode configuration;
+- OpenAI long-context billing и ручной ChatGPT plan tier;
+- Codex Web Search per-call pricing;
+- host-фильтр системных логов;
+- выбор пользователей в OpenAI Fast/Flex policy;
+- миграции `174`, `175`, `175a` и `176`.
 
 ### Локальный фикс instructions
 
@@ -124,6 +145,16 @@ make test-unit
 ```bash
 make test-frontend
 ```
+
+Проверка нового frontend toolchain без изменения файлов:
+
+```bash
+cd frontend
+pnpm typecheck
+pnpm build
+```
+
+Перед push проверить, что текущая версия соответствует `backend/cmd/server/VERSION`, а `git diff --check` не сообщает об ошибках.
 
 ## Коммит обновления
 
