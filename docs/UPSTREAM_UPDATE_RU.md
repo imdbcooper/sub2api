@@ -83,14 +83,20 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 
 ### Новые upstream возможности
 
-После обновления до версии `0.1.155` дополнительно проверить:
+После обновления до версии `0.1.156` дополнительно проверить:
 
 - Grok SSO-cookie import и Grok CLI/OpenCode configuration;
 - OpenAI long-context billing и ручной ChatGPT plan tier;
 - Codex Web Search per-call pricing;
 - host-фильтр системных логов;
 - выбор пользователей в OpenAI Fast/Flex policy;
-- миграции `174`, `175`, `175a` и `176`.
+- импорт Codex `auth.json` и Agent Identity;
+- duplicate account и новый optional ID column в списках accounts/groups/keys;
+- Grok OAuth reconciliation, pool health и безопасный refresh;
+- failover при отмене клиентом запроса и failover passthrough 5xx;
+- Responses/Anthropic direct bridge, Read tool finalization и parallel tool-use;
+- configurable OpenAI first-output timeout;
+- миграции и runtime schema changes, если они добавлены upstream.
 
 ### Локальный фикс instructions
 
