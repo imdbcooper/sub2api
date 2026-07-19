@@ -83,7 +83,7 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 
 ### Новые upstream возможности
 
-После обновления до версии `0.1.156` дополнительно проверить:
+После обновления до версии `0.1.161` дополнительно проверить:
 
 - Grok SSO-cookie import и Grok CLI/OpenCode configuration;
 - OpenAI long-context billing и ручной ChatGPT plan tier;
@@ -96,7 +96,16 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 - failover при отмене клиентом запроса и failover passthrough 5xx;
 - Responses/Anthropic direct bridge, Read tool finalization и parallel tool-use;
 - configurable OpenAI first-output timeout;
-- миграции и runtime schema changes, если они добавлены upstream.
+- security audit, session binding и step-up 2FA для чувствительных операций;
+- prompt audit: хранилище полных промптов, Qwen3Guard pool, blocking/async режимы и retention;
+- audit log IP/UA binding и новый ingress-reject cleanup;
+- async image task API и object storage настройки;
+- upstream billing probe, image-input billing и account scheduler cost weighting;
+- duplicate operations для групп и channel monitors;
+- Grok protected video/media quarantine, paid eligibility и custom headers/base URL;
+- OpenAI API-key alpha/search scheduling, body-limit failover и WS turn lifecycle;
+- новые security switches (по умолчанию отключены) и step-up gates для S3 backup/role promotion;
+- миграции `177`–`184` и соответствующие schema changes.
 
 ### Локальный фикс instructions
 

@@ -1,4 +1,6 @@
-export default {
+import en from './en'
+
+const russianMessages = {
   batchImageGuide: {
     title: 'Пакетная генерация изображений',
     description: 'Отправляйте несколько промптов одним заданием и скачивайте готовые изображения после завершения'
@@ -8106,3 +8108,248 @@ export default {
   },
 
 }
+
+const newRussianMessages = {
+  nav: {
+    securityAudit: 'Аудит безопасности',
+    contentModeration: 'Модерация контента',
+    promptAudit: 'Аудит промптов',
+    auditLogs: 'Журнал аудита'
+  },
+  stepUp: {
+    title: 'Подтверждение операции',
+    hint: 'Введите свежий код двухфакторной аутентификации для продолжения.',
+    verifyFailed: 'Не удалось подтвердить код двухфакторной аутентификации.',
+    notEnabled: 'Для этой операции требуется включённая двухфакторная аутентификация.',
+    adminApiKeyForbidden: 'Эта операция недоступна при использовании admin API key.'
+  },
+  keys: {
+    useKeyModal: {
+      claudeSettingsHint: 'Добавьте эти настройки в файл конфигурации Claude Code.',
+      openai: {
+        authModeApiKeyRestartNotice: 'После изменения режима перезапустите Codex CLI.'
+      },
+      grok: {
+        claudeDescription: 'Настройте Claude Code для работы через группу Grok.',
+        codexDescription: 'Настройте Codex CLI для работы через группу Grok.',
+        codexConfigTomlHint: 'Добавьте этот блок в config.toml Codex CLI.',
+        claudeNote: 'Сохраните настройки и перезапустите Claude Code.',
+        codexNote: 'Сохраните настройки в ~/.codex/config.toml и перезапустите Codex CLI.',
+        codexNoteWindows: 'Сохраните настройки в %USERPROFILE%\\.codex\\config.toml и перезапустите Codex CLI.'
+      }
+    }
+  },
+  usage: {
+    imageInputTokens: 'Токены входных изображений',
+    imageInputTokenPrice: 'Цена токена входного изображения',
+    imageInputCost: 'Стоимость входных изображений'
+  },
+  availableChannels: {
+    pricing: {
+      imageInputPrice: 'Цена токена входного изображения'
+    }
+  },
+  admin: {
+    users: {
+      bulkLimits: {
+        action: 'Массовые лимиты',
+        title: 'Изменить лимиты пользователей',
+        selectedCount: 'Выбрано пользователей: {count}',
+        selectionLimit: 'Выберите пользователей для изменения лимитов.',
+        selectUser: 'Выбрать пользователя',
+        enableConcurrency: 'Изменить лимит параллельности',
+        enableRPMLimit: 'Изменить лимит RPM',
+        unlimited: 'Без ограничений',
+        nonNegativeInteger: 'Введите неотрицательное целое число.',
+        apply: 'Применить',
+        applying: 'Применение...',
+        concurrencyValue: 'Лимит параллельности',
+        rpmValue: 'Лимит RPM',
+        rpmUnlimitedValue: 'RPM: без ограничений',
+        confirm: 'Подтвердить изменение лимитов',
+        success: 'Лимиты обновлены для {count} пользователей.',
+        failed: 'Не удалось обновить лимиты пользователей.'
+      }
+    },
+    groups: {
+      duplicate: 'Дублировать группу',
+      duplicating: 'Дублирование...',
+      duplicateSuccess: 'Группа продублирована.',
+      duplicateFailed: 'Не удалось продублировать группу.'
+    },
+    channels: {
+      form: {
+        imageInputPrice: 'Цена токена входного изображения'
+      }
+    },
+    channelMonitor: {
+      duplicate: 'Дублировать монитор',
+      duplicating: 'Дублирование...',
+      duplicateSuccess: 'Монитор продублирован.',
+      duplicateFailed: 'Не удалось продублировать монитор.',
+      duplicateKeyUnavailable: 'Невозможно продублировать монитор: ключ недоступен.'
+    },
+    accounts: {
+      columns: {
+        upstreamBillingRate: 'Тариф upstream'
+      },
+      upstreamBilling: {
+        trustWarning: 'Тариф получен от upstream и может влиять на расчёт стоимости.',
+        autoProbe: 'Автоматическая проверка тарифа',
+        autoProbeHint: 'Периодически проверять тариф аккаунтов через upstream.',
+        manualProbe: 'Проверить тариф сейчас',
+        stale: 'Данные устарели',
+        unsupported: 'Не поддерживается',
+        failed: 'Проверка не удалась',
+        notProbed: 'Ещё не проверялся',
+        groupRate: 'Тариф группы',
+        userRate: 'Тариф пользователя',
+        peakRate: 'Пиковый тариф',
+        noPeakRate: 'Пиковый тариф отсутствует',
+        effectiveRate: 'Итоговый тариф',
+        updatedAt: 'Обновлено',
+        nextProbeAt: 'Следующая проверка',
+        lastDetectedRate: 'Последний обнаруженный тариф',
+        lastDetectedAt: 'Тариф обнаружен',
+        elapsedSince: 'Прошло времени',
+        justNow: 'только что',
+        minutesAgo: '{count} мин назад',
+        hoursAgo: '{count} ч назад',
+        daysAgo: '{count} дн назад',
+        accountProbeState: 'Состояние проверки аккаунта',
+        globalProbeState: 'Состояние глобальной проверки',
+        enabled: 'Включена',
+        disabled: 'Отключена',
+        probeFailed: 'Ошибка проверки',
+        noEligibleAccounts: 'Нет подходящих аккаунтов',
+        batchLimit: 'Размер пакета',
+        batchCompleted: 'Проверено: {count}',
+        batchPartial: 'Проверено частично: {success} успешно, {failed} с ошибкой'
+      },
+      bulkActions: {
+        probeUpstreamBilling: 'Проверить тариф upstream'
+      },
+      headerOverride: {
+        importJson: 'Импортировать JSON',
+        importJsonApply: 'Применить импорт',
+        importJsonCancel: 'Отмена',
+        importJsonHint: 'Вставьте плоский JSON-объект с парами имя-значение заголовков.',
+        importJsonInvalid: 'Некорректный JSON заголовков.',
+        copyJson: 'Копировать JSON'
+      },
+      grokCustomBaseUrl: {
+        title: 'Собственный Base URL Grok',
+        hint: 'Переопределяет адрес upstream только для этого аккаунта.',
+        placeholder: 'https://api.example.com/v1',
+        required: 'Укажите Base URL.',
+        invalid: 'Некорректный Base URL.',
+        presets: {
+          cli: 'Grok CLI gateway',
+          official: 'Официальный xAI API'
+        }
+      },
+      oauth: {
+        openai: {
+          agentIdentityAuth: 'Agent Identity',
+          agentIdentityDesc: 'Импортируйте Agent Identity для авторизации Codex.',
+          agentIdentityInputLabel: 'Файл Agent Identity',
+          agentIdentityPlaceholder: 'Выберите файл или вставьте JSON',
+          agentIdentityHint: 'Используйте действительный файл Agent Identity с неповреждёнными сроками действия.',
+          agentIdentityInvalid: 'Некорректный или просроченный Agent Identity.'
+        }
+      }
+    },
+    settings: {
+      features: {
+        affiliate: {
+          adminRechargeRebate: 'Начислять rebate с пополнений администратора',
+          adminRechargeRebateHint: 'Включает affiliate-rebate при пополнении баланса через управление пользователями.'
+        }
+      },
+      security: {
+        stepUp: 'Step-up 2FA для чувствительных операций',
+        stepUpHint: 'Требовать свежую проверку 2FA перед чувствительными административными действиями.',
+        stepUpEnableRequiresTotp: 'Для включения этой функции требуется свежий код TOTP.',
+        sessionBinding: 'Привязка сессии к IP и User-Agent',
+        sessionBindingHint: 'Отклонять изменения IP или User-Agent активной сессии.',
+        auditRetention: 'Срок хранения аудита (дни)',
+        auditRetentionHint: 'Оставьте пустым для значения по умолчанию.'
+      },
+      upstreamBillingProbe: {
+        title: 'Проверка тарифа upstream',
+        description: 'Периодически определяет тариф upstream для расчёта и маршрутизации.',
+        enabled: 'Включить проверку тарифа',
+        enabledHint: 'Автоматически проверять подходящие аккаунты в фоне.',
+        intervalMinutes: 'Интервал проверки (минуты)',
+        intervalHint: 'Минимальный интервал между фоновыми проверками.',
+        saved: 'Настройки проверки сохранены.',
+        saveFailed: 'Не удалось сохранить настройки проверки.'
+      },
+      openaiExperimentalScheduler: {
+        lowRatePriorityTitle: 'Приоритет аккаунтов с низким тарифом',
+        lowRatePriorityDescription: 'Учитывать тариф upstream при выборе аккаунта.',
+        oauthRateTitle: 'Тариф OAuth-аккаунтов',
+        oauthRatePriorityDescription: 'Приоритизировать OAuth-аккаунты с учётом обнаруженного тарифа.',
+        oauthRateWeightedDescription: 'Взвешивать выбор OAuth-аккаунтов по тарифу upstream.',
+        upstreamCostWeight: 'Вес тарифа upstream'
+      }
+    },
+    audit: {
+      title: 'Журнал аудита',
+      description: 'Записи операций администраторов и пользователей. Заголовки и тела запросов сохраняются в безопасном виде.',
+      clearAll: 'Очистить всё',
+      empty: 'Записей аудита пока нет',
+      loadFailed: 'Не удалось загрузить журнал аудита',
+      filters: {
+        all: 'Все', q: 'Ключевое слово', qPlaceholder: 'Путь / действие / email', actorEmail: 'Email инициатора', action: 'Действие', clientIp: 'IP клиента', method: 'Метод', authMethod: 'Способ авторизации', result: 'Результат', resultSuccess: 'Успешно', resultFailure: 'Ошибка', startTime: 'Начало', endTime: 'Конец'
+      },
+      columns: { time: 'Время', actor: 'Инициатор', action: 'Действие', method: 'Метод', result: 'Результат', clientIp: 'IP клиента', detail: 'Детали' },
+      detail: { title: 'Детали записи аудита', actorRole: 'Роль', methodPath: 'Метод / путь', latency: 'Задержка', requestId: 'ID запроса', credential: 'Учётные данные (скрыты)', userAgent: 'User-Agent', requestBody: 'Тело запроса (скрыто)', extra: 'Дополнительно' },
+      clearConfirm: { title: 'Очистить журнал аудита', message: 'Все записи аудита будут удалены без возможности восстановления. Продолжить?', totpTitle: 'Введите код 2FA', totpHint: 'Для очистки журнала требуется свежая проверка TOTP.', success: 'Удалено записей: {count}', failed: 'Не удалось очистить журнал аудита' }
+    },
+    promptAudit: {
+      title: 'Аудит промптов',
+      description: 'Проверяйте пользовательский ввод асинхронно или блокируйте его синхронно через OpenAI-compatible узлы Qwen3Guard.',
+      configVersion: 'Версия конфигурации: v{version}',
+      tabs: { config: 'Конфигурация', events: 'События' },
+      actions: { refresh: 'Обновить runtime', retry: 'Повторить', Allow: 'Разрешить', Warn: 'Предупредить', Block: 'Заблокировать' },
+      common: { actions: 'Действия', never: 'Никогда' },
+      mode: { off: 'Выключен', async_audit: 'Только асинхронный аудит', blocking: 'Синхронный аудит и блокировка' },
+      status: { disabled: 'Отключен', running: 'Работает', degraded: 'Деградация', error: 'Ошибка', healthy: 'Работает штатно', failed: 'Не удалось', stale: 'Устаревший heartbeat' },
+      decisions: { pass: 'Пропуск', flag: 'Флаг', critical: 'Критично' },
+      riskLevels: { low: 'Низкий', medium: 'Средний', high: 'Высокий', critical: 'Критический' },
+      scanners: { violent: 'Насилие', non_violent_illegal_acts: 'Ненасильственные незаконные действия', sexual_content_or_sexual_acts: 'Сексуальный контент или действия', pii: 'Персональные данные', suicide_and_self_harm: 'Суицид и самоповреждение', unethical_acts: 'Неэтичные действия', politically_sensitive_topics: 'Политически чувствительные темы', copyright_violation: 'Нарушение авторских прав', jailbreak: 'Jailbreak' },
+      scannerDescriptions: { violent: 'Насилие или угрозы насилия', non_violent_illegal_acts: 'Ненасильственная незаконная деятельность', sexual_content_or_sexual_acts: 'Сексуальный контент или действия', pii: 'Персональная идентифицирующая информация', suicide_and_self_harm: 'Суицид или самоповреждение', unethical_acts: 'Неэтичное поведение', politically_sensitive_topics: 'Политически чувствительные темы', copyright_violation: 'Нарушение авторских прав', jailbreak: 'Попытка prompt injection или jailbreak' },
+      runtime: { title: 'Обзор runtime', description: 'Текущая активная конфигурация сервера. Несохранённые изменения не влияют на эти значения.', process: 'Состояние процесса', mode: 'Итоговый режим', version: 'Активная / ожидаемая версия', workers: 'Активные / все воркеры', queue: 'Активные задачи / ёмкость', dependencies: 'Зависимости', guardMetrics: 'Метрики синхронного Guard', latest: 'Последняя обработка и ошибка', queueBreakdown: 'в очереди {queued} · обрабатываются {processing} · повторяются {retry} · завершены {done} · ошибки {failed}', deliveryTotals: 'Всего поставлено {enqueued} · отброшено {dropped} · обработано {processed} · ошибки {failed}' },
+      metrics: { total: 'Всего', allowed: 'Разрешено', flagged: 'С флагом', blocked: 'Заблокировано', unavailable: 'Недоступно', timeouts: 'Тайм-ауты', failovers: 'Переключения' },
+      pool: { title: 'Пул аудита', description: 'Включённые OpenAI-compatible узлы проверяются по порядку. Проверки выполняются с сервера.', add: 'Добавить узел', edit: 'Изменить узел', empty: 'Узлы аудита не настроены.', node: 'Узел', model: 'Модель', limits: 'Тайм-аут / лимит чанка', credential: 'Ключ и проверка', configured: 'API Key настроен', missing: 'API Key отсутствует', probe: 'Проверить соединение', probing: 'Проверка...', probeProgress: 'Конфигурация проверена ✓ · запрос отправлен · ожидание ответа...', probeResult: 'Конфигурация ✓ · запрос ✓ · HTTP {http} · {status} · {latency} мс', name: 'Имя узла', id: 'Стабильный ID узла', baseUrl: 'Base URL', apiKey: 'API Key', keepSecret: 'Оставьте пустым, чтобы сохранить текущий API Key', secretHint: 'Открытый ключ существует только в форме и очищается после успешного сохранения.', clearSecret: 'Явно очистить сохранённый API Key', timeout: 'Общий тайм-аут (мс)', inputLimit: 'Unicode-символов на чанк', toggleNode: 'Переключить узел {name}', deleteConfirm: 'Удалить «{name}» из черновика? Изменение вступит в силу после сохранения.' },
+      policy: { title: 'Политика аудита', description: 'Настройте группы, девять категорий риска ввода, воркеры и границы очереди.', scope: 'Область', allGroups: 'Все группы', selectedGroups: 'Выбранные группы', searchGroups: 'Поиск групп', noGroups: 'Подходящие группы не найдены', missingGroups: 'ID отсутствующих групп', selectedCount: 'Выбрано групп: {count}', scanners: 'Категории риска Qwen3Guard', workerCount: 'Количество воркеров', queueCapacity: 'Ёмкость постоянной очереди', strategy: 'Стратегия узлов', strategyHint: 'Проверять узлы по порядку и переключаться при разрешённых ошибках.' },
+      saveBar: { enabled: 'Включить аудит промптов', blocking: 'Синхронная блокировка', storePass: 'Сохранять безопасные события', dirty: 'Есть несохранённые изменения', synced: 'Конфигурация синхронизирована' },
+      blockingConfirm: { title: 'Включить синхронную блокировку?', message: 'Запросы будут ждать Guard до выбора аккаунта, биллинга и обращения к upstream. Блокировка, недоступность Guard и некорректные ответы запрещают доступ к upstream.', confirm: 'Понимаю, включить' },
+      events: { title: 'События аудита', description: 'Просмотр событий по идентификаторам, маршруту, риску, хэшу и времени; детали показывают полный промпт.', decision: 'Решение', risk: 'Уровень риска', endpoint: 'Endpoint', groupId: 'ID группы', userId: 'ID пользователя', apiKeyId: 'ID API-ключа', keyword: 'Ключевое слово', startAt: 'Начало', endAt: 'Конец', deleteSelected: 'Удалить выбранные ({count})', deleteByFilter: 'Удалить по фильтру', filterDeleteDialogTitle: 'Удалить события аудита по фильтру', filterDeleteDialogDesc: 'Выберите диапазон времени и критерии риска. Удаление необратимо.', filterTimeRange: 'Диапазон удаления', filterTimeRangeHint: 'Удаляются события до выбранной границы.', timePresets: { '1d': 'Старше 1 дня', '7d': 'Старше 7 дней', '30d': 'Старше 30 дней', '90d': 'Старше 90 дней', all: 'За всё время', custom: 'Свой диапазон' }, customRangeInvalid: 'Укажите корректные начало и конец диапазона.', moreConditions: 'Дополнительные условия', filterDeletePreviewAction: 'Предпросмотр удаления', filterDeletePreviewing: 'Создание предпросмотра...', filterDeleteNeedPreview: 'Можно удалить сразу или сначала создать предпросмотр.', filterDeleteConfirmInvalidRange: 'Сначала выберите корректный диапазон удаления.', filterDeleteConfirmNoMatches: 'По текущим фильтрам событий нет.', selectAll: 'Выбрать все события на странице', selectEvent: 'Выбрать событие {id}', time: 'Время', identity: 'Пользователь / email / API Key', user: 'Имя пользователя', email: 'Email пользователя', apiKey: 'Имя API-ключа', group: 'Группа', route: 'Endpoint / модель', result: 'Решение / риск', preview: 'Скрытый предпросмотр', empty: 'Подходящих событий нет.', passEventsDisabled: 'Сохранение безопасных событий выключено. События с флагом и критическим риском сохраняются.', openConfiguration: 'Открыть конфигурацию', detailTitle: 'Детали события аудита промпта', tabs: { summary: 'Сводка аудита', risks: 'Риски', technical: 'Технические детали' }, promptFull: 'Полный промпт (без маскировки)', promptFullHint: 'Полный промпт хранится только для просмотра администратором. Считайте его чувствительными данными.', guardReturn: 'Ответ аудита модели', guardReturnHint: 'Нормализованный результат Guard.', riskSummaries: 'Сводки рисков', evidence: 'Скрытые подтверждения', score: 'Оценка', categories: 'Категории', model: 'Модель', stage: 'Этап запроса', noRisks: 'Для этого события нет сведений о рисках.', requestId: 'ID запроса', promptHash: 'SHA-256 промпта', technical: { scanner: 'Сканер', policy: 'Политика', guardEndpoint: 'Endpoint Guard', config: 'Конфигурация', chunks: 'Чанки', latency: 'Задержка', protocol: 'Протокол' }, deleteConfirmTitle: 'Удалить события аудита?', deleteConfirmMessage: 'Будет удалено событий: {count}.', filterDeleteCount: 'Снимок сервера содержит событий: {count}.', snapshotMax: 'Максимальный ID снимка', expiresAt: 'Срок действия подтверждения', filterDeleteWarning: 'Удаляются только события до границы предпросмотра.', confirmFilterDelete: 'Удалить навсегда' },
+      messages: { saved: 'Конфигурация аудита промптов сохранена.', probeSucceeded: 'Узел аудита доступен.', deleted: 'Удалено событий аудита: {count}.' },
+      errors: { loadConfig: 'Не удалось загрузить конфигурацию аудита промптов.', loadRuntime: 'Не удалось загрузить runtime аудита.', loadGroups: 'Не удалось загрузить группы.', loadEvents: 'Не удалось загрузить события аудита.', loadDetail: 'Не удалось загрузить детали события.', saveConfig: 'Не удалось сохранить конфигурацию.', probe: 'Проверка узла не удалась.', delete: 'Не удалось удалить события.', previewDelete: 'Не удалось создать предпросмотр удаления.', deleteConfirmation: 'Подтверждение удаления недействительно или просрочено. Создайте предпросмотр снова.', prompt_audit_config_conflict: 'Другой администратор изменил конфигурацию. Загрузите версию сервера.', prompt_guard_requires_audit_enabled: 'Включите аудит промптов перед синхронной блокировкой.', prompt_audit_invalid_endpoint: 'Конфигурация узла аудита некорректна.', prompt_audit_endpoint_required: 'Включите хотя бы один узел аудита.', prompt_audit_groups_required: 'Выберите хотя бы одну группу.', prompt_audit_scanners_required: 'Включите хотя бы одну категорию риска.' }
+    },
+  },
+  payment: {
+    admin: {
+      currency: 'Валюта', currencyPlaceholder: 'например USD', currencyHint: 'Валюта отображается рядом с ценой тарифа.', validity: 'Срок действия', validityRequired: 'Укажите срок действия тарифа.'
+    }
+  }
+}
+
+function mergeLocaleMessages<T>(base: T, overrides: unknown): T {
+  if (Array.isArray(base) || Array.isArray(overrides)) {
+    return (overrides ?? base) as T
+  }
+  if (base && typeof base === 'object' && overrides && typeof overrides === 'object') {
+    const merged: Record<string, unknown> = { ...(base as Record<string, unknown>) }
+    for (const [key, value] of Object.entries(overrides)) {
+      merged[key] = key in merged ? mergeLocaleMessages(merged[key], value) : value
+    }
+    return merged as T
+  }
+  return (overrides ?? base) as T
+}
+
+export default mergeLocaleMessages(en, mergeLocaleMessages(russianMessages, newRussianMessages))
