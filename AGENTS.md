@@ -70,5 +70,5 @@ x-api-key: <admin-api-key>
 - Preserve Russian localization in `frontend/src/i18n/locales/ru.ts` when merging upstream changes.
 - Keep `frontend/src/i18n/__tests__/ruLocaleKeys.spec.ts` green after every upstream merge; it prevents silent English fallback for new keys.
 - Preserve the local Responses-shaped `/v1/chat/completions` API-key fix in `backend/internal/service/openai_gateway_chat_completions.go` unless upstream adds an equivalent fix.
-- After upstream updates, verify migrations, security-audit routes, prompt-audit settings, image-task storage, and new provider routes before production rollout. Current synchronized upstream baseline is `0.1.161`.
+- After upstream updates, verify migrations, security-audit routes, prompt-audit settings, image-task storage, client IP settings, Grok client-tool cache, Codex model discovery/quota handling, and new provider routes before production rollout. Current synchronized upstream baseline is `0.1.162`.
 - See `docs/UPSTREAM_UPDATE_RU.md` for the full upstream update and deploy checklist.

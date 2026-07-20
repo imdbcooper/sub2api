@@ -83,7 +83,7 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 
 ### Новые upstream возможности
 
-После обновления до версии `0.1.161` дополнительно проверить:
+После обновления до версии `0.1.162` дополнительно проверить:
 
 - Grok SSO-cookie import и Grok CLI/OpenCode configuration;
 - OpenAI long-context billing и ручной ChatGPT plan tier;
@@ -106,6 +106,13 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 - OpenAI API-key alpha/search scheduling, body-limit failover и WS turn lifecycle;
 - новые security switches (по умолчанию отключены) и step-up gates для S3 backup/role promotion;
 - миграции `177`–`184` и соответствующие schema changes.
+- настраиваемый режим определения client IP, trusted proxies и пользовательские IP-заголовки;
+- runtime-настройки object storage для async image tasks и защита S3 SecretAccessKey от временных ключей;
+- Grok client-tool cache для Claude Desktop, Codex Lite и Trae, включая сохранение маршрутизации между ходами;
+- Codex models manifest, стандартный OpenAI model-list envelope, quota errors и OAuth 401 unschedulable handling;
+- HTTP bridge failover до реального terminal event и отсутствие повторного cache billing при retry того же аккаунта;
+- Agent Identity import с изоляцией по Team и ограничение длины Codex `call_id`;
+- обновлённый логотип, batch image guide i18n и удаление legacy `frontend/public/logo.png`.
 
 ### Локальный фикс instructions
 
