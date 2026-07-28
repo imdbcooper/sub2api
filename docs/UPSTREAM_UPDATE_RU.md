@@ -83,7 +83,7 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 
 ### Новые upstream возможности
 
-После обновления до версии `0.1.162` дополнительно проверить:
+После обновления до версии `0.1.166` дополнительно проверить:
 
 - Grok SSO-cookie import и Grok CLI/OpenCode configuration;
 - OpenAI long-context billing и ручной ChatGPT plan tier;
@@ -113,6 +113,16 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 - HTTP bridge failover до реального terminal event и отсутствие повторного cache billing при retry того же аккаунта;
 - Agent Identity import с изоляцией по Team и ограничение длины Codex `call_id`;
 - обновлённый логотип, batch image guide i18n и удаление legacy `frontend/public/logo.png`.
+- composite groups и миграции `172`, `185`–`191`, включая reasoning policy, live-доступ, email-alias dedup и passkeys;
+- Model Plaza, channel plaza и новые composite-platform routes;
+- Ollama Cloud usage refresh, debounce и совместимость с PostgreSQL <= 16;
+- OpenAI Live Gateway/macOS attestation, Live billing и корректное завершение lease;
+- panel API rate limiting и новые настройки ограничения запросов в админ-панели;
+- passkey/WebAuthn routes, session revocation и конфигурацию RP ID/origins;
+- Claude Opus 5, Antigravity OpenAI compatibility и новые Responses/Anthropic client-tools преобразования;
+- OpenAI API-key item ID sanitization, namespace normalization, reasoning failover и proxy stream circuit breaker;
+- email-alias registration dedup, сохранение session ID в usage logs и mapped-model billing/statistics;
+- security dependency updates (`postcss`, `axios`, `golang.org/x/text`) и отсутствие frontend/backend security-audit регрессий.
 
 ### Локальный фикс instructions
 

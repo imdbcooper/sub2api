@@ -21,7 +21,8 @@ vi.mock('@/stores/auth', () => ({
 
 vi.mock('@/stores/app', () => ({
   useAppStore: () => ({
-    fetchPublicSettings: fetchPublicSettingsMock
+    fetchPublicSettings: fetchPublicSettingsMock,
+    showError: vi.fn()
   })
 }))
 

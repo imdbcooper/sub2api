@@ -8338,6 +8338,316 @@ const newRussianMessages = {
   }
 }
 
+// Keep new upstream keys translated instead of relying on the English fallback.
+const upstreamRussianMessages = {
+  common: {
+    nav: {
+      modelPlaza: 'Витрина моделей',
+      announcements: 'Объявления'
+    },
+    auth: {
+      passkeySignIn: 'Войти с помощью Passkey',
+      passkeySigningIn: 'Ожидание Passkey...',
+      passkeyCancelled: 'Вход через Passkey отменён.',
+      passkeyFailed: 'Не удалось войти через Passkey. Повторите попытку.'
+    }
+  },
+  setup: {
+    redis: {
+      username: 'Имя пользователя (необязательно)',
+      usernamePlaceholder: 'Оставьте пустым для пользователя по умолчанию'
+    }
+  },
+  dashboard: {
+    live: 'Live',
+    modelPlaza: {
+      title: 'Витрина моделей',
+      description: 'Доступные модели и цены по группам',
+      loading: 'Загрузка...',
+      empty: 'Нет групп для отображения',
+      loadFailed: 'Не удалось загрузить витрину моделей',
+      noSearchResult: 'Совпадений не найдено',
+      anonymousHint: 'Войдите, чтобы увидеть эксклюзивные группы и персональные цены',
+      filters: {
+        platformLabel: 'Платформа',
+        groupLabel: 'Группа',
+        rateLabel: 'Тариф',
+        modelLabel: 'Модель',
+        searchPlaceholder: 'Поиск моделей',
+        all: 'Все'
+      },
+      badges: {
+        exclusive: 'Эксклюзивная',
+        subscription: 'Подписка'
+      },
+      detail: {
+        noModels: 'Для этой группы модели не настроены',
+        noPricing: 'Цены не настроены',
+        peakNote: 'Пиковые часы {window}: тариф ×{multiplier}'
+      },
+      table: {
+        model: 'Модель',
+        input: 'Вход',
+        output: 'Выход',
+        cache: 'Кэш',
+        cacheWrite: 'Запись',
+        cacheRead: 'Чтение',
+        paidPrice: 'Ваша цена со скидкой',
+        officialPrice: 'Официальная цена',
+        rate: 'Тариф',
+        unitPerMillion: '$ / 1 млн токенов',
+        perUnitRequest: '/ запрос',
+        perUnitImage: '/ изображение',
+        perRequest: 'За запрос',
+        perImage: 'За изображение'
+      },
+      nav: {
+        login: 'Войти',
+        backToDashboard: 'Вернуться в панель'
+      }
+    },
+    profile: {
+      passkey: {
+        title: 'Passkey',
+        description: 'Используйте Face ID, Touch ID, Windows Hello или ключ безопасности для входа без пароля.',
+        add: 'Добавить Passkey',
+        continue: 'Создать Passkey',
+        name: 'Название Passkey',
+        namePlaceholder: 'Например, Touch ID на MacBook',
+        passwordPlaceholder: 'Введите текущий пароль для подтверждения',
+        empty: 'Зарегистрированных Passkey пока нет.',
+        synced: 'Синхронизирован',
+        createdAt: 'Создан: {date}',
+        lastUsed: 'Последнее использование: {date}',
+        featureDisabled: 'Passkey не настроены администратором.',
+        unsupported: 'Этот браузер или устройство не поддерживает Passkey.',
+        loadFailed: 'Не удалось загрузить Passkey.',
+        added: 'Passkey добавлен.',
+        addFailed: 'Не удалось добавить Passkey.',
+        renamePrompt: 'Введите новое название Passkey',
+        renamed: 'Название Passkey изменено.',
+        renameFailed: 'Не удалось переименовать Passkey.',
+        deleteTitle: 'Удалить Passkey',
+        deleteConfirm: 'Удалить «{name}»? Вход через него станет недоступен.',
+        deleted: 'Passkey удалён.',
+        deleteFailed: 'Не удалось удалить Passkey.'
+      }
+    }
+  },
+  admin: {
+    accounts: {
+      ollamaCloud: {
+        title: 'Использование Ollama Cloud',
+        sessionSecurityHint: 'Сессия браузера шифруется при хранении и отправляется только на фиксированный официальный URL настроек.',
+        configured: 'Настроено',
+        notConfigured: 'Не настроено',
+        notRefreshed: 'Не обновлялось',
+        encryptionKeyRequired: 'Перед сохранением сессии задайте постоянный TOTP_ENCRYPTION_KEY.',
+        sessionLabel: 'Cookie браузера Ollama',
+        sessionPlaceholder: 'wos-session=...; __Secure-authjs.session-token.0=...',
+        writeOnlyHint: 'Только для записи. Сохранённое значение нельзя просмотреть, а пустое значение его не заменяет.',
+        deleteSession: 'Удалить сессию',
+        deleteConfirm: 'Удалить сохранённую сессию браузера Ollama и снимок использования?',
+        refreshNow: 'Обновить использование',
+        autoRefresh: 'Автоматическое обновление использования',
+        autoRefreshHint: 'Работает только при включённых настройках аккаунта и системы.',
+        plan: 'Тариф',
+        fiveHour: '5 часов',
+        fiveHourShort: '5 ч',
+        sevenDay: '7 дней',
+        sevenDayShort: '7 д',
+        balance: 'Баланс',
+        models: 'Модели',
+        status: 'Статус',
+        updatedAt: 'Обновлено',
+        ok: 'Актуально',
+        unauthorized: 'Сессия истекла',
+        failed: 'Ошибка обновления',
+        windowWithReset: 'Использовано {percent}, сброс: {reset}',
+        loadFailed: 'Не удалось загрузить настройки использования Ollama Cloud',
+        sessionSaved: 'Сессия браузера Ollama сохранена',
+        sessionSaveFailed: 'Не удалось сохранить сессию браузера Ollama',
+        sessionDeleted: 'Сессия браузера Ollama удалена',
+        sessionDeleteFailed: 'Не удалось удалить сессию браузера Ollama',
+        autoRefreshFailed: 'Не удалось изменить автоматическое обновление использования',
+        refreshSuccess: 'Использование Ollama Cloud обновлено',
+        refreshFailed: 'Не удалось обновить использование Ollama Cloud',
+        errors: {
+          request_failed: 'Ошибка запроса',
+          empty_response: 'Пустой ответ',
+          response_host_mismatch: 'Неожиданный хост ответа',
+          redirect_blocked: 'Официальный сервис перенаправил запрос',
+          unauthorized: 'Сессия браузера истекла',
+          http_error: 'Официальный сервис вернул ошибку',
+          response_read_failed: 'Не удалось прочитать ответ',
+          response_too_large: 'Страница настроек превысила допустимый размер',
+          invalid_html: 'Формат страницы настроек не распознан',
+          OLLAMA_CLOUD_USAGE_REFRESH_RATE_LIMITED: 'Обновления ограничены. Повторите через {retry_after_seconds} с.'
+        }
+      }
+    },
+    ops: {
+      systemLogs: {
+        cleanupFilterRequired: 'Для очистки укажите хотя бы одно условие фильтрации: время или другое поле'
+      }
+    },
+    groups: {
+        form: {
+          maxReasoningEffort: 'Максимальный уровень рассуждения',
+          maxReasoningEffortUnlimited: 'Без ограничений (как в запросе)',
+          maxReasoningEffortHint: 'Ограничивает только явно заданный OpenAI reasoning effort. Более высокие значения уменьшаются; отсутствующее значение не добавляется. Ограничение имеет приоритет над сопоставлениями.',
+          reasoningEffortMappings: 'Сопоставления уровня рассуждения',
+          addReasoningEffortMapping: 'Добавить сопоставление',
+          removeReasoningEffortMapping: 'Удалить сопоставление',
+          reasoningEffortFrom: 'Значение в запросе',
+          reasoningEffortTo: 'Передаваемое значение',
+          reasoningEffortFromPlaceholder: 'Выберите A',
+          reasoningEffortToPlaceholder: 'Выберите B',
+          fromRequired: 'Выберите значение A в запросе',
+          toRequired: 'Выберите передаваемое значение B',
+          unsupportedFrom: 'Значение запроса не поддерживается платформой',
+          unsupportedTo: 'Передаваемое значение не поддерживается платформой',
+          duplicateFrom: 'Значение A в запросе должно быть уникальным'
+        },
+        platforms: { composite: 'Композитная' },
+        compositeRoutes: {
+          action: 'Маршруты',
+          title: 'Композитные маршруты',
+          titleWithGroup: 'Композитные маршруты: {name}',
+          routes: 'Сохранённые маршруты',
+          empty: 'Композитные маршруты не настроены',
+          publicModel: 'Публичная модель',
+          target: 'Цель',
+          scope: 'Область',
+          priority: 'Приоритет',
+          addRoute: 'Добавить маршрут',
+          editRoute: 'Изменить маршрут',
+          matchType: 'Сопоставление',
+          endpoint: 'Endpoint',
+          targetPlatform: 'Целевая платформа',
+          upstreamModel: 'Модель upstream',
+          upstreamModelHint: 'Оставьте пустым, чтобы передавать исходную модель запроса; заполните, чтобы направлять все совпадения на фиксированную модель.',
+          notes: 'Заметки',
+          enabled: 'Включён',
+          preview: 'Предпросмотр',
+          matched: 'Совпадение найдено',
+          notMatched: 'Совпадений нет',
+          publicModelRequired: 'Укажите публичную модель',
+          routeCreated: 'Композитный маршрут создан',
+          routeUpdated: 'Композитный маршрут обновлён',
+          routeDeleted: 'Композитный маршрут удалён',
+          failedToLoad: 'Не удалось загрузить композитные маршруты',
+          failedToSave: 'Не удалось сохранить композитный маршрут',
+          failedToDelete: 'Не удалось удалить композитный маршрут',
+          failedToPreview: 'Не удалось создать предпросмотр маршрута',
+          deleteConfirm: 'Удалить этот композитный маршрут?',
+          endpoints: { any: 'Любой', messages: 'Messages', countTokens: 'Count Tokens', responses: 'Responses', chatCompletions: 'Chat Completions', embeddings: 'Embeddings', images: 'Images', gemini: 'Gemini Native' },
+          match: { exact: 'Точное', prefix: 'Префиксное' },
+          sources: { route: 'Маршрут', detector: 'Определитель' }
+        },
+        openaiLive: {
+          title: 'OpenAI Live',
+          allow: 'Разрешить Live-доступ',
+          hint: 'API-ключи этой OpenAI-группы смогут создавать и управлять голосовыми Live-сессиями. По умолчанию выключено. Сервер должен работать на Apple Silicon macOS с официальным приложением ChatGPT.',
+          unsupportedTitle: 'Текущий сервер не поддерживает Live',
+          unsupportedMessage: 'Сервер не может создать требуемую Live-аттестацию. Live не заработает даже после включения. Продолжить?',
+          enableAnyway: 'Всё равно включить'
+        }
+      },
+      settings: {
+      features: {
+        modelPlaza: {
+          title: 'Витрина моделей',
+          description: 'Публичная страница с доступными моделями и ценами по группам. По умолчанию выключено.',
+          enabled: 'Включить витрину моделей',
+          enabledHint: 'После включения ссылка появится в шапке, а страница будет доступна по адресу /model-plaza.',
+          requireAuth: 'Требовать вход',
+          requireAuthHint: 'При включении анонимные посетители перенаправляются на страницу входа; при выключении видят только неэксклюзивные группы.',
+          priceDescription: 'Примечания к ценам (Markdown)',
+          priceDescriptionHint: 'Отображаются вверху страницы витрины моделей.'
+        }
+      },
+      security: {
+        passkey: 'Вход через Passkey',
+        passkeyHint: 'Разрешить вход без пароля и управление Passkey пользователем при корректной конфигурации WebAuthn.',
+        passkeyConfigured: 'Конфигурация WebAuthn корректна.',
+        passkeyNotConfigured: 'Перед включением Passkey задайте корректный RP ID и разрешённые HTTPS-источники.',
+        passkeyRPID: 'RP ID',
+        passkeyOrigins: 'Разрешённые HTTPS-источники',
+        passkeyValueNotConfigured: 'Не настроено'
+      },
+      payment: {
+        alipayMobilePrecreateDeepLink: 'Переход в Alipay с мобильного устройства',
+        alipayMobilePrecreateDeepLinkHint: 'Использовать официальный Alipay precreate на мобильном устройстве и открыть приложение Alipay; динамический QR показывать только при ошибке перехода.'
+      },
+      panelRateLimit: {
+        title: 'Ограничение запросов Panel API',
+        description: 'Ограничивает частые запросы панели, чтобы статистика и дашборды не перегружали базу данных.',
+        proxySafeNote: 'Авторизованные endpoint считаются по аккаунту пользователя, а публичные по реальному IP клиента. Внутренние loopback/private-адреса прокси пропускаются.',
+        enabled: 'Включить ограничение запросов панели',
+        enabledHint: 'Превышение порога возвращает HTTP 429; лимит автоматически сбрасывается по окончании окна.',
+        userRpm: 'Запросов на аккаунт',
+        userRpmHint: 'Общее число запросов Panel API на аккаунт в минуту. 0 = без ограничений.',
+        heavyRpm: 'Тяжёлых запросов на аккаунт',
+        heavyRpmHint: 'Лимит запросов статистики и агрегаций на аккаунт в минуту. 0 = без ограничений.',
+        publicIpRpm: 'Публичных запросов на IP',
+        publicIpRpmHint: 'Лимит запросов публичных endpoint на реальный IP клиента в минуту. 0 = без ограничений.',
+        perMinute: 'запр./мин',
+        exemptAdmin: 'Исключить администраторов',
+        exemptAdminHint: 'Администраторы не ограничиваются, чтобы массовые операции не прерывались.',
+        saved: 'Настройки ограничения запросов сохранены',
+        saveFailed: 'Не удалось сохранить настройки ограничения запросов'
+      },
+      ollamaCloudUsage: {
+        title: 'Обновление использования Ollama Cloud',
+        description: 'Обновляет официальное использование Ollama для аккаунтов с индивидуальным разрешением. По умолчанию выключено.',
+        enabled: 'Включить автоматическое обновление',
+        enabledHint: 'Обновляются только аккаунты с сохранённой сессией и включённым индивидуальным переключателем после последующих запросов к моделям.',
+        intervalMinutes: 'Максимальное ожидание при продолжающихся запросах (минуты)',
+        intervalHint: 'Диапазон: 15–1440 минут.',
+        debounceMinutes: 'Пауза после последнего запроса (минуты)',
+        debounceHint: 'Диапазон: 1–60 минут.',
+        saved: 'Настройки обновления использования Ollama Cloud сохранены',
+        saveFailed: 'Не удалось сохранить настройки обновления использования Ollama Cloud'
+      }
+    },
+    promptAudit: {
+      pool: {
+        configured: 'API Key настроен',
+        missing: 'API Key отсутствует',
+        invalid: 'API Key не расшифровывается; введите его заново',
+        reenterSecret: 'Сохранённый API Key нельзя расшифровать; введите новый ключ'
+      },
+      errors: {
+        prompt_audit_encryption_key_required: 'Не задан постоянный ключ шифрования. Установите TOTP_ENCRYPTION_KEY и перезапустите сервис.'
+      }
+    },
+    resources: {
+      announcements: {
+        preview: 'Предпросмотр'
+      }
+    }
+  },
+  misc: {
+    payment: {
+      qr: {
+        alipayOpening: 'Открытие Alipay',
+        alipayContinueInApp: 'Завершите оплату в Alipay',
+        alipayWaitingHint: 'Сервер подтвердит оплату и автоматически обновит страницу',
+        alipayFallbackTitle: 'Alipay не открылся',
+        alipayFallbackHint: 'Откройте Alipay ещё раз или сохраните QR-код и отсканируйте его из альбома Alipay',
+        reopenAlipay: 'Открыть Alipay снова',
+        saveQRCode: 'Сохранить QR-код',
+        alipaySaveAndScanHint: 'Сохраните QR-код, откройте сканер Alipay и выберите его из альбома'
+      },
+      weeks: 'нед.',
+      admin: {
+        weeks: 'нед.'
+      }
+    }
+  }
+}
+
 function mergeLocaleMessages<T>(base: T, overrides: unknown): T {
   if (Array.isArray(base) || Array.isArray(overrides)) {
     return (overrides ?? base) as T
@@ -8352,4 +8662,7 @@ function mergeLocaleMessages<T>(base: T, overrides: unknown): T {
   return (overrides ?? base) as T
 }
 
-export default mergeLocaleMessages(en, mergeLocaleMessages(russianMessages, newRussianMessages))
+export default mergeLocaleMessages(
+  en,
+  mergeLocaleMessages(russianMessages, mergeLocaleMessages(newRussianMessages, upstreamRussianMessages))
+)
