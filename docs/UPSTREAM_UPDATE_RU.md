@@ -83,7 +83,7 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 
 ### Новые upstream возможности
 
-После обновления до версии `0.1.166` дополнительно проверить:
+После обновления до версии `0.1.168` дополнительно проверить:
 
 - Grok SSO-cookie import и Grok CLI/OpenCode configuration;
 - OpenAI long-context billing и ручной ChatGPT plan tier;
@@ -123,6 +123,8 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 - OpenAI API-key item ID sanitization, namespace normalization, reasoning failover и proxy stream circuit breaker;
 - email-alias registration dedup, сохранение session ID в usage logs и mapped-model billing/statistics;
 - security dependency updates (`postcss`, `axios`, `golang.org/x/text`) и отсутствие frontend/backend security-audit регрессий.
+- исправление завершения OpenAI Live-сессий при сбоях store и корректное подавление toast при отключённых passkey;
+- алиасы статусов Claude Sonnet 5 и отказоустойчивость finalize/observer для OpenAI Live.
 
 ### Локальный фикс instructions
 
