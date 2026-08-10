@@ -22,7 +22,7 @@ const {
   getModelsListCandidates: vi.fn(),
   getUsageSummary: vi.fn(),
   getCapacitySummary: vi.fn(),
-  getLiveCapability: vi.fn(() => Promise.resolve({ supported: false })),
+  getLiveCapability: vi.fn(),
   listAccounts: vi.fn(),
   showError: vi.fn(),
   showSuccess: vi.fn(),
@@ -247,6 +247,7 @@ describe('admin GroupsView column settings', () => {
     getModelsListCandidates.mockResolvedValue([])
     getUsageSummary.mockResolvedValue([])
     getCapacitySummary.mockResolvedValue([])
+    getLiveCapability.mockResolvedValue({ supported: false })
     listAccounts.mockResolvedValue({ items: [], total: 0, page: 1, page_size: 20, pages: 0 })
     isCurrentStep.mockReturnValue(false)
   })

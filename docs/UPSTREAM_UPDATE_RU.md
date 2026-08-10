@@ -83,7 +83,7 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 
 ### Новые upstream возможности
 
-После обновления до версии `0.1.168` дополнительно проверить:
+После обновления до версии `0.1.173` дополнительно проверить:
 
 - Grok SSO-cookie import и Grok CLI/OpenCode configuration;
 - OpenAI long-context billing и ручной ChatGPT plan tier;
@@ -125,6 +125,15 @@ pnpm vitest run src/i18n/__tests__/ruLocaleKeys.spec.ts
 - security dependency updates (`postcss`, `axios`, `golang.org/x/text`) и отсутствие frontend/backend security-audit регрессий.
 - исправление завершения OpenAI Live-сессий при сбоях store и корректное подавление toast при отключённых passkey;
 - алиасы статусов Claude Sonnet 5 и отказоустойчивость finalize/observer для OpenAI Live.
+- безопасный billing по фактической upstream response model и аудит расхождений модели;
+- channel monitor v2 с rollups, privacy defaults, health thresholds и режимами v1/v2;
+- новые Grok audio/video/search flows, quota gates, free-tier ограничения, OAuth reconciliation и client-tool cache;
+- Codex identity enforcement, актуализацию Codex CLI version и безопасную обработку quota/identity;
+- OpenAI stream capacity shedding, circuit breaker, WS close-frame race и partial-usage billing;
+- captcha-провайдеры Aliyun/Tencent, OAuth captcha gate и настройки email-domain quota;
+- web search gateway, backup больших файлов по частям, SMTP STARTTLS и email delivery flows;
+- новые миграции `192`–`220`, включая profit control, response-model billing, channel monitor v2 и media pricing;
+- новые пользовательские и административные экраны channel monitor v2, duplicate operations, backup и captcha flows.
 
 ### Локальный фикс instructions
 

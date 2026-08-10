@@ -20,7 +20,7 @@ const {
   getModelsListCandidates: vi.fn(),
   getUsageSummary: vi.fn(),
   getCapacitySummary: vi.fn(),
-  getLiveCapability: vi.fn(() => Promise.resolve({ supported: false })),
+  getLiveCapability: vi.fn(),
   showSuccess: vi.fn(),
   showError: vi.fn()
 }))
@@ -169,6 +169,7 @@ describe('GroupsView duplicate action', () => {
       getModelsListCandidates,
       getUsageSummary,
       getCapacitySummary,
+      getLiveCapability,
       showSuccess,
       showError
     ]) {
@@ -191,6 +192,7 @@ describe('GroupsView duplicate action', () => {
     getModelsListCandidates.mockResolvedValue([])
     getUsageSummary.mockResolvedValue([])
     getCapacitySummary.mockResolvedValue([])
+    getLiveCapability.mockResolvedValue({ supported: false })
   })
 
   afterEach(() => {
