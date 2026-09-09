@@ -164,6 +164,11 @@ export default {
     resetNow: '即将重置',
     subscriptionType: '订阅类型',
     subscriptionExpires: '订阅到期',
+    periodUnits: {
+      day: '天',
+      week: '周',
+      month: '月'
+    },
     // Usage stat cells
     todayRequests: '今日请求',
     todayInputTokens: '今日输入',

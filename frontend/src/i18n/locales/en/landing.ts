@@ -164,6 +164,11 @@ export default {
     resetNow: 'Resetting soon',
     subscriptionType: 'Subscription Type',
     subscriptionExpires: 'Subscription Expires',
+    periodUnits: {
+      day: 'd',
+      week: 'wk',
+      month: 'mo'
+    },
     // Usage stat cells
     todayRequests: 'Today Requests',
     todayInputTokens: 'Today Input',
